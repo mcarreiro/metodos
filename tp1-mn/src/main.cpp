@@ -4,15 +4,15 @@
 
 using namespace std;
 
-enum estado = {VACIO,SANGUIJUELA,FRIO};
+enum status = {VACIO,SANGUIJUELA,FRIO};
 
 struct Point {
     int x;
     int y;
 	float temp;
-	estado status;
+	status status;
 
-
+	Point(int x, int y, float temp, status status) : x(x), y(y), temp(temp), status(status) {};
 
 };
 
@@ -64,15 +64,15 @@ void Windshield::initializeEmptyMatrix(){
 			}
 		}		
 	}
+
+
 }
 
 int main() {
 	int a,b,h,r;
 	cout << "Ingrese con enters en el medio, a, b, h y r" << "\n";
 	cin >> a >> b >> h >> r;
-    Windshield *Windshield = new Windshield(a,b,h,r);
-	
-	
+    Windshield *Windshield = new Windshield(a,b,h,r);	
 
     return 0;
 }
