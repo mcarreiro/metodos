@@ -43,12 +43,12 @@ private:
 	vector< vector<Point *> > matrix;
 };
 
-Windshield::Windshield(int x, int y, float ah, int ar) {	
+Windshield::Windshield(int x, int y, float ah, int ar) {
 	a = x;
 	b = y;
 	h = ah;
 	r = ar;
-    
+
 
 	m = (a/h) + 1;
 	n = (b/h) + 1;
@@ -82,16 +82,16 @@ void Windshield::initializeEmptyMatrix(){
 
 }
 
-int main() {
-	float h;
-	int a,b,r;
+int main(int a,int b,float h,int r) {
+//	float h;
+//	int a,b,r;
 	cout << "Ingrese con enters en el medio, a, b, h y r" << "\n";
 
 //	cin >> a >> b >> h >> r;
-	a = 2;
-	b = 2;
-	h = 1.0f;
-	r = 1;
+//	a = 2;
+//	b = 2;
+//	h = 1.0f;
+//	r = 1;
 
     Windshield *windshield = new Windshield(a,b,h,r);
 
