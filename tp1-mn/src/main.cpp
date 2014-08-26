@@ -18,8 +18,14 @@ struct Point {
         temp = NULL;
         status = VACIO;
 	};
-
+    Point(int j, int i) : x(j), y(i) {};
 	Point(int xa, int ya, float tempa, statusPoint statusa) : x(xa), y(ya), temp(tempa), status(statusa) {};
+};
+
+struct Position {
+    double x;
+    double y;
+    Position(double x, double y) : x(x), y(y) {};
 };
 
 class Windshield {
@@ -32,6 +38,10 @@ public:
 	void initialize();
 	void initializeEmptyMatrix();
 	void bandMatrix();
+	void showMatriz();
+	bool putSanguijuela(vector< vector<double > > posSanguijuelas);
+	double norma2squared(Position p1, Position p2);
+	vector<Point> puntosCubiertos(Position sanguijuela);
 private:
 	int a;
     int b;
@@ -43,6 +53,7 @@ private:
 
 	vector< vector<Point *> > matrix;
 };
+
 
 Windshield::Windshield(int x, int y, float ah, int ar, float temp, vector< vector<double > > posSanguijuelas) {
 	a = x;
@@ -60,10 +71,8 @@ Windshield::Windshield(int x, int y, float ah, int ar, float temp, vector< vecto
 
     int i,j;
 	for(i=0; i< m;i++){
-		cout << "I: " << i << "\n";
-		cout << "SIZE[I]: "<< matrix[i].size() << "\n";
+
 		for (j=0; j<n;j++){
-			cout << "J: " << j << "\n";
             matrix[i][j] = new Point(i,j,0.00f,VACIO);
 			if (j == 0 || i == 0 || j== n-1 || i==m-1){
                matrix[i][j]->temp = -100;
@@ -72,7 +81,51 @@ Windshield::Windshield(int x, int y, float ah, int ar, float temp, vector< vecto
         }
 	}
 
-	this->initialize();
+	this->putSanguijuela(posSanguijuelas);
+	this->showMatriz();
+}
+
+bool Windshield::putSanguijuela(vector< vector<double > > posSanguijuelas){
+    int i,posX, posY;
+
+	for(i=0; i< posSanguijuelas.size();i++){
+        vector<Point> cubiertos = this->puntosCubiertos(Position(posSanguijuelas[i][0],posSanguijuelas[i][1]));
+        for (int i = 0; i < cubiertos.size(); i++) {
+            Point p = cubiertos[i];
+            matrix[p.x][p.y]->status = SANGUIJUELA;
+            matrix[p.x][p.y]->temp = ts;
+        }
+
+	}
+}
+
+double Windshield::norma2squared(Position p1, Position p2) {
+    double dx = p1.x - p2.x;
+    double dy = p1.y - p2.y;
+    return dx*dx + dy*dy;
+}
+
+vector<Point> Windshield::puntosCubiertos(Position sanguijuela) {
+    vector<Point> v;
+    for (int i = 0; i <= n; i++) {
+        for (int j = 0; j <= m; j++) {
+            Position p(j*h , i*h);
+            if (this->norma2squared(sanguijuela, p) <= r*r) {
+                v.push_back(Point(j, i));
+            }
+        }
+    }
+    return v;
+}
+
+
+void Windshield::showMatriz(){
+    int i,j;
+    for(i=0; i< m;i++){
+		for (j=0; j<n;j++){
+            cout << i << " " << j << " " <<  matrix[i][j]->temp << "\n";
+        }
+	}
 }
 
 void Windshield::initialize(){
@@ -132,11 +185,9 @@ int main() {
     double colS;
     int i;
 	for (i=0; i<CantSanguijuleas;i++){
-        cin >> rowS;
-        posSanguijuelas[i].push_back(rowS);
-        cin >> colS;
-        posSanguijuelas[i].push_back(colS);
-
+        cin >> rowS >> colS;
+        posSanguijuelas[i][0] = rowS;
+        posSanguijuelas[i][1] = colS;
     }
 
 
