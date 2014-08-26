@@ -15,7 +15,7 @@ struct Point {
 	float coeficiente;
 
 	Point() {
-        temp = NULL;
+        temp = 0;
         status = VACIO;
 	};
     Point(int j, int i) : x(j), y(i) {};
@@ -111,7 +111,7 @@ vector<Point> Windshield::puntosCubiertos(Position sanguijuela) {
         for (int j = 0; j <= m; j++) {
             Position p(j*h , i*h);
             if (this->norma2squared(sanguijuela, p) <= r*r) {
-                v.push_back(Point(j, i));
+                v.push_back(Point(i, j));
             }
         }
     }
