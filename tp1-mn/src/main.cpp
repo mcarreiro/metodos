@@ -28,7 +28,7 @@ public:
     	cout << "3" << "\n";
         vector<vector<Point *> > matrix(0, vector<Point *>(0));
     };
-	Windshield(int x, int y, float ah, int ar, float temp);
+	Windshield(int x, int y, float ah, int ar, float temp, vector< vector<double > > posSanguijuelas);
 	void initialize();
 	void initializeEmptyMatrix();
 	void bandMatrix();
@@ -44,7 +44,7 @@ private:
 	vector< vector<Point *> > matrix;
 };
 
-Windshield::Windshield(int x, int y, float ah, int ar, float temp) {
+Windshield::Windshield(int x, int y, float ah, int ar, float temp, vector< vector<double > > posSanguijuelas) {
 	a = x;
 	b = y;
 	h = ah;
@@ -117,7 +117,7 @@ void Windshield::bandMatrix(){
 
 }
 
-int main(int a,int b,float h,int r) {
+int main() {
     float h;
 	int a,b,r;
 	cout << "Ingrese con enters en el medio, a, b, h, r, Ts y las sanguijuelas" << "\n";
@@ -140,7 +140,7 @@ int main(int a,int b,float h,int r) {
     }
 
 
-    Windshield *windshield = new Windshield(a,b,h,r, 500);
+    Windshield *windshield = new Windshield(a, b, h, r, Ts, posSanguijuelas);
 	windshield->bandMatrix();
 
     return 0;
