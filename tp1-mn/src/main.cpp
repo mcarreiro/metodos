@@ -91,15 +91,15 @@ void Windshield::bandMatrix(){
 		for (j=0; j<n;j++){
 			pos = j + i * m;
 			switch(matrix[i][j]->status){
-			case SANGUIJUELA: 
+			case SANGUIJUELA:
 				bandMatrix[ancho][pos] = 1;
 				bandMatrix[res][pos] = ts;
 				break;
-			case FRIO: 
+			case FRIO:
 				bandMatrix[ancho][pos] = 1;
 				bandMatrix[res][pos] = -100;
 				break;
-			case VACIO: 
+			case VACIO:
 				bandMatrix[ancho][pos] = -4;
 				bandMatrix[res][pos] = 0;
 				if(matrix[i-1][j]->status != VACIO) bandMatrix[res][pos] -= matrix[i-1][j]->temp;
@@ -118,15 +118,27 @@ void Windshield::bandMatrix(){
 }
 
 int main(int a,int b,float h,int r) {
-//	float h;
-//	int a,b,r;
-//	cout << "Ingrese con enters en el medio, a, b, h y r" << "\n";
+    float h;
+	int a,b,r;
+	cout << "Ingrese con enters en el medio, a, b, h, r, Ts y las sanguijuelas" << "\n";
+    int CantSanguijuleas;
+    int Ts;
 
-//	cin >> a >> b >> h >> r;
-	a = 2;
-	b = 2;
-	h = 1.0f;
-	r = 1;
+	cin >> a >> b >> h >> r >> Ts >> CantSanguijuleas;
+
+    vector< vector<double > > posSanguijuelas;
+	posSanguijuelas = vector<vector<double > >(CantSanguijuleas, vector<double >(2));
+	double rowS;
+    double colS;
+    int i;
+	for (i=0; i<CantSanguijuleas;i++){
+        cin >> rowS;
+        posSanguijuelas[i].push_back(rowS);
+        cin >> colS;
+        posSanguijuelas[i].push_back(colS);
+
+    }
+
 
     Windshield *windshield = new Windshield(a,b,h,r, 500);
 	windshield->bandMatrix();
