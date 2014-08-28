@@ -39,7 +39,7 @@ public:
 	void initializeEmptyMatrix();
 	void bandMatrix();
 	void showMatriz();
-	bool putSanguijuela(vector< vector<double > > posSanguijuelas);
+	void putSanguijuela(vector< vector<double > > posSanguijuelas);
 	double norma2squared(Position p1, Position p2);
 	vector<Point> puntosCubiertos(Position sanguijuela);
 private:
@@ -85,7 +85,7 @@ Windshield::Windshield(int x, int y, float ah, int ar, float temp, vector< vecto
 	this->showMatriz();
 }
 
-bool Windshield::putSanguijuela(vector< vector<double > > posSanguijuelas){
+void Windshield::putSanguijuela(vector< vector<double > > posSanguijuelas){
     int i,posX, posY;
 
 	for(i=0; i< posSanguijuelas.size();i++){
@@ -138,36 +138,36 @@ void Windshield::initializeEmptyMatrix(){
 
 void Windshield::bandMatrix(){
 	int ancho = 2;
-	  vector<vector<int> > bandMatrix  = vector<vector<int> >(ancho*2+2, vector<int>(n*m));
+	  vector<vector<double> > bandMatrix  = vector<vector<double> >(n*m, vector<double>(ancho*2+2));
 	int i,j, pos, res = ancho*2+1;
 	for(i=0; i< m;i++){
 		for (j=0; j<n;j++){
 			pos = j + i * m;
 			switch(matrix[i][j]->status){
 			case SANGUIJUELA:
-				bandMatrix[ancho][pos] = 1;
-				bandMatrix[res][pos] = ts;
+				bandMatrix[pos][ancho] = 1;
+				bandMatrix[pos][res] = ts;
 				break;
 			case FRIO:
-				bandMatrix[ancho][pos] = 1;
-				bandMatrix[res][pos] = -100;
+				bandMatrix[pos][ancho] = 1;
+				bandMatrix[pos][res] = -100;
 				break;
 			case VACIO:
-				bandMatrix[ancho][pos] = -4;
-				bandMatrix[res][pos] = 0;
-				if(matrix[i-1][j]->status != VACIO) bandMatrix[res][pos] -= matrix[i-1][j]->temp;
-				else bandMatrix[ancho-1][pos] = 1;
-				if(matrix[i+1][j]->status != VACIO) bandMatrix[res][pos] -= matrix[i+1][j]->temp;
-				else bandMatrix[ancho+1][pos] = 1;
-				if(matrix[i][j-1]->status != VACIO) bandMatrix[res][pos] -= matrix[i][j-1]->temp;
-				else bandMatrix[0][pos] = 1;
-				if(matrix[i][j+1]->status != VACIO) bandMatrix[res][pos] -= matrix[i][j+1]->temp;
-				else bandMatrix[ancho*2][pos] = 1;
+				bandMatrix[pos][ancho] = -4;
+				bandMatrix[pos][res] = 0;
+				if(matrix[i-1][j]->status != VACIO) bandMatrix[pos][res] -= matrix[i-1][j]->temp;
+				else bandMatrix[pos][ancho-1] = 1;
+				if(matrix[i+1][j]->status != VACIO) bandMatrix[pos][res] -= matrix[i+1][j]->temp;
+				else bandMatrix[pos][ancho+1] = 1;
+				if(matrix[i][j-1]->status != VACIO) bandMatrix[pos][res] -= matrix[i][j-1]->temp;
+				else bandMatrix[pos][0] = 1;
+				if(matrix[i][j+1]->status != VACIO) bandMatrix[pos][res] -= matrix[i][j+1]->temp;
+				else bandMatrix[pos][ancho*2] = 1;
 				break;
 			}
         }
 	}
-
+	int b = 2;
 }
 
 int main() {
