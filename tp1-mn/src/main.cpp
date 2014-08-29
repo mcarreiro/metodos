@@ -178,14 +178,17 @@ vector<vector<double> > Windshield::bandMatrix(){
 void Windshield::resolveBandMatrix(vector<vector<double> > bandMatrix){
 	for(int i = 0; i < n*m -1; i++){
         for( int h = 1; h <= m; h++){
+            if(i+h >= n*m || m-h < 0) break;
             double centro = bandMatrix[i][m];
+            if(centro == 1) break;
             double actual = bandMatrix[i+h][m-h];
             double multiplicador = actual / centro;
             if(actual * centro != 0){
                 for(int j = 1; j < m*2+1; j++){
                     bandMatrix[i+h][j-h] -= centro * multiplicador;
                 }
-                bandMatrix[i+h][m*2+1] = bandMatrix[i][m*2+1] * multiplicador;
+                bandMatrix[i+h][m*2+1] -= bandMatrix[i][m*2+1] * multiplicador;
+                cout << bandMatrix[i+h][m*2+1];
             }
         }
 
