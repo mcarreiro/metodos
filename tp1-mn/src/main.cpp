@@ -37,7 +37,8 @@ public:
 	Windshield(int x, int y, float ah, int ar, float temp, vector< vector<double > > posSanguijuelas);
 	void initialize();
 	void initializeEmptyMatrix();
-	void bandMatrix();
+	vector<vector<double> > bandMatrix();
+	void resolveBandMatrix(vector<vector<double> > bandMatrix);
 	void showMatriz();
 	void putSanguijuela(vector< vector<double > > posSanguijuelas);
 	double norma2squared(Position p1, Position p2);
@@ -136,8 +137,8 @@ void Windshield::initializeEmptyMatrix(){
 
 }
 
-void Windshield::bandMatrix(){
-	int ancho = 2;
+vector<vector<double> > Windshield::bandMatrix(){
+	int ancho = n;
 	  vector<vector<double> > bandMatrix  = vector<vector<double> >(n*m, vector<double>(ancho*2+2));
 	int i,j, pos, res = ancho*2+1;
 	for(i=0; i< m;i++){
@@ -167,6 +168,19 @@ void Windshield::bandMatrix(){
 			}
         }
 	}
+	return bandMatrix;
+}
+
+void Windshield::resolveBandMatrix(vector<vector<double> > bandMatrix){
+	for(int i = 0; i < n*m -1; i++){
+		if(bandMatrix[i+1][m-1]*bandMatrix[i][m] != 0){
+			double multiplicador = bandMatrix[i+1][m-1] / bandMatrix[i][m];
+			for(int j = 1; j < m*2+1; j++){
+				bandMatrix[i+1][j-1] = bandMatrix[i+1][j-1]  - bandMatrix[i][j] * multiplicador;
+			}
+			bandMatrix[i+1][m*2+1] = bandMatrix[i][m*2+1] * multiplicador;
+		}
+	}
 	int b = 2;
 }
 
@@ -192,8 +206,10 @@ int main() {
 
 
     Windshield *windshield = new Windshield(a, b, h, r, Ts, posSanguijuelas);
-	windshield->bandMatrix();
+	vector<vector<double> > bandMatrix = windshield->bandMatrix();
+	windshield->resolveBandMatrix(bandMatrix);
 
     return 0;
 }
+
 
