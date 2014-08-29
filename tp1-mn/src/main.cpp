@@ -41,8 +41,8 @@ public:
 	void resolveBandMatrix(vector<vector<double> > bandMatrix);
 	void showMatriz();
 	void putSanguijuela(vector< vector<double > > posSanguijuelas);
-	double norma2squared(Position p1, Position p2);
-	vector<Point> puntosCubiertos(Position sanguijuela);
+	double distance(Position p1, Position p2);
+	vector<Point> sanguijuelaPoints(Position sanguijuela);
 private:
 	int a;
     int b;
@@ -54,6 +54,9 @@ private:
 
 	vector< vector<Point *> > matrix;
 };
+
+
+
 
 
 Windshield::Windshield(int x, int y, float ah, int ar, float temp, vector< vector<double > > posSanguijuelas) {
@@ -83,6 +86,7 @@ Windshield::Windshield(int x, int y, float ah, int ar, float temp, vector< vecto
 	}
 
 	this->putSanguijuela(posSanguijuelas);
+	this->bandMatrix();
 	this->showMatriz();
 }
 
@@ -90,7 +94,7 @@ void Windshield::putSanguijuela(vector< vector<double > > posSanguijuelas){
     int i,posX, posY;
 
 	for(i=0; i< posSanguijuelas.size();i++){
-        vector<Point> cubiertos = this->puntosCubiertos(Position(posSanguijuelas[i][0],posSanguijuelas[i][1]));
+        vector<Point> cubiertos = this->sanguijuelaPoints(Position(posSanguijuelas[i][0],posSanguijuelas[i][1]));
         for (int i = 0; i < cubiertos.size(); i++) {
             Point p = cubiertos[i];
             matrix[p.x][p.y]->status = SANGUIJUELA;
@@ -100,18 +104,18 @@ void Windshield::putSanguijuela(vector< vector<double > > posSanguijuelas){
 	}
 }
 
-double Windshield::norma2squared(Position p1, Position p2) {
+double Windshield::distance(Position p1, Position p2) {
     double dx = p1.x - p2.x;
     double dy = p1.y - p2.y;
     return dx*dx + dy*dy;
 }
 
-vector<Point> Windshield::puntosCubiertos(Position sanguijuela) {
+vector<Point> Windshield::sanguijuelaPoints(Position sanguijuela) {
     vector<Point> v;
     for (int i = 0; i <= n; i++) {
         for (int j = 0; j <= m; j++) {
             Position p(j*h , i*h);
-            if (this->norma2squared(sanguijuela, p) <= r*r) {
+            if (this->distance(sanguijuela, p) <= r*r) {
                 v.push_back(Point(i, j));
             }
         }
