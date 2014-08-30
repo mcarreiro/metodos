@@ -28,6 +28,7 @@ struct Position {
     Position(double x, double y) : x(x), y(y) {};
 };
 
+
 class Windshield {
 public:
     Windshield(){
@@ -145,9 +146,14 @@ vector<vector<double> > Windshield::bandMatrix(){
 	int ancho = n;
 	  vector<vector<double> > bandMatrix  = vector<vector<double> >(n*m, vector<double>(ancho*2+2));
 	int i,j, pos, res = ancho*2+1;
+	for(i=0; i< m*n;i++){
+		for (j=0; j<ancho*2+2;j++){
+			bandMatrix[i][j] = 0;
+		}
+	}
 	for(i=0; i< m;i++){
 		for (j=0; j<n;j++){
-			pos = j + i * m;
+			pos = j + i * n;
 			switch(matrix[i][j]->status){
 			case SANGUIJUELA:
 				bandMatrix[pos][ancho] = 1;
@@ -165,7 +171,8 @@ vector<vector<double> > Windshield::bandMatrix(){
 				if(matrix[i+1][j]->status != VACIO) bandMatrix[pos][res] -= matrix[i+1][j]->temp;
 				else bandMatrix[pos][ancho+1] = 1;
 				if(matrix[i][j-1]->status != VACIO) bandMatrix[pos][res] -= matrix[i][j-1]->temp;
-				else bandMatrix[pos][0] = 1;
+				else 
+					bandMatrix[pos][0] = 1;
 				if(matrix[i][j+1]->status != VACIO) bandMatrix[pos][res] -= matrix[i][j+1]->temp;
 				else bandMatrix[pos][ancho*2] = 1;
 				break;
@@ -176,20 +183,27 @@ vector<vector<double> > Windshield::bandMatrix(){
 }
 
 void Windshield::resolveBandMatrix(vector<vector<double> > bandMatrix){
+	int ancho = n*2+1;
+	int fila, columna;
 	for(int i = 0; i < n*m -1; i++){
-        for( int h = 1; h <= m; h++){
-            if(i+h >= n*m || m-h < 0) break;
-            double centro = bandMatrix[i][m];
-            if(centro == 1) break;
-            double actual = bandMatrix[i+h][m-h];
+		fila = i / n;
+		columna = i % n;
+        if(matrix[fila][columna]->status != VACIO)  continue; // SI NO ES VACIO SE QUE ABAJO HAY TODO CERO
+        for( int h = 1; h <= n; h++){ // COMO ES BANDA ME FIJO SI EN LA DIAGONAL IZQ INF HAY DISTINTO DE 0 PARA PIVOTEAR
+            if(i+h >= n*m || n-h < 0) break;
+            double centro = bandMatrix[i][n];
+			
+            double actual = bandMatrix[i+h][n-h];
             double multiplicador = actual / centro;
-            if(actual * centro != 0){
-                for(int j = 1; j < m*2+1; j++){
-                    bandMatrix[i+h][j-h] -= centro * multiplicador;
+			if(multiplicador == 0) continue;         
+                for(int j = 0; j < n; j++){
+					double pivote = bandMatrix[i][n+j];
+					double antes = bandMatrix[i+h][n-h+j];
+                    bandMatrix[i+h][n-h+j] -= bandMatrix[i][n+j] * multiplicador;
+					double desp = bandMatrix[i+h][n-h+j];
+					int sdasd = 2;
                 }
-                bandMatrix[i+h][m*2+1] -= bandMatrix[i][m*2+1] * multiplicador;
-                cout << bandMatrix[i+h][m*2+1];
-            }
+                bandMatrix[i+h][ancho] -= bandMatrix[i][ancho] * multiplicador;            
         }
 
 
