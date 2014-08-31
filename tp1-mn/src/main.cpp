@@ -2,11 +2,24 @@
 #include <iostream>
 #include <list>
 #include <vector>
+#include <cmath>
 
 using namespace std;
 
 enum statusPoint {VACIO,SANGUIJUELA,FRIO};
 
+bool esIgual(double a, double b, double error= 0.00001){
+	return abs(a-b) < error;
+}
+
+void imprimirMatriz(vector<vector<double> > matriz, int filas, int columnas){
+	for(int i=0; i< filas; i++){
+		for(int j=0; j< columnas; j++)
+			cout << matriz[i][j] << ";";
+	cout << "\n";
+	}
+	
+}
 struct Point {
     int x;
     int y;
@@ -166,50 +179,65 @@ vector<vector<double> > Windshield::bandMatrix(){
 			case VACIO:
 				bandMatrix[pos][ancho] = -4;
 				bandMatrix[pos][res] = 0;
-				if(matrix[i-1][j]->status != VACIO) bandMatrix[pos][res] -= matrix[i-1][j]->temp;
-				else bandMatrix[pos][ancho-1] = 1;
-				if(matrix[i+1][j]->status != VACIO) bandMatrix[pos][res] -= matrix[i+1][j]->temp;
-				else bandMatrix[pos][ancho+1] = 1;
 				if(matrix[i][j-1]->status != VACIO) bandMatrix[pos][res] -= matrix[i][j-1]->temp;
-				else 
-					bandMatrix[pos][0] = 1;
+				else bandMatrix[pos][ancho-1] = 1;
 				if(matrix[i][j+1]->status != VACIO) bandMatrix[pos][res] -= matrix[i][j+1]->temp;
+				else bandMatrix[pos][ancho+1] = 1;
+				if(matrix[i-1][j]->status != VACIO) bandMatrix[pos][res] -= matrix[i-1][j]->temp;
+				else bandMatrix[pos][0] = 1;
+				if(matrix[i+1][j]->status != VACIO) bandMatrix[pos][res] -= matrix[i+1][j]->temp;
 				else bandMatrix[pos][ancho*2] = 1;
 				break;
 			}
         }
 	}
+	//imprimirMatriz(bandMatrix, n*m, ancho*2+2);
 	return bandMatrix;
 }
 
 void Windshield::resolveBandMatrix(vector<vector<double> > bandMatrix){
+	cout << "RESOLVER" << "\n";
 	int ancho = n*2+1;
 	int fila, columna;
+	//PRIMERO LA HAGO TRIANGULAR SUPERIOR
 	for(int i = 0; i < n*m -1; i++){
 		fila = i / n;
 		columna = i % n;
         if(matrix[fila][columna]->status != VACIO)  continue; // SI NO ES VACIO SE QUE ABAJO HAY TODO CERO
         for( int h = 1; h <= n; h++){ // COMO ES BANDA ME FIJO SI EN LA DIAGONAL IZQ INF HAY DISTINTO DE 0 PARA PIVOTEAR
             if(i+h >= n*m || n-h < 0) break;
-            double centro = bandMatrix[i][n];
-			
+            double centro = bandMatrix[i][n];			
             double actual = bandMatrix[i+h][n-h];
             double multiplicador = actual / centro;
-			if(multiplicador == 0) continue;         
+			if(esIgual(multiplicador,0)) continue;         
                 for(int j = 0; j < n; j++){
-					double pivote = bandMatrix[i][n+j];
-					double antes = bandMatrix[i+h][n-h+j];
                     bandMatrix[i+h][n-h+j] -= bandMatrix[i][n+j] * multiplicador;
-					double desp = bandMatrix[i+h][n-h+j];
-					int sdasd = 2;
+					if(esIgual(bandMatrix[i+h][n-h+j], 0)) bandMatrix[i+h][n-h+j] = 0;					
                 }
-                bandMatrix[i+h][ancho] -= bandMatrix[i][ancho] * multiplicador;            
+                bandMatrix[i+h][ancho] -= bandMatrix[i][ancho] * multiplicador;  				
         }
-
-
-
 	}
-	int b = 2;
+	
+	//AHORA RESUELVO :)
+	
+	for(int i = n*m-1; i >0; i--){
+		fila = i / n;
+		columna = i % n;
+        for( int h = 1; h <= n; h++){ // COMO ES BANDA ME FIJO SI EN LA DIAGONAL IZQ INF HAY DISTINTO DE 0 PARA PIVOTEAR
+            if(n+h >= ancho*2+1 || i-h < 0) break;
+            double centro = bandMatrix[i][n];			
+            double actual = bandMatrix[i-h][n+h];
+            double multiplicador = actual / centro;
+			if(esIgual(multiplicador,0)) continue;         
+                for(int j = 0; j < n; j++){
+                    bandMatrix[i-h][n+h+j] -= bandMatrix[i][n+j] * multiplicador;
+					if(esIgual(bandMatrix[i-h][n+h+j], 0)) bandMatrix[i-h][n+h+j] = 0;					
+                }
+                bandMatrix[i-h][ancho] -= bandMatrix[i][ancho] * multiplicador;  				
+        }
+	}
+	
+	imprimirMatriz(bandMatrix, n*m, ancho+1);
 }
 
 int main() {
