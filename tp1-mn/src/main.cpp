@@ -3,6 +3,7 @@
 #include <list>
 #include <vector>
 #include <cmath>
+#include <iomanip>
 
 using namespace std;
 
@@ -11,15 +12,16 @@ typedef vector<rvector> rmatrix;
 
 enum statusPoint {VACIO,SANGUIJUELA,FRIO};
 
-bool esIgual(double a, double b, double error= 0.00001){
-	return abs(a-b) < error;
+bool esIgual(double a, double b, double error= 0.0000001){
+	return abs(a-b) <= 0;
 }
+
 
 void imprimirMatriz(vector<vector<double> > matriz, int filas, int columnas){
 	for(int i=0; i< filas; i++){
 		for(int j=0; j< columnas; j++)
 			cout << matriz[i][j] << ";";
-	cout << "\n";
+	cout << " (" << i  << ")" << "\n";
 	}
 	
 }
@@ -50,7 +52,7 @@ public:
     Windshield(){};
 	Windshield(int x, int y, float ah, int ar, float temp, vector< vector<double > > posSanguijuelas);
 	vector<vector<double> > bandMatrix();
-	void resolveBandMatrix(vector<vector<double> > bandMatrix);
+	void resolveBandMatrix();
 	void showMatriz();
 	void putSanguijuela(vector< vector<double > > posSanguijuelas);
 	double distance(Position p1, Position p2);
@@ -105,8 +107,8 @@ Windshield::Windshield(int x, int y, float ah, int ar, float temp, vector< vecto
 	}
 
 	this->putSanguijuela(posSanguijuelas);
-	this->bandMatrix();
-	this->showMatriz();
+	//this->bandMatrix();
+	//this->showMatriz();
 }
 
 void Windshield::putSanguijuela(vector< vector<double > > posSanguijuelas){
@@ -147,7 +149,8 @@ void Windshield::showMatriz(){
     int i,j;
     for(i=0; i< m;i++){
 		for (j=0; j<n;j++){
-            cout << i << " " << j << " " <<  matrix[i][j]->temp << "\n";
+			cout << fixed;
+            cout << i << " " << j << " " << setprecision(5) <<  matrix[i][j]->temp << "\n";
         }
 	}
 }
@@ -192,8 +195,8 @@ vector<vector<double> > Windshield::bandMatrix(){
 	return bandMatrix;
 }
 
-void Windshield::resolveBandMatrix(vector<vector<double> > bandMatrix){
-	cout << "RESOLVER" << "\n";
+void Windshield::resolveBandMatrix(){
+	vector<vector<double> > bandMatrix = this->bandMatrix(); //CREO LA MATRIZ
 	int ancho = n*2+1;
 	int fila, columna;
 	//PRIMERO LA HAGO TRIANGULAR SUPERIOR
@@ -207,16 +210,15 @@ void Windshield::resolveBandMatrix(vector<vector<double> > bandMatrix){
             double actual = bandMatrix[i+h][n-h];
             double multiplicador = actual / centro;
 			if(esIgual(multiplicador,0)) continue;         
-                for(int j = 0; j < n; j++){
+                for(int j = 0; j <= n; j++){ //OPERO ENTRE FILAS
                     bandMatrix[i+h][n-h+j] -= bandMatrix[i][n+j] * multiplicador;
-					if(esIgual(bandMatrix[i+h][n-h+j], 0)) bandMatrix[i+h][n-h+j] = 0;					
                 }
                 bandMatrix[i+h][ancho] -= bandMatrix[i][ancho] * multiplicador;  				
         }
 	}
+	//imprimirMatriz(bandMatrix, n*m, ancho+1);
 	
 	//AHORA RESUELVO :)
-	
 	for(int i = n*m-1; i >0; i--){
 		fila = i / n;
 		columna = i % n;
@@ -226,15 +228,18 @@ void Windshield::resolveBandMatrix(vector<vector<double> > bandMatrix){
             double actual = bandMatrix[i-h][n+h];
             double multiplicador = actual / centro;
 			if(esIgual(multiplicador,0)) continue;         
-                for(int j = 0; j < n; j++){
+                for(int j = 0; j <= n-h; j++){ //OPERO ENTRE FILAS
                     bandMatrix[i-h][n+h+j] -= bandMatrix[i][n+j] * multiplicador;
-					if(esIgual(bandMatrix[i-h][n+h+j], 0)) bandMatrix[i-h][n+h+j] = 0;					
                 }
-                bandMatrix[i-h][ancho] -= bandMatrix[i][ancho] * multiplicador;  				
+                bandMatrix[i-h][ancho] -= bandMatrix[i][ancho] * multiplicador;  
+				
+				bandMatrix[i][ancho] /= bandMatrix[i][n];
+				bandMatrix[i][n] = 1;
+
+				matrix[fila][columna]->temp = bandMatrix[i][ancho];
+				
         }
 	}
-	
-	imprimirMatriz(bandMatrix, n*m, ancho+1);
 }
 
 vector<double> Windshield::gaussianElimination(){
@@ -371,10 +376,12 @@ int main() {
 
 
     Windshield *windshield = new Windshield(a, b, h, r, Ts, posSanguijuelas);
-	vector<vector<double> > bandMatrix = windshield->bandMatrix();
-	windshield->resolveBandMatrix(bandMatrix);
+	windshield->resolveBandMatrix();
+	windshield->showMatriz();
 
     return 0;
 }
+
+
 
 
