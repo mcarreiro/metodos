@@ -2,8 +2,12 @@
 #include <iostream>
 #include <list>
 #include <vector>
+#include <cmath>
 
 using namespace std;
+
+typedef vector<double> rvector; 
+typedef vector<rvector> rmatrix;
 
 enum statusPoint {VACIO,SANGUIJUELA,FRIO};
 
@@ -31,20 +35,24 @@ struct Position {
 
 class Windshield {
 public:
-    Windshield(){
-    	cout << "3" << "\n";
-        vector<vector<Point *> > matrix(0, vector<Point *>(0));
-    };
+    Windshield(){};
 	Windshield(int x, int y, float ah, int ar, float temp, vector< vector<double > > posSanguijuelas);
-	void initialize();
-	void initializeEmptyMatrix();
 	vector<vector<double> > bandMatrix();
 	void resolveBandMatrix(vector<vector<double> > bandMatrix);
 	void showMatriz();
 	void putSanguijuela(vector< vector<double > > posSanguijuelas);
 	double distance(Position p1, Position p2);
 	vector<Point> sanguijuelaPoints(Position sanguijuela);
+	vector<double> gaussianElimination();
 private:
+
+	vector< vector< double > > prepareSystemOfEquations();
+	vector< double > resolveByGaussianElimination(rmatrix& A, rvector& b);
+	void calculateForAdjacent(int x, int y, vector< vector< double > > systemOfEquations, int pos);
+	rvector backSubstitution(const rmatrix& A, const rvector& b);
+	bool doGaussianElimination(rmatrix& A, rvector& b);
+	int find_max(const rmatrix& A, int k);
+
 	int a;
     int b;
     float h;
@@ -54,10 +62,8 @@ private:
     int n;
 
 	vector< vector<Point *> > matrix;
+	vector< double > bVector;
 };
-
-
-
 
 
 Windshield::Windshield(int x, int y, float ah, int ar, float temp, vector< vector<double > > posSanguijuelas) {
@@ -134,14 +140,6 @@ void Windshield::showMatriz(){
 	}
 }
 
-void Windshield::initialize(){
-	this->initializeEmptyMatrix();
-}
-
-void Windshield::initializeEmptyMatrix(){
-
-}
-
 vector<vector<double> > Windshield::bandMatrix(){
 	int ancho = n;
 	  vector<vector<double> > bandMatrix  = vector<vector<double> >(n*m, vector<double>(ancho*2+2));
@@ -210,6 +208,118 @@ void Windshield::resolveBandMatrix(vector<vector<double> > bandMatrix){
 
 	}
 	int b = 2;
+}
+
+vector<double> Windshield::gaussianElimination(){
+	vector<vector<double > > systemOfEquations = prepareSystemOfEquations(); // N X N
+
+	vector<double> solution = resolveByGaussianElimination(systemOfEquations,bVector); //Gaussian Elimination resolver
+
+	for (int i = 0 ; i < solution.size() ; i++){
+		cout << solution[i] << " ";
+	}
+
+	return solution;
+}
+
+vector< vector<double > > Windshield::prepareSystemOfEquations(){
+	vector< vector<double > > systemOfEquations = vector< vector <double > >(m*n, vector<double >(m*n));
+	bVector = vector<double>(m*n);
+	int pos,otherPos,i,j;
+
+	for(i=0; i< m*n;i++){
+		bVector[i] = 0;
+		for (j=0; j < m*n ; j++){
+			systemOfEquations[i][j] = 0;
+		}
+	}
+
+	for (int i = 0 ; i < m ; ++i){
+		for (int j = 0 ; j < n ; ++j){
+			pos = j + (i * n);
+			switch(matrix[i][j]->status){
+				case SANGUIJUELA:
+					systemOfEquations[pos][pos] = 1;
+					bVector[pos] = ts;
+				case FRIO:
+					systemOfEquations[pos][pos] = 1;
+					bVector[pos] = -100;
+				case VACIO:
+					systemOfEquations[pos][pos] = -4;
+					bVector[pos] = 0;
+					calculateForAdjacent(i-1,j,systemOfEquations,pos);
+					calculateForAdjacent(i+1,j,systemOfEquations,pos);
+					calculateForAdjacent(i,j+1,systemOfEquations,pos);
+					calculateForAdjacent(i,j-1,systemOfEquations,pos);
+			}
+		}
+	}
+
+	return systemOfEquations;
+}
+
+void Windshield::calculateForAdjacent(int x, int y, vector< vector< double > > systemOfEquations, int pos){
+	if(matrix[x][y]->status != VACIO){ 
+		bVector[pos] -= matrix[x][y]->temp;
+	}else{ 
+		int otherPos = y + (x * n);
+		systemOfEquations[pos][otherPos] = 1;
+	}
+}
+
+rvector Windshield::backSubstitution(const rmatrix& A, const rvector& b) { 
+	int n = A.size();
+
+	rvector x(n); // Creates the vector for the solution
+	  // Calculates x from x[n-1] to x[0]
+	for (int i = n - 1; i >= 0; --i) {
+		// The values x[i+1..n-1] have already been calculated 
+		double s = 0;
+		for (int j = i + 1; j < n; ++j) s = s + A[i][j] * x[j];
+		
+		x[i] = (b[i] - s)/A[i][i];
+	}
+	return x; 
+}
+
+bool Windshield::doGaussianElimination(rmatrix& A, rvector& b) {
+  	int n = A.size();
+  	// Reduce rows 0..n-1
+	for (int k = 0; k < n; ++k) {
+		// Rows 0..k have already been reduced
+		int imax = find_max(A, k); // finds the max pivot
+		if (A[imax][k] == 0) return true; // Singular matrix
+	    swap(A[k], A[imax]); swap(b[k], b[imax]); // Swap rows k and imax
+	    // Force 0’s in column A[k+1..n-1][k]
+		for (int i = k + 1; i < n; ++i) {
+			double c = A[i][k]/A[k][k]; // coefficient to scale row A[i][k] = 0;
+			for (int j = k + 1; j < n; ++j) A[i][j] = A[i][j] - c * A[k][j]; 
+			b[i] = b[i] - c * b[k];
+		} 
+	}
+  	return false; // We have a non-singular matrix
+}
+
+int Windshield::find_max(const rmatrix& A, int k) {
+  	int n = A.size();
+	double imax = k; // index of the row with max pivot 
+	double max_pivot = abs(A[k][k]);
+	for (int i = k + 1; i < n; ++i) { 
+		double a = abs(A[i][k]);
+		if (a > max_pivot) {
+	        max_pivot = a;
+			imax = i; 
+		}
+	}
+    return imax;
+}
+
+
+rvector Windshield::resolveByGaussianElimination(rmatrix& A, rvector& b) { 
+	bool singular = doGaussianElimination(A, b);
+	if (singular) return rvector(0);
+	// A is in row echelon form
+	return backSubstitution(A, b); 
 }
 
 int main() {
