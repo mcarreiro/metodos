@@ -78,7 +78,7 @@ private:
     int m;
     int n;
     int cantSanguijuelas;
-
+    vector< vector<double > > sanguijuelas;
 	vector< vector<Point *> > matrix;
 	vector< double > bVector;
 };
@@ -115,7 +115,7 @@ Windshield::Windshield(int x, int y, float ah, int ar, float temp, int cs, vecto
     cantSanguijuelas = cs;
 	n = (a/h) + 1; // FILAS
 	m = (b/h) + 1; // COLUMNAS
-
+    sanguijuelas = posSanguijuelas;
     matrix = vector<vector<Point *> >(m, vector<Point *>(n));
 
     //cout << matrix.size() << "\n";
