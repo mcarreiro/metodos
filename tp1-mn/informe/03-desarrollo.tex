@@ -1,0 +1,66 @@
+\section{Desarrollo}
+
+Como se mencion\'o anteriormente, el objetivo es analizar la estructura de algunas redes locales
+mediante la captura de paquetes ARP que se env\'ian por esas redes. Estos paquetes servir\'an para
+obtener informaci\'on sobre los dispositivos de red y sacar conclusiones de los resultados que se 
+consigan.
+
+Lo primero que se hace en el trabajo es implementar una herramienta para escuchar de manera pasiva
+una red local. La idea es que la red local que analicemos no sea una red controlada, para favorecer
+una an\'alisis m\'as rico (si fuera controlada, sabr\'iamos por ejemplo cu\'al es la IP del router).
+Para eso se utiliza \emph{Scapy} una biblioteca escrita en \verb@Python@, para la captura y 
+manipulaci\'on de paquetes en redes.
+
+El segundo paso es definir los siguientes modelos de fuente de informaci\'on:
+
+\begin{itemize}
+\item $S_{src} = \{s_1,...,s_k\}$ donde cada s\'imbolo $s_i$ es una direcci\'on IP que aparece como 
+direcci\'on origen en los paquetes ARP de tipo \emph{who-has}. 
+
+\item $S_{dst} = \{d_1,...,d_k\}$ donde cada s\'imbolo $d_i$ es una direcci\'on IP que aparece como 
+direcci\'on destino en los paquetes ARP de tipo \emph{who-has}.
+\end{itemize}
+
+Con estas fuentes definidas, ya se puede estimar las probabilidades de cada IP que necesitemos de 
+los paquetes ARP capturados y calcular la cantidad de informaci\'on de cada uno para luego conocer
+la entrop\'ia de cada fuente. Para estimar las probabilidades de las IPs en las fuentes, lo que se 
+hace es simple. Supongamos que \verb@#paquetes@ es la cantidad total de paquetes ARP 
+\emph{who-has} obtenidos y \verb@#apariciones@ es la cantidad de veces que aparece una 
+\emph{ip} determinada (la explicaci\'on sirve para ambas fuentes de informaci\'on), entonces se 
+define la probabilidad de esa \emph{ip} como: 
+
+P(\emph{ip}) = $\dfrac{\#apariciones}{\#paquetes}$
+
+Con esta definici\'on se puede calcular la cantidad de informaci\'on de cada IP obtenida en las 
+fuentes. Luego, es f\'acil obtener la entrop\'ia de cada fuente de informaci\'on.
+
+Entonces, haciendo uso de esta herramienta implementada, se deben realizar capturas de paquetes ARP
+sobre distintas LANs (\emph{Local Area Network}) para poder hallar nodos (dispositivos de red) 
+distinguidos. El router que oficia como \emph{gateway} (se comunica con otras redes) de la LAN 
+analizada es de particular inter\'es. La probabilidad de que su IP aparezca en un paquete ARP 
+\emph{who-has}, sea como emisor o como destinatario deberi\'ia ser alta. Es decir, en teori\'a 
+deber\'ia ser la IP m\'as frecuente en este tipo de paquetes porque es el canal comu\'n de 
+comunicaci\'on. Otra manera de verlo, es la siguiente: se busca la direcci\'on IP (notar que puede
+haber m\'as de un \emph{gateway})cuya probabilidades la m\'as alta y por tanto, es la que menor 
+cantidad de informaci\'on aporta. Se supone que las direcciones IP cuya informaci\'on sea m\'as 
+cercana al valor de la entrop\'ia de la fuente ser\'an los \emph{gateways} de la red.
+
+Asimismo, adem\'as de analizar la LAN para poder identificar el o los \emph{gateways}, se monitorea
+la actividad de las otras IPs que se referencian en la red para registrar la frecuencia de cada 
+una, comparando su informaci\'on con la entrop\'ia de la fuente y quiz\'as, encontrar otros nodos
+especiales.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

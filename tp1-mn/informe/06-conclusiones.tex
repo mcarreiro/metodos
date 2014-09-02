@@ -1,0 +1,45 @@
+\section{Conclusiones}
+
+Se pudo observar que capturar los paquetes ARP en distintas redes locales da bastante informaci\'on
+sobre la red. Es decir, con un an\'alisis est\'adistico sobre los paquetes ARP \emph{who-has} 
+tomando como referencia las fuentes de informaci\'on que se pueden definir a partir de las IPs
+que emiten mensajes y las IPs detinatarias, se puede por ejemplo deducir cu\'al es el router de
+la red. Otra manera de verlo es que si ya se sabe cu\'al es la IP del router, los experimentos
+sirven para ver que efectivamente el router es el dispositivos m\'as solicitado, como se puede
+ver en la experimentaci\'on que se realiz\'o en el departamento de un miembro del equipo.
+
+Se ejecut\'o la herramienta implementada en distintas redes, lo que supuso distintos resultados. 
+Lo interesante de esto es detectar nodos distinguidos o un comportamiento especial que hizo que
+tuvi\'eramos que averiguar ciertas cosas, como sucedi\'o en las capturas de la red del McDonald's
+en donde aparece una forma de asignar IPs cuando se levantan interfaces. Asimismo, con los 
+histogramas hechos de las fuentes correspondientes se puede ver el grado de actividad de ciertos
+dispositivos en la red (por lo menos en el momento en que fue realizado el experimento; para mayor
+precisi\'on se deber\'ia realizar una captura m\'as amplia y de m\'as duraci\'on).
+
+Como \'ultima observaci\'on cabe destacar que no se debi\'o participar 'agresivamente' en la red. Es
+decir, la escucha de los paquetes ARP fue pasiva. S\'olo con recopilar informaci\'on durante un 
+tiempo determinado se puede deducir con bastante confiabilidad qu\'e dispositivo hace de servidor
+para el resto de los nodos de la red. 
+
+\newpage
+
+\section{Referencias}
+
+\begin{itemize}
+
+\item RFC 826 (An Ethernet Address Resolution Protocol) \verb@http://tools.ietf.org/html/rfc826@, David
+C. Plummer, 1982
+
+\item RFC 5735 (Special-Use IPv4 Addresses) \verb@http://tools.ietf.org/html/rfc3330@, IANA 
+(\emph{Internet Assigned Numbers Authority}), 2002
+
+\item \verb@http://www.secdev.org/projects/scapy/@
+
+\item \verb@http://www.wireshark.org@
+
+\item \verb@http://www.tcpdump.org@
+
+\end{itemize}
+
+
+
