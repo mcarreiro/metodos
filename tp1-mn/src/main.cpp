@@ -4,6 +4,7 @@
 #include <vector>
 #include <cmath>
 #include <iomanip>
+#include <stdlib.h>
 
 using namespace std;
 
@@ -57,7 +58,9 @@ public:
 	void putSanguijuela(vector< vector<double > > posSanguijuelas);
 	double distance(Position p1, Position p2);
 	vector<Point> sanguijuelaPoints(Position sanguijuela);
-	vector<double> gaussianElimination();
+	void gaussianElimination();
+	vector< vector<double > > sanguijuelasPos;
+	void matarSanguijuelasRandom();
 private:
 
 	vector< vector< double > > prepareSystemOfEquations();
@@ -78,6 +81,28 @@ private:
 	vector< vector<Point *> > matrix;
 	vector< double > bVector;
 };
+
+
+void Windshield::matarSanguijuelasRandom(){
+    int cantSanguijuelas =  sanguijuelasPos.size();
+    int sanguijuelaElegida = rand()%cantSanguijuelas;
+
+
+    //creoo un nuevo vector sin la sanguijuela elegida para asesinar
+    vector< vector<double > > newSanguijuelasPos;
+    int i;
+	for (i=0; i< (cantSanguijuelas);i++){
+        if(i != sanguijuelaElegida){
+            newSanguijuelasPos[i] = sanguijuelasPos[i];
+
+        }
+    }
+
+    Windshield *windshield = new Windshield(a, b, h, r, ts, newSanguijuelasPos);
+	windshield->gaussianElimination();
+	windshield->showMatriz();
+
+}
 
 
 Windshield::Windshield(int x, int y, float ah, int ar, float temp, vector< vector<double > > posSanguijuelas) {
@@ -116,6 +141,7 @@ void Windshield::putSanguijuela(vector< vector<double > > posSanguijuelas){
 
 	for(i=0; i< posSanguijuelas.size();i++){
         vector<Point> cubiertos = this->sanguijuelaPoints(Position(posSanguijuelas[i][0],posSanguijuelas[i][1]));
+        sanguijuelasPos = posSanguijuelas;
         for (int i = 0; i < cubiertos.size(); i++) {
             Point p = cubiertos[i];
             matrix[p.x][p.y]->status = SANGUIJUELA;
@@ -242,16 +268,17 @@ void Windshield::resolveBandMatrix(){
 	}
 }
 
-vector<double> Windshield::gaussianElimination(){
+void Windshield::gaussianElimination(){
 	vector<vector<double > > systemOfEquations = prepareSystemOfEquations(); // N X N
 
 	vector<double> solution = resolveByGaussianElimination(systemOfEquations,bVector); //Gaussian Elimination resolver
+     int i,j;
+    for(i=0; i< m;i++){
+		for (j=0; j<n;j++){
+               matrix[i][j]->temp = solution[i * n+j];
+		}
+    }
 
-	for (int i = 0 ; i < solution.size() ; i++){
-		cout << solution[i] << " ";
-	}
-
-	return solution;
 }
 
 vector< vector<double > > Windshield::prepareSystemOfEquations(){
@@ -379,8 +406,9 @@ int main() {
 
 
     Windshield *windshield = new Windshield(a, b, h, r, Ts, posSanguijuelas);
+   // windshield->matarSanguijuelasRandom();
 	windshield->gaussianElimination();
-	//windshield->showMatriz();
+	windshield->showMatriz();
 
     return 0;
 }
