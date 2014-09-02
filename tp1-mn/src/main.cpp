@@ -58,6 +58,7 @@ public:
 	double distance(Position p1, Position p2);
 	vector<Point> sanguijuelaPoints(Position sanguijuela);
 	vector<double> gaussianElimination();
+	void removeLeachesByGrasp();
 private:
 
 	vector< vector< double > > prepareSystemOfEquations();
@@ -77,6 +78,7 @@ private:
 
 	vector< vector<Point *> > matrix;
 	vector< double > bVector;
+	vector<Point> leachesOrderedCentrically;
 };
 
 
@@ -91,6 +93,7 @@ Windshield::Windshield(int x, int y, float ah, int ar, float temp, vector< vecto
 	m = (b/h) + 1; // COLUMNAS
 
     matrix = vector<vector<Point *> >(m, vector<Point *>(n));
+    leachesOrderedCentrically = vector<Point>(CantSanguijuleas);
 
     //cout << matrix.size() << "\n";
 
@@ -351,6 +354,50 @@ rvector Windshield::resolveByGaussianElimination(rmatrix& A, rvector& b) {
 	if (singular) return rvector(0);
 	// A is in row echelon form
 	return backSubstitution(A, b);
+}
+
+void Windshield::removeLeachesByGrasp(int k, int threshold){
+	resolveBandMatrix();
+	orderLeachesCentrically();
+	vector<Point> leachesRemoved = vector<Point>();
+	vector<Point> bestNow = vector<Point>();
+	bool hasStarted = false;
+
+	for (int timesToTry = 0 ; timesToTry < k ; ++timesToTry){
+		while(!isCooledDown()){
+			leachesRemoved.add(removeOneRandomLeachOrdered(threshold));
+			localSearchOneByZero(leachesRemoved);
+			resolveBandMatrix();
+		}
+
+		if (leachesRemoved.size() <= bestNow.size() || !hasStarted){
+			bestNow = leachesRemoved;
+			hasStarted = true;
+		}
+	}
+}
+
+bool isCooledDown(){
+	int xCenter = m/2+1;
+	int yCenter = n/2+1;
+
+	return matrix[xCenter][yCenter]->temp < 235;
+}
+
+void orderLeachesCentrically(){
+
+}
+
+void localSearchOneByZero(vector<double> leachesRemoved){
+
+}
+
+Point removeOneRandomLeachOrdered(int threshold){
+	int position = 0 + (rand() % (int)(threshold));
+	Point selectedLeach = orderLeachesCentrically[position];
+	orderLeachesCentrically.erase(position);
+	matrix[selectedLeach->x][selectedLeach->y] = new Point(selectedLeach->x,selectedLeach->y)
+	return selectedLeach;
 }
 
 int main() {
