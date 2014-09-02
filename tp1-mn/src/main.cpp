@@ -61,6 +61,7 @@ public:
 	void gaussianElimination();
 	vector< vector<double > > sanguijuelasPos;
 	void matarSanguijuelasRandom();
+	vector< vector<Point *> > matrix;
 private:
 
 	vector< vector< double > > prepareSystemOfEquations();
@@ -79,7 +80,7 @@ private:
     int n;
     int cantSanguijuelas;
     vector< vector<double > > sanguijuelas;
-	vector< vector<Point *> > matrix;
+
 	vector< double > bVector;
 };
 
@@ -88,29 +89,29 @@ void Windshield::matarSanguijuelasRandom(){
     int cantSanguijuelas =  sanguijuelasPos.size();
     int sanguijuelaElegida = rand()%cantSanguijuelas;
 
-
-    vector<Point> cubiertos = this->sanguijuelaPoints(Position(sanguijuelasPos[sanguijuelaElegida][0],sanguijuelasPos[sanguijuelaElegida][1]));
-
-        for (int i = 0; i < cubiertos.size(); i++) {
-            Point p = cubiertos[i];
-            matrix[p.x][p.y]->status = VACIO;
-            matrix[p.x][p.y]->temp = 0;
-        }
+//
+//    vector<Point> cubiertos = this->sanguijuelaPoints(Position(sanguijuelasPos[sanguijuelaElegida][0],sanguijuelasPos[sanguijuelaElegida][1]));
+//
+//        for (int i = 0; i < cubiertos.size(); i++) {
+//            Point p = cubiertos[i];
+//            matrix[p.x][p.y]->status = VACIO;
+//            matrix[p.x][p.y]->temp = 0;
+//        }
 
 
     //creoo un nuevo vector sin la sanguijuela elegida para asesinar
-//    vector< vector<double > > newSanguijuelasPos;
-//    int i;
-//	for (i=0; i< (cantSanguijuelas);i++){
-//        if(i != sanguijuelaElegida){
-//            newSanguijuelasPos[i] = sanguijuelasPos[i];
-//
-//        }
-//    }
-//
-//    Windshield *windshield = new Windshield(a, b, h, r, ts, cantSanguijuelas, newSanguijuelasPos);
+    vector< vector<double > > newSanguijuelasPos;
+    int i;
+	for (i=0; i< (cantSanguijuelas);i++){
+        if(i != sanguijuelaElegida){
+            newSanguijuelasPos[i] = sanguijuelasPos[i];
 
+        }
+    }
 
+    Windshield *windshield = new Windshield(a, b, h, r, ts, cantSanguijuelas, newSanguijuelasPos);
+
+    matrix = windshield->matrix;
 }
 
 
@@ -415,7 +416,7 @@ int main() {
 
 
     Windshield *windshield = new Windshield(a, b, h, r, Ts, CantSanguijuleas, posSanguijuelas);
-   // windshield->matarSanguijuelasRandom();
+    windshield->matarSanguijuelasRandom();
 	windshield->resolveBandMatrix();
 	windshield->showMatriz();
 
