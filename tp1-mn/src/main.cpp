@@ -51,7 +51,7 @@ struct Position {
 class Windshield {
 public:
     Windshield(){};
-	Windshield(int x, int y, float ah, int ar, float temp, vector< vector<double > > posSanguijuelas);
+	Windshield(int x, int y, float ah, int ar, float temp, int cs, vector< vector<double > > posSanguijuelas);
 	vector<vector<double> > bandMatrix();
 	void resolveBandMatrix();
 	void showMatriz();
@@ -77,6 +77,7 @@ private:
 	float ts;
     int m;
     int n;
+    int cantSanguijuelas;
 
 	vector< vector<Point *> > matrix;
 	vector< double > bVector;
@@ -98,20 +99,20 @@ void Windshield::matarSanguijuelasRandom(){
         }
     }
 
-    Windshield *windshield = new Windshield(a, b, h, r, ts, newSanguijuelasPos);
+    Windshield *windshield = new Windshield(a, b, h, r, ts, cantSanguijuelas, newSanguijuelasPos);
 	windshield->gaussianElimination();
 	windshield->showMatriz();
 
 }
 
 
-Windshield::Windshield(int x, int y, float ah, int ar, float temp, vector< vector<double > > posSanguijuelas) {
+Windshield::Windshield(int x, int y, float ah, int ar, float temp, int cs, vector< vector<double > > posSanguijuelas) {
 	a = x;
 	b = y;
 	h = ah;
 	r = ar;
 	ts = temp;
-
+    cantSanguijuelas = cs;
 	n = (a/h) + 1; // FILAS
 	m = (b/h) + 1; // COLUMNAS
 
@@ -387,9 +388,9 @@ int main() {
     int CantSanguijuleas;
     int Ts;
 
-	//cin >> a >> b >> h >> r >> Ts >> CantSanguijuleas;
+	cin >> a >> b >> h >> r >> Ts >> CantSanguijuleas;
 
-	a = 100; b = 100 ; h = 5 ; r = 10 ; Ts = 500 ; CantSanguijuleas = 1;
+	//a = 100; b = 100 ; h = 5 ; r = 10 ; Ts = 500 ; CantSanguijuleas = 1;
 
     vector< vector<double > > posSanguijuelas;
 	posSanguijuelas = vector<vector<double > >(CantSanguijuleas, vector<double >(2));
@@ -397,17 +398,18 @@ int main() {
     double colS;
     int i;
 	for (i=0; i<CantSanguijuleas;i++){
-        //cin >> rowS >> colS;
-        rowS = 30;
-        colS = 20;
+
+        cin >> rowS >> colS;
+        //rowS = 30;
+        //colS = 20;
         posSanguijuelas[i][0] = rowS;
         posSanguijuelas[i][1] = colS;
     }
 
 
-    Windshield *windshield = new Windshield(a, b, h, r, Ts, posSanguijuelas);
+    Windshield *windshield = new Windshield(a, b, h, r, Ts, CantSanguijuleas, posSanguijuelas);
    // windshield->matarSanguijuelasRandom();
-	windshield->gaussianElimination();
+	windshield->resolveBandMatrix();
 	windshield->showMatriz();
 
     return 0;
