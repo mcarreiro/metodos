@@ -62,7 +62,7 @@ private:
 
 	vector< vector< double > > prepareSystemOfEquations();
 	vector< double > resolveByGaussianElimination(rmatrix& A, rvector& b);
-	void calculateForAdjacent(int x, int y, vector< vector< double > > systemOfEquations, int pos);
+	void calculateForAdjacent(int x, int y, vector< vector< double > >& systemOfEquations, int pos);
 	rvector backSubstitution(const rmatrix& A, const rvector& b);
 	bool doGaussianElimination(rmatrix& A, rvector& b);
 	int find_max(const rmatrix& A, int k);
@@ -92,7 +92,7 @@ Windshield::Windshield(int x, int y, float ah, int ar, float temp, vector< vecto
 
     matrix = vector<vector<Point *> >(m, vector<Point *>(n));
 
-    cout << matrix.size() << "\n";
+    //cout << matrix.size() << "\n";
 
     int i,j;
 	for(i=0; i< m;i++){
@@ -256,6 +256,7 @@ vector<double> Windshield::gaussianElimination(){
 
 vector< vector<double > > Windshield::prepareSystemOfEquations(){
 	vector< vector<double > > systemOfEquations = vector< vector <double > >(m*n, vector<double >(m*n));
+
 	bVector = vector<double>(m*n);
 	int pos,otherPos,i,j;
 
@@ -273,9 +274,11 @@ vector< vector<double > > Windshield::prepareSystemOfEquations(){
 				case SANGUIJUELA:
 					systemOfEquations[pos][pos] = 1;
 					bVector[pos] = ts;
+					break;
 				case FRIO:
 					systemOfEquations[pos][pos] = 1;
 					bVector[pos] = -100;
+					break;
 				case VACIO:
 					systemOfEquations[pos][pos] = -4;
 					bVector[pos] = 0;
@@ -290,13 +293,9 @@ vector< vector<double > > Windshield::prepareSystemOfEquations(){
 	return systemOfEquations;
 }
 
-void Windshield::calculateForAdjacent(int x, int y, vector< vector< double > > systemOfEquations, int pos){
-	if(matrix[x][y]->status != VACIO){
-		bVector[pos] -= matrix[x][y]->temp;
-	}else{
-		int otherPos = y + (x * n);
-		systemOfEquations[pos][otherPos] = 1;
-	}
+void Windshield::calculateForAdjacent(int x, int y, vector< vector< double > >& systemOfEquations, int pos){
+	int otherPos = y + (x * n);
+	systemOfEquations[pos][otherPos] = 1;
 }
 
 rvector Windshield::backSubstitution(const rmatrix& A, const rvector& b) {
@@ -361,7 +360,9 @@ int main() {
     int CantSanguijuleas;
     int Ts;
 
-	cin >> a >> b >> h >> r >> Ts >> CantSanguijuleas;
+	//cin >> a >> b >> h >> r >> Ts >> CantSanguijuleas;
+
+	a = 100; b = 100 ; h = 5 ; r = 10 ; Ts = 500 ; CantSanguijuleas = 1;
 
     vector< vector<double > > posSanguijuelas;
 	posSanguijuelas = vector<vector<double > >(CantSanguijuleas, vector<double >(2));
@@ -369,15 +370,17 @@ int main() {
     double colS;
     int i;
 	for (i=0; i<CantSanguijuleas;i++){
-        cin >> rowS >> colS;
+        //cin >> rowS >> colS;
+        rowS = 30;
+        colS = 20;
         posSanguijuelas[i][0] = rowS;
         posSanguijuelas[i][1] = colS;
     }
 
 
     Windshield *windshield = new Windshield(a, b, h, r, Ts, posSanguijuelas);
-	windshield->resolveBandMatrix();
-	windshield->showMatriz();
+	windshield->gaussianElimination();
+	//windshield->showMatriz();
 
     return 0;
 }
