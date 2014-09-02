@@ -7,7 +7,7 @@
 
 using namespace std;
 
-typedef vector<double> rvector; 
+typedef vector<double> rvector;
 typedef vector<rvector> rmatrix;
 
 enum statusPoint {VACIO,SANGUIJUELA,FRIO};
@@ -23,7 +23,7 @@ void imprimirMatriz(vector<vector<double> > matriz, int filas, int columnas){
 			cout << matriz[i][j] << ";";
 	cout << " (" << i  << ")" << "\n";
 	}
-	
+
 }
 struct Point {
     int x;
@@ -87,8 +87,8 @@ Windshield::Windshield(int x, int y, float ah, int ar, float temp, vector< vecto
 	r = ar;
 	ts = temp;
 
-	m = (a/h) + 1;
-	n = (b/h) + 1;
+	n = (a/h) + 1; // FILAS
+	m = (b/h) + 1; // COLUMNAS
 
     matrix = vector<vector<Point *> >(m, vector<Point *>(n));
 
@@ -206,38 +206,38 @@ void Windshield::resolveBandMatrix(){
         if(matrix[fila][columna]->status != VACIO)  continue; // SI NO ES VACIO SE QUE ABAJO HAY TODO CERO
         for( int h = 1; h <= n; h++){ // COMO ES BANDA ME FIJO SI EN LA DIAGONAL IZQ INF HAY DISTINTO DE 0 PARA PIVOTEAR
             if(i+h >= n*m || n-h < 0) break;
-            double centro = bandMatrix[i][n];			
+            double centro = bandMatrix[i][n];
             double actual = bandMatrix[i+h][n-h];
             double multiplicador = actual / centro;
-			if(esIgual(multiplicador,0)) continue;         
+			if(esIgual(multiplicador,0)) continue;
                 for(int j = 0; j <= n; j++){ //OPERO ENTRE FILAS
                     bandMatrix[i+h][n-h+j] -= bandMatrix[i][n+j] * multiplicador;
                 }
-                bandMatrix[i+h][ancho] -= bandMatrix[i][ancho] * multiplicador;  				
+                bandMatrix[i+h][ancho] -= bandMatrix[i][ancho] * multiplicador;
         }
 	}
 	//imprimirMatriz(bandMatrix, n*m, ancho+1);
-	
+
 	//AHORA RESUELVO :)
 	for(int i = n*m-1; i >0; i--){
 		fila = i / n;
 		columna = i % n;
         for( int h = 1; h <= n; h++){ // COMO ES BANDA ME FIJO SI EN LA DIAGONAL IZQ INF HAY DISTINTO DE 0 PARA PIVOTEAR
             if(n+h >= ancho*2+1 || i-h < 0) break;
-            double centro = bandMatrix[i][n];			
+            double centro = bandMatrix[i][n];
             double actual = bandMatrix[i-h][n+h];
             double multiplicador = actual / centro;
-			if(esIgual(multiplicador,0)) continue;         
+			if(esIgual(multiplicador,0)) continue;
                 for(int j = 0; j <= n-h; j++){ //OPERO ENTRE FILAS
                     bandMatrix[i-h][n+h+j] -= bandMatrix[i][n+j] * multiplicador;
                 }
-                bandMatrix[i-h][ancho] -= bandMatrix[i][ancho] * multiplicador;  
-				
+                bandMatrix[i-h][ancho] -= bandMatrix[i][ancho] * multiplicador;
+
 				bandMatrix[i][ancho] /= bandMatrix[i][n];
 				bandMatrix[i][n] = 1;
 
 				matrix[fila][columna]->temp = bandMatrix[i][ancho];
-				
+
         }
 	}
 }
@@ -291,27 +291,27 @@ vector< vector<double > > Windshield::prepareSystemOfEquations(){
 }
 
 void Windshield::calculateForAdjacent(int x, int y, vector< vector< double > > systemOfEquations, int pos){
-	if(matrix[x][y]->status != VACIO){ 
+	if(matrix[x][y]->status != VACIO){
 		bVector[pos] -= matrix[x][y]->temp;
-	}else{ 
+	}else{
 		int otherPos = y + (x * n);
 		systemOfEquations[pos][otherPos] = 1;
 	}
 }
 
-rvector Windshield::backSubstitution(const rmatrix& A, const rvector& b) { 
+rvector Windshield::backSubstitution(const rmatrix& A, const rvector& b) {
 	int n = A.size();
 
 	rvector x(n); // Creates the vector for the solution
 	  // Calculates x from x[n-1] to x[0]
 	for (int i = n - 1; i >= 0; --i) {
-		// The values x[i+1..n-1] have already been calculated 
+		// The values x[i+1..n-1] have already been calculated
 		double s = 0;
 		for (int j = i + 1; j < n; ++j) s = s + A[i][j] * x[j];
-		
+
 		x[i] = (b[i] - s)/A[i][i];
 	}
-	return x; 
+	return x;
 }
 
 bool Windshield::doGaussianElimination(rmatrix& A, rvector& b) {
@@ -325,33 +325,33 @@ bool Windshield::doGaussianElimination(rmatrix& A, rvector& b) {
 	    // Force 0’s in column A[k+1..n-1][k]
 		for (int i = k + 1; i < n; ++i) {
 			double c = A[i][k]/A[k][k]; // coefficient to scale row A[i][k] = 0;
-			for (int j = k + 1; j < n; ++j) A[i][j] = A[i][j] - c * A[k][j]; 
+			for (int j = k + 1; j < n; ++j) A[i][j] = A[i][j] - c * A[k][j];
 			b[i] = b[i] - c * b[k];
-		} 
+		}
 	}
   	return false; // We have a non-singular matrix
 }
 
 int Windshield::find_max(const rmatrix& A, int k) {
   	int n = A.size();
-	double imax = k; // index of the row with max pivot 
+	double imax = k; // index of the row with max pivot
 	double max_pivot = abs(A[k][k]);
-	for (int i = k + 1; i < n; ++i) { 
+	for (int i = k + 1; i < n; ++i) {
 		double a = abs(A[i][k]);
 		if (a > max_pivot) {
 	        max_pivot = a;
-			imax = i; 
+			imax = i;
 		}
 	}
     return imax;
 }
 
 
-rvector Windshield::resolveByGaussianElimination(rmatrix& A, rvector& b) { 
+rvector Windshield::resolveByGaussianElimination(rmatrix& A, rvector& b) {
 	bool singular = doGaussianElimination(A, b);
 	if (singular) return rvector(0);
 	// A is in row echelon form
-	return backSubstitution(A, b); 
+	return backSubstitution(A, b);
 }
 
 int main() {
