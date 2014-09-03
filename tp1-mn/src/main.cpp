@@ -55,6 +55,7 @@ public:
 	vector<vector<double> > bandMatrix();
 	void resolveBandMatrix();
 	void showMatriz();
+	void printMatriz(char* outfile);
 	void putSanguijuela(vector< vector<double > > posSanguijuelas);
 	double distance(Position p1, Position p2);
 	vector<Point> sanguijuelaPoints(Position sanguijuela);
@@ -185,9 +186,23 @@ void Windshield::showMatriz(){
     for(i=0; i< m;i++){
 		for (j=0; j<n;j++){
 			cout << fixed;
-            cout << i << " " << j << " " << setprecision(5) <<  matrix[i][j]->temp << "\n";
+            cout << i << "\t" << j << "\t" << setprecision(5) <<  matrix[i][j]->temp << "\n";
         }
 	}
+}
+
+void Windshield::printMatriz(char* outfile){
+    ofstream myfile;
+    myfile.open (outfile);
+
+    int i,j;
+    for(i=0; i< m;i++){
+		for (j=0; j<n;j++){
+			myfile << fixed;
+            myfile << i << "\t" << j << "\t" << setprecision(5) <<  matrix[i][j]->temp << "\n";
+        }
+	}
+	  myfile.close();
 }
 
 vector<vector<double> > Windshield::bandMatrix(){
@@ -389,39 +404,57 @@ rvector Windshield::resolveByGaussianElimination(rmatrix& A, rvector& b) {
 	return backSubstitution(A, b);
 }
 
-int main() {
+int main(int argc, char *argv[]) {
+
+
     float h;
 	int a,b,r;
-	cout << "Ingrese con enters en el medio, a, b, h, r, Ts y las sanguijuelas" << "\n";
+	//cout << "Ingrese con enters en el medio, a, b, h, r, Ts y las sanguijuelas" << "\n";
     int CantSanguijuleas;
     int Ts;
 
-	cin >> a >> b >> h >> r >> Ts >> CantSanguijuleas;
+	//cin >> a >> b >> h >> r >> Ts >> CantSanguijuleas;
 
 	//a = 100; b = 100 ; h = 5 ; r = 10 ; Ts = 500 ; CantSanguijuleas = 1;
 
     vector< vector<double > > posSanguijuelas;
-	posSanguijuelas = vector<vector<double > >(CantSanguijuleas, vector<double >(2));
+
 	double rowS;
     double colS;
-    int i;
-	for (i=0; i<CantSanguijuleas;i++){
-
-        cin >> rowS >> colS;
-        //rowS = 30;
-        //colS = 20;
-        posSanguijuelas[i][0] = rowS;
-        posSanguijuelas[i][1] = colS;
-    }
 
 
-    Windshield *windshield = new Windshield(a, b, h, r, Ts, CantSanguijuleas, posSanguijuelas);
-    windshield->matarSanguijuelasRandom();
-	windshield->resolveBandMatrix();
-	windshield->showMatriz();
+    ifstream input_file (argv[1]);
+    input_file >> a >> b >> h >> r >> Ts >> CantSanguijuleas;
+   // cout << a << b << h << r << Ts << CantSanguijuleas << "\n" << flush;
+    posSanguijuelas = vector<vector<double > >(CantSanguijuleas, vector<double >(2));
+     for (int i=0; i<CantSanguijuleas;i++){
+
+            input_file >> rowS >> colS;
+            //cout << rowS << colS << "\n" << flush;
+            posSanguijuelas[i][0] = rowS;
+            posSanguijuelas[i][1] = colS;
+        }
+
+        Windshield *windshield = new Windshield(a, b, h, r, Ts, CantSanguijuleas, posSanguijuelas);
+       // windshield->matarSanguijuelasRandom();
+        if(argv[3] == string("0")){
+            windshield->gaussianElimination();
+
+        }
+
+        if(argv[3] == string("1")){
+            windshield->resolveBandMatrix();
+        }
+
+        windshield->printMatriz(argv[2]);
+        windshield->showMatriz();
+
 
     return 0;
 }
+
+
+
 
 
 
