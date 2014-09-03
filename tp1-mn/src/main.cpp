@@ -90,6 +90,7 @@ private:
 void Windshield::solucionRandom(){
     while(not this->isCooledDown()){
         this->matarSanguijuelasRandom();
+        this->resolveBandMatrix();
     }
 }
 
@@ -466,7 +467,7 @@ int main(int argc, char *argv[]) {
 
         windshield->resolveBandMatrix();
        }
-
+        //windshield->solucionRandom();
         windshield->showMatriz();
 
 
