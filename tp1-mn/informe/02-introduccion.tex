@@ -19,10 +19,35 @@ Los pasos a seguir en este algoritmo son:
 correspondientes a los renglones correspondientes
 
 \end{itemize}
-
-EXPLICACION COMO IMPLEMENTAMOS GAUSS
  
+Ejemplo:
+
+\begin{figure}[htb]
+\begin{center}
+\includegraphics[scale=0.70]{imagenes/ejemplo_gaus_1.png} 
+\caption{Sistema de ecuaciones de 3x3} 
+\end{center}
+\end{figure}
+
+\begin{figure}[htb]
+\begin{center}
+\includegraphics[scale=0.70]{imagenes/ejemplo_gaus_2.png} 
+\caption{Sistema de ecuaciones con ceros en la primera columna} 
+\end{center}
+\end{figure}
+
+\begin{figure}[htb]
+\begin{center}
+\includegraphics[scale=0.70]{imagenes/ejemplo_gaus_3.png} 
+\caption{Sistema de ecuaciones triangulado} 
+\end{center}
+\end{figure}
+\newpage
+En esta última imagen podemos observar que el valor de Z ya lo tenemos. Por lo tanto si reemplazamos el mismo en la ecuación arriba obtenemos Y y lo mismo con la primer ecuación.
+
 La complejidad computacional de esto es aproximadamente $n^3$. Esto es, el número de operaciones requeridas es $n^3$ si el tamaño de la matriz es n x n. Por lo tanto puede volverse un cálclo sumamente grande si la matriz es de dimensiones importantes. Por esto decidimos pensar un poco mejor la situación y encontrarle la vuelta para resolverlo en un tiempo razonable. 
+
+\subsection{Matriz banda}
 
 Analizando cuidadosamente la ecuación del cálculo de cada celda EXPLICACION BANDA 
 
