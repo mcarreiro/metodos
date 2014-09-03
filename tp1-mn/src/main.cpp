@@ -425,24 +425,33 @@ int main(int argc, char *argv[]) {
 
     vector< vector<double > > posSanguijuelas;
 
-
+    ifstream input_file;
         double rowS;
         double colS;
+    if(argc > 1){
+        ifstream input_file (argv[1]);
+        input_file >> a >> b >> h >> r >> Ts >> CantSanguijuleas;
+    }else{
 
-    ifstream input_file (argv[1]);
-    input_file >> a >> b >> h >> r >> Ts >> CantSanguijuleas;
-   // cout << a << b << h << r << Ts << CantSanguijuleas << "\n" << flush;
+
+    cin >> a >> b >> h >> r >> Ts >> CantSanguijuleas;
+    }
     posSanguijuelas = vector<vector<double > >(CantSanguijuleas, vector<double >(2));
      for (int i=0; i<CantSanguijuleas;i++){
 
-            input_file >> rowS >> colS;
-            //cout << rowS << colS << "\n" << flush;
+            if(argc > 1){
+                input_file >> rowS >> colS;
+            }else{
+                cin >> rowS >> colS ;
+            }
+
             posSanguijuelas[i][0] = rowS;
             posSanguijuelas[i][1] = colS;
         }
 
         Windshield *windshield = new Windshield(a, b, h, r, Ts, CantSanguijuleas, posSanguijuelas);
        // windshield->matarSanguijuelasRandom();
+       if(argc > 1){
         if(argv[3] == string("0")){
             windshield->gaussianElimination();
 
@@ -451,8 +460,13 @@ int main(int argc, char *argv[]) {
         if(argv[3] == string("1")){
             windshield->resolveBandMatrix();
         }
+          windshield->printMatriz(argv[2]);
+       }
+       else{
 
-        windshield->printMatriz(argv[2]);
+        windshield->resolveBandMatrix();
+       }
+
         windshield->showMatriz();
 
 
