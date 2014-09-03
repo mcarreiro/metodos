@@ -76,9 +76,9 @@ private:
 
 	int a;
     int b;
-    float h;
-    int r;
-	float ts;
+    double h;
+    double r;
+	double ts;
     int m;
     int n;
     int cantSanguijuelas;
@@ -90,7 +90,6 @@ private:
 void Windshield::solucionRandom(){
     while(not this->isCooledDown()){
         this->matarSanguijuelasRandom();
-        this->resolveBandMatrix();
     }
 }
 
@@ -434,8 +433,8 @@ rvector Windshield::resolveByGaussianElimination(rmatrix& A, rvector& b) {
 int main(int argc, char *argv[]) {
 
 
-    float h;
-	int a,b,r;
+    double h;
+	double a,b,r;
 	//cout << "Ingrese con enters en el medio, a, b, h, r, Ts y las sanguijuelas" << "\n";
     int CantSanguijuleas;
     int Ts;
@@ -498,8 +497,8 @@ int main(int argc, char *argv[]) {
             }
         }*/
        }
-        //windshield->solucionRandom();
-       // windshield->showMatriz();
+
+        windshield->showMatriz();
 
 
 
