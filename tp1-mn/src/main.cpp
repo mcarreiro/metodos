@@ -5,6 +5,7 @@
 #include <cmath>
 #include <iomanip>
 #include <stdlib.h>
+ #include <fstream>
 
 using namespace std;
 
@@ -198,8 +199,7 @@ void Windshield::showMatriz(){
 }
 
 void Windshield::printMatriz(char* outfile){
-    ofstream myfile;
-    myfile.open (outfile);
+    ofstream myfile (outfile);
 
     int i,j;
     for(i=0; i< m;i++){
@@ -451,11 +451,6 @@ int main(int argc, char *argv[]) {
         if(argv[3] == string("1")){
             windshield->resolveBandMatrix();
         }
-
-
-    Windshield *windshield = new Windshield(a, b, h, r, Ts, CantSanguijuleas, posSanguijuelas);
-	windshield->resolveBandMatrix();
-	//windshield->solucionRandom();
 
         windshield->printMatriz(argv[2]);
         windshield->showMatriz();
