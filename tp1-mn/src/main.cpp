@@ -61,10 +61,11 @@ public:
 	vector<Point> sanguijuelaPoints(Position sanguijuela);
 	void gaussianElimination();
 	vector< vector<double > > sanguijuelasPos;
-	void matarSanguijuelasRandom();
+	void solucionRandom();
 	vector< vector<Point *> > matrix;
 private:
-
+    void matarSanguijuelasRandom();
+    bool isCooledDown();
 	vector< vector< double > > prepareSystemOfEquations();
 	vector< double > resolveByGaussianElimination(rmatrix& A, rvector& b);
 	void calculateForAdjacent(int x, int y, vector< vector< double > >& systemOfEquations, int pos);
@@ -85,33 +86,39 @@ private:
 	vector< double > bVector;
 };
 
+void Windshield::solucionRandom(){
+    while(not this->isCooledDown()){
+        this->matarSanguijuelasRandom();
+    }
+}
+
+bool Windshield::isCooledDown(){
+int xCenter = m/2+1;
+int yCenter = n/2+1;
+
+return matrix[xCenter][yCenter]->temp < 235;
+}
+
 
 void Windshield::matarSanguijuelasRandom(){
     int cantSanguijuelas =  sanguijuelasPos.size();
     int sanguijuelaElegida = rand()%cantSanguijuelas;
 
-//
-//    vector<Point> cubiertos = this->sanguijuelaPoints(Position(sanguijuelasPos[sanguijuelaElegida][0],sanguijuelasPos[sanguijuelaElegida][1]));
-//
-//        for (int i = 0; i < cubiertos.size(); i++) {
-//            Point p = cubiertos[i];
-//            matrix[p.x][p.y]->status = VACIO;
-//            matrix[p.x][p.y]->temp = 0;
-//        }
-
-
-    //creoo un nuevo vector sin la sanguijuela elegida para asesinar
+   //creoo un nuevo vector sin la sanguijuela elegida para asesinar
     vector< vector<double > > newSanguijuelasPos;
-    int i;
+    newSanguijuelasPos = vector<vector<double > >(cantSanguijuelas - 1, vector<double >(2));
+
+    int i,i2 = 0;
 	for (i=0; i< (cantSanguijuelas);i++){
         if(i != sanguijuelaElegida){
-            newSanguijuelasPos[i] = sanguijuelasPos[i];
-
+            newSanguijuelasPos[i2][0] = sanguijuelasPos[i][0];
+            newSanguijuelasPos[i2][1] = sanguijuelasPos[i][1];
+            i2++;
         }
     }
 
     Windshield *windshield = new Windshield(a, b, h, r, ts, cantSanguijuelas, newSanguijuelasPos);
-
+    sanguijuelasPos = newSanguijuelasPos;
     matrix = windshield->matrix;
 }
 
@@ -125,7 +132,7 @@ Windshield::Windshield(int x, int y, float ah, int ar, float temp, int cs, vecto
     cantSanguijuelas = cs;
 	n = (a/h) + 1; // FILAS
 	m = (b/h) + 1; // COLUMNAS
-    sanguijuelas = posSanguijuelas;
+    sanguijuelasPos = posSanguijuelas;
     matrix = vector<vector<Point *> >(m, vector<Point *>(n));
 
     //cout << matrix.size() << "\n";
@@ -151,7 +158,6 @@ void Windshield::putSanguijuela(vector< vector<double > > posSanguijuelas){
 
 	for(i=0; i< posSanguijuelas.size();i++){
         vector<Point> cubiertos = this->sanguijuelaPoints(Position(posSanguijuelas[i][0],posSanguijuelas[i][1]));
-        sanguijuelasPos = posSanguijuelas;
         for (int i = 0; i < cubiertos.size(); i++) {
             Point p = cubiertos[i];
             matrix[p.x][p.y]->status = SANGUIJUELA;
@@ -419,9 +425,9 @@ int main(int argc, char *argv[]) {
 
     vector< vector<double > > posSanguijuelas;
 
-	double rowS;
-    double colS;
 
+        double rowS;
+        double colS;
 
     ifstream input_file (argv[1]);
     input_file >> a >> b >> h >> r >> Ts >> CantSanguijuleas;
@@ -446,8 +452,14 @@ int main(int argc, char *argv[]) {
             windshield->resolveBandMatrix();
         }
 
+
+    Windshield *windshield = new Windshield(a, b, h, r, Ts, CantSanguijuleas, posSanguijuelas);
+	windshield->resolveBandMatrix();
+	//windshield->solucionRandom();
+
         windshield->printMatriz(argv[2]);
         windshield->showMatriz();
+
 
 
     return 0;
