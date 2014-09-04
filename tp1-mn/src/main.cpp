@@ -7,7 +7,7 @@
 #include <iomanip>
 #include <stdlib.h>
 #include <fstream>
-
+#include <algorithm>
 using namespace std;
 
 typedef vector<double> rvector;
