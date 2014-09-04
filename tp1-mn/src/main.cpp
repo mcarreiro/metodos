@@ -15,18 +15,21 @@ typedef vector<rvector> rmatrix;
 enum statusPoint {VACIO,SANGUIJUELA,FRIO};
 
 bool esIgual(double a, double b, double error = 0.0000000001){
-	return abs(a-b) <= error;
+	return abs(a-b) <= 0;
 }
+
 
 
 void imprimirMatriz(vector<vector<double> > matriz, int filas, int columnas){
-	for(int i=0; i< filas; i++){
-		for(int j=0; j< columnas; j++)
+	for(int i=0; i< matriz.size(); i++){
+		for(int j=0; j< matriz[0].size(); j++)
 			cout << matriz[i][j] << ";";
-	cout << " (" << i  << ")" << "\n";
+	int fila = i/columnas;
+	int col = i % columnas;
+	cout << " (" << i  << ") "  <<  fila  << "-" << col  << "\n";
 	}
 
-}
+} 
 struct Point {
     int x;
     int y;
@@ -131,8 +134,8 @@ Windshield::Windshield(int x, int y, float ah, int ar, float temp, int cs, vecto
 	r = ar;
 	ts = temp;
     cantSanguijuelas = cs;
-	n = (a/h) + 1; // FILAS
-	m = (b/h) + 1; // COLUMNAS
+	m = (b/h) + 1; // FILAS
+	n = (a/h) + 1; // COLUMNAS
     sanguijuelasPos = posSanguijuelas;
     matrix = vector<vector<Point *> >(m, vector<Point *>(n));
 
@@ -212,7 +215,7 @@ void Windshield::printMatriz(char* outfile){
 }
 
 vector<vector<double> > Windshield::bandMatrix(){
-	int ancho = m;
+	int ancho = n;
 	  vector<vector<double> > bandMatrix  = vector<vector<double> >(n*m, vector<double>(ancho*2+2));
 	int i,j, pos, res = ancho*2+1;
 	for(i=0; i< m*n;i++){
@@ -222,7 +225,7 @@ vector<vector<double> > Windshield::bandMatrix(){
 	}
 	for(i=0; i< m;i++){
 		for (j=0; j<n;j++){
-			pos = j + i * m;
+			pos = j + i * ancho;
 			switch(matrix[i][j]->status){
 			case SANGUIJUELA:
 				bandMatrix[pos][ancho] = 1;
@@ -235,41 +238,49 @@ vector<vector<double> > Windshield::bandMatrix(){
 			case VACIO:
 				bandMatrix[pos][ancho] = -4;
 				bandMatrix[pos][res] = 0;
+
 				if(matrix[i][j-1]->status != VACIO) bandMatrix[pos][res] -= matrix[i][j-1]->temp;
 				else bandMatrix[pos][ancho-1] = 1;
-				if(matrix[i][j+1]->status != VACIO) bandMatrix[pos][res] -= matrix[i][j+1]->temp;
-				else bandMatrix[pos][ancho+1] = 1;
+
+				
+
 				if(matrix[i-1][j]->status != VACIO) bandMatrix[pos][res] -= matrix[i-1][j]->temp;
 				else bandMatrix[pos][0] = 1;
+
+
+				if(matrix[i][j+1]->status != VACIO) bandMatrix[pos][res] -= matrix[i][j+1]->temp;
+				else bandMatrix[pos][ancho+1] = 1;
+				
+
 				if(matrix[i+1][j]->status != VACIO) bandMatrix[pos][res] -= matrix[i+1][j]->temp;
 				else bandMatrix[pos][ancho*2] = 1;
 				break;
 			}
         }
 	}
-	//imprimirMatriz(bandMatrix, n*m, ancho*2+2);
+	imprimirMatriz(bandMatrix, m, n);
 	return bandMatrix;
 }
 
 void Windshield::resolveBandMatrix(){
 	vector<vector<double> > bandMatrix = this->bandMatrix(); //CREO LA MATRIZ
-	int ancho = m*2+1;
+	int ancho = n*2+1;
 	int fila, columna;
 	//PRIMERO LA HAGO TRIANGULAR SUPERIOR
 	for(int i = 0; i < n*m -1; i++){
-		fila = i / m;
-		columna = i % m;
+		fila = i / n;
+		columna = i % n;
         if(matrix[fila][columna]->status != VACIO)  continue; // SI NO ES VACIO SE QUE ABAJO HAY TODO CERO
-        for( int h = 1; h <= m; h++){ // COMO ES BANDA ME FIJO SI EN LA DIAGONAL IZQ INF HAY DISTINTO DE 0 PARA PIVOTEAR
-            if(i+h >= n*m || m-h < 0) break;
-            double centro = bandMatrix[i][m];
-            double actual = bandMatrix[i+h][m-h];
+        for( int h = 1; h <= n; h++){ // COMO ES BANDA ME FIJO SI EN LA DIAGONAL IZQ INF HAY DISTINTO DE 0 PARA PIVOTEAR
+            if(i+h >= n*m || n-h < 0) break;
+            double centro = bandMatrix[i][n];
+            double actual = bandMatrix[i+h][n-h];
                     if(esIgual( actual ,0))  actual = 0;
             double multiplicador = actual / centro;
 			if(esIgual(multiplicador,0)) continue;
-                for(int j = 0; j <= m; j++){ //OPERO ENTRE FILAS
-                    bandMatrix[i+h][m-h+j] -= bandMatrix[i][m+j] * multiplicador;
-                   if(esIgual( bandMatrix[i+h][m-h+j] ,0))  bandMatrix[i+h][m-h+j] = 0;
+                for(int j = 0; j <= n; j++){ //OPERO ENTRE FILAS
+                    bandMatrix[i+h][n-h+j] -= bandMatrix[i][n+j] * multiplicador;
+                   if(esIgual( bandMatrix[i+h][n-h+j] ,0))  bandMatrix[i+h][n-h+j] = 0;
                 }
 
                 bandMatrix[i+h][ancho] -= bandMatrix[i][ancho] * multiplicador;
@@ -279,24 +290,24 @@ void Windshield::resolveBandMatrix(){
 
 	//AHORA RESUELVO :)
 	for(int i = n*m-1; i >0; i--){
-		fila = i / m;
-		columna = i % m;
-        for( int h = 1; h <= m; h++){ // COMO ES BANDA ME FIJO SI EN LA DIAGONAL IZQ INF HAY DISTINTO DE 0 PARA PIVOTEAR
+		fila = i / n;
+		columna = i % n;
+        for( int h = 1; h <= n; h++){ // COMO ES BANDA ME FIJO SI EN LA DIAGONAL IZQ INF HAY DISTINTO DE 0 PARA PIVOTEAR
             if(n+h >= ancho || i-h < 0) break;
-            double centro = bandMatrix[i][m];
-            double actual = bandMatrix[i-h][m+h];
+            double centro = bandMatrix[i][n];
+            double actual = bandMatrix[i-h][n+h];
              if(esIgual( actual ,0))  actual = 0;
             double multiplicador = actual / centro;
 			if(esIgual(multiplicador,0)) continue;
-                for(int j = 0; j <= m-h; j++){ //OPERO ENTRE FILAS
-                    bandMatrix[i-h][m+h+j] -= bandMatrix[i][m+j] * multiplicador;
-                      if(esIgual(  bandMatrix[i-h][m+h+j]  ,0))  bandMatrix[i-h][m+h+j] = 0;
+                for(int j = 0; j <= n-h; j++){ //OPERO ENTRE FILAS
+                    bandMatrix[i-h][n+h+j] -= bandMatrix[i][n+j] * multiplicador;
+                      if(esIgual(  bandMatrix[i-h][n+h+j]  ,0))  bandMatrix[i-h][n+h+j] = 0;
                 }
                 bandMatrix[i-h][ancho] -= bandMatrix[i][ancho] * multiplicador;
                 if(esIgual(  bandMatrix[i-h][ancho] ,0))   bandMatrix[i-h][ancho] = 0;
-				bandMatrix[i][ancho] /= bandMatrix[i][m];
+				bandMatrix[i][ancho] /= bandMatrix[i][n];
 				if(esIgual( bandMatrix[i][ancho] ,0))  bandMatrix[i][ancho]= 0;
-				bandMatrix[i][m] = 1;
+				bandMatrix[i][n] = 1;
 
 				matrix[fila][columna]->temp = bandMatrix[i][ancho];
 
@@ -307,9 +318,7 @@ void Windshield::resolveBandMatrix(){
     {
         for( int j =0; j < n; j++)
         {
-            if(i == 1 && j == 1){
-                int aaaa = 3;
-            }
+
             if (!(j == 0 || i == 0 || j== n-1 || i==m-1) && matrix[i][j]->temp == 0){
                 matrix[i][j]->temp = (matrix[i-1][j]->temp+ matrix[i][j-1]->temp + matrix[i+1][j]->temp + matrix[i][j+1]->temp) / 4;
             }
@@ -445,11 +454,12 @@ int main(int argc, char *argv[]) {
 
     vector< vector<double > > posSanguijuelas;
 
-    ifstream input_file;
+
+ifstream input_file (argv[1]);
         double rowS;
         double colS;
     if(argc > 1){
-        ifstream input_file (argv[1]);
+        
         input_file >> a >> b >> h >> r >> Ts >> CantSanguijuleas;
     }else{
 
@@ -474,17 +484,19 @@ int main(int argc, char *argv[]) {
        if(argc > 1){
         if(argv[3] == string("0")){
             windshield->gaussianElimination();
+
         }
 
         if(argv[3] == string("1")){
             windshield->resolveBandMatrix();
+
         }
 
           windshield->printMatriz(argv[2]);
        }
        else{
 
-        windshield->resolveBandMatrix();
+       //windshield->resolveBandMatrix();
         /*Windshield *windshield2 = new Windshield(a, b, h, r, Ts, CantSanguijuleas, posSanguijuelas);
         windshield2->gaussianElimination();
 
