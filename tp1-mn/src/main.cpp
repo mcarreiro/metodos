@@ -343,7 +343,6 @@ void Windshield::resolveBandMatrix(){
     {
         for( int j =0; j < n; j++)
         {
-
             if (!(j == 0 || i == 0 || j== n-1 || i==m-1) && matrix[i][j]->temp == 0){
                 matrix[i][j]->temp = (matrix[i-1][j]->temp+ matrix[i][j-1]->temp + matrix[i+1][j]->temp + matrix[i][j+1]->temp) / 4;
             }
@@ -468,12 +467,13 @@ rvector Windshield::resolveByGaussianElimination(rmatrix& A, rvector& b) {
 void Windshield::removeLeachesByGrasp(int k, int threshold){
 	resolveBandMatrix();
 	orderLeachesCentrically();
-	vector<int> indexesLeachesRemoved = vector<int>();
+	vector<int> indexesLeachesRemoved;
 	vector<int> bestNow = vector<int>();
 
 	bool hasStarted = false;
 
 	for (int timesToTry = 0 ; timesToTry < k ; ++timesToTry){
+		vector<int> indexesLeachesRemoved = vector<int>(cantSanguijuelas);
 		while(!isCooledDown()){
 			indexesLeachesRemoved.push_back(removeOneRandomLeachOrdered(threshold));
 			resolveBandMatrix();
@@ -482,7 +482,7 @@ void Windshield::removeLeachesByGrasp(int k, int threshold){
 		localSearchOneByZero(indexesLeachesRemoved);
 
 		if (indexesLeachesRemoved.size() <= bestNow.size() || !hasStarted){
-			bestNow = indexesLeachesRemoved;
+			bestNow = vector<int>(indexesLeachesRemoved.begin(), indexesLeachesRemoved.end());
 			hasStarted = true;
 		}
 	}
@@ -498,14 +498,6 @@ bool Windshield::isCooledDown(){
 void Windshield::orderLeachesCentrically(){
 	sort(leachesOrderedCentrically.begin(), leachesOrderedCentrically.end());
 }
-
-/*struct less_than_distance
-{
-    inline bool operator() (const Position& p1, const Position& p2)
-    {
-        return (p1.distanceToCenter < p2.distanceToCenter);
-    }
-};*/
 
 void Windshield::localSearchOneByZero(vector<int> indexesLeachesRemoved){
 	for (int i = 0 ; i < indexesLeachesRemoved.size() ; ++ i){
