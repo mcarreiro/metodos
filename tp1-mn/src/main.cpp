@@ -8,7 +8,6 @@
 #include <stdlib.h>
 #include <fstream>
 
-
 using namespace std;
 
 typedef vector<double> rvector;
@@ -16,16 +15,17 @@ typedef vector<rvector> rmatrix;
 
 enum statusPoint {VACIO,SANGUIJUELA,FRIO};
 
-bool esIgual(double a, double b, double error= 0.0000001){
+bool esIgual(double a, double b, double error = 0.0000000001){
 	return abs(a-b) <= 0;
 }
 
-
 void imprimirMatriz(vector<vector<double> > matriz, int filas, int columnas){
-	for(int i=0; i< filas; i++){
-		for(int j=0; j< columnas; j++)
+	for(int i=0; i< matriz.size(); i++){
+		for(int j=0; j< matriz[0].size(); j++)
 			cout << matriz[i][j] << ";";
-	cout << " (" << i  << ")" << "\n";
+	int fila = i/columnas;
+	int col = i % columnas;
+	cout << " (" << i  << ") "  <<  fila  << "-" << col  << "\n";
 	}
 
 }
@@ -47,16 +47,24 @@ struct Point {
 struct Position {
     double x;
     double y;
+    int a;
+    int b;
     double distanceToCenter;
-    Position(double x, double y) : x(x), y(y) {
-    	distanceToCenter = distanceToCenter(this);
+    Position(){};
+    Position(double x, double y, int a, int b) : x(x), y(y), a(a), b(b) {
+    	distanceToCenter = calculateDistanceToCenter(this);
     };
 
-    double distanceToCenter(Position p){
+    bool operator < (const Position& str) const
+    {
+        return (distanceToCenter < str.distanceToCenter);
+    }
+
+    double calculateDistanceToCenter(Position* p1){
 		double xCenter = a/2;
 		double yCenter = b/2;
-		double dx = p1.x - xCenter;
-	    double dy = p1.y - yCenter;
+		double dx = p1->x - xCenter;
+	    double dy = p1->y - yCenter;
 		return dx*dx + dy*dy;
 	}
 };
@@ -75,7 +83,7 @@ public:
 
 	void resolveBandMatrix();
 	void gaussianElimination();
-	
+
 	void removeLeachesByGrasp(int k, int threshold);
 	void solucionRandom();
 
@@ -84,7 +92,7 @@ public:
 	void orderLeachesCentrically(); //Bajar a prvidado
 private:
 	vector<vector<double> > bandMatrix();
-	vector<Point> sanguijuelaPoints(Position sanguijuela);
+	vector<Point* > sanguijuelaPoints(Position sanguijuela);
 	void spiral( int X, int Y);
 	double distance(Position p1, Position p2);
 	void putSanguijuela(vector< vector<double > > posSanguijuelas);
@@ -95,12 +103,14 @@ private:
 	rvector backSubstitution(const rmatrix& A, const rvector& b);
 	bool doGaussianElimination(rmatrix& A, rvector& b);
 	int find_max(const rmatrix& A, int k);
+	int removeOneRandomLeachOrdered(int threshold);
+	void localSearchOneByZero(vector<int> indexesLeachesRemoved);
 
 	int a;
     int b;
-    float h;
-    int r;
-	float ts;
+    double h;
+    double r;
+	double ts;
     int m;
     int n;
     int cantSanguijuelas;
@@ -147,11 +157,11 @@ Windshield::Windshield(int x, int y, float ah, int ar, float temp, int cs, vecto
 	r = ar;
 	ts = temp;
     cantSanguijuelas = cs;
-	n = (a/h) + 1; // FILAS
-	m = (b/h) + 1; // COLUMNAS
+	m = (b/h) + 1; // FILAS
+	n = (a/h) + 1; // COLUMNAS
     sanguijuelasPos = posSanguijuelas;
     matrix = vector<vector<Point *> >(m, vector<Point *>(n));
-    leachesOrderedCentrically = vector<Position>(CantSanguijuleas);
+    leachesOrderedCentrically = vector<Position>(cantSanguijuelas);
 
     int i,j;
 	for(i=0; i< m;i++){
@@ -173,7 +183,7 @@ void Windshield::putSanguijuela(vector< vector<double > > posSanguijuelas){
     int i,posX, posY;
 
 	for(i=0; i< posSanguijuelas.size();i++){
-		Position p(posSanguijuelas[i][0],posSanguijuelas[i][1]);
+		Position p(posSanguijuelas[i][0],posSanguijuelas[i][1],a,b);
 		leachesOrderedCentrically[i] = p;
         this->sanguijuelaPoints(p);
         /*for (int i = 0; i < cubiertos.size(); i++) {
@@ -191,11 +201,11 @@ double Windshield::distance(Position p1, Position p2) {
     return dx*dx + dy*dy;
 }
 
-vector<Point> Windshield::sanguijuelaPoints(Position sanguijuela) {
-    vector<Point> v;
+vector<Point* > Windshield::sanguijuelaPoints(Position sanguijuela) {
+    vector<Point* > v;
     for (int i = 0; i <= n; i++) {
         for (int j = 0; j <= m; j++) {
-            Position p(j*h , i*h);
+            Position p(j*h , i*h,a,b);
             if (this->distance(sanguijuela, p) <= r*r) {
             	matrix[i][j]->status = SANGUIJUELA;
             	matrix[i][j]->temp = ts;
@@ -241,7 +251,7 @@ vector<vector<double> > Windshield::bandMatrix(){
 	}
 	for(i=0; i< m;i++){
 		for (j=0; j<n;j++){
-			pos = j + i * n;
+			pos = j + i * ancho;
 			switch(matrix[i][j]->status){
 			case SANGUIJUELA:
 				bandMatrix[pos][ancho] = 1;
@@ -254,19 +264,27 @@ vector<vector<double> > Windshield::bandMatrix(){
 			case VACIO:
 				bandMatrix[pos][ancho] = -4;
 				bandMatrix[pos][res] = 0;
+
 				if(matrix[i][j-1]->status != VACIO) bandMatrix[pos][res] -= matrix[i][j-1]->temp;
 				else bandMatrix[pos][ancho-1] = 1;
-				if(matrix[i][j+1]->status != VACIO) bandMatrix[pos][res] -= matrix[i][j+1]->temp;
-				else bandMatrix[pos][ancho+1] = 1;
+
+
+
 				if(matrix[i-1][j]->status != VACIO) bandMatrix[pos][res] -= matrix[i-1][j]->temp;
 				else bandMatrix[pos][0] = 1;
+
+
+				if(matrix[i][j+1]->status != VACIO) bandMatrix[pos][res] -= matrix[i][j+1]->temp;
+				else bandMatrix[pos][ancho+1] = 1;
+
+
 				if(matrix[i+1][j]->status != VACIO) bandMatrix[pos][res] -= matrix[i+1][j]->temp;
 				else bandMatrix[pos][ancho*2] = 1;
 				break;
 			}
         }
 	}
-	//imprimirMatriz(bandMatrix, n*m, ancho*2+2);
+	imprimirMatriz(bandMatrix, m, n);
 	return bandMatrix;
 }
 
@@ -283,11 +301,14 @@ void Windshield::resolveBandMatrix(){
             if(i+h >= n*m || n-h < 0) break;
             double centro = bandMatrix[i][n];
             double actual = bandMatrix[i+h][n-h];
+                    if(esIgual( actual ,0))  actual = 0;
             double multiplicador = actual / centro;
 			if(esIgual(multiplicador,0)) continue;
                 for(int j = 0; j <= n; j++){ //OPERO ENTRE FILAS
                     bandMatrix[i+h][n-h+j] -= bandMatrix[i][n+j] * multiplicador;
+                   if(esIgual( bandMatrix[i+h][n-h+j] ,0))  bandMatrix[i+h][n-h+j] = 0;
                 }
+
                 bandMatrix[i+h][ancho] -= bandMatrix[i][ancho] * multiplicador;
         }
 	}
@@ -298,23 +319,38 @@ void Windshield::resolveBandMatrix(){
 		fila = i / n;
 		columna = i % n;
         for( int h = 1; h <= n; h++){ // COMO ES BANDA ME FIJO SI EN LA DIAGONAL IZQ INF HAY DISTINTO DE 0 PARA PIVOTEAR
-            if(n+h >= ancho*2+1 || i-h < 0) break;
+            if(n+h >= ancho || i-h < 0) break;
             double centro = bandMatrix[i][n];
             double actual = bandMatrix[i-h][n+h];
+             if(esIgual( actual ,0))  actual = 0;
             double multiplicador = actual / centro;
 			if(esIgual(multiplicador,0)) continue;
                 for(int j = 0; j <= n-h; j++){ //OPERO ENTRE FILAS
                     bandMatrix[i-h][n+h+j] -= bandMatrix[i][n+j] * multiplicador;
+                      if(esIgual(  bandMatrix[i-h][n+h+j]  ,0))  bandMatrix[i-h][n+h+j] = 0;
                 }
                 bandMatrix[i-h][ancho] -= bandMatrix[i][ancho] * multiplicador;
-
+                if(esIgual(  bandMatrix[i-h][ancho] ,0))   bandMatrix[i-h][ancho] = 0;
 				bandMatrix[i][ancho] /= bandMatrix[i][n];
+				if(esIgual( bandMatrix[i][ancho] ,0))  bandMatrix[i][ancho]= 0;
 				bandMatrix[i][n] = 1;
 
 				matrix[fila][columna]->temp = bandMatrix[i][ancho];
 
         }
 	}
+
+	for(int i = 0; i < m; i++)
+    {
+        for( int j =0; j < n; j++)
+        {
+
+            if (!(j == 0 || i == 0 || j== n-1 || i==m-1) && matrix[i][j]->temp == 0){
+                matrix[i][j]->temp = (matrix[i-1][j]->temp+ matrix[i][j-1]->temp + matrix[i+1][j]->temp + matrix[i][j+1]->temp) / 4;
+            }
+        }
+    }
+	//cout << bandMatrix[21][ancho];
 }
 
 void Windshield::gaussianElimination(){
@@ -429,16 +465,18 @@ rvector Windshield::resolveByGaussianElimination(rmatrix& A, rvector& b) {
 	return backSubstitution(A, b);
 }
 
+
 void Windshield::removeLeachesByGrasp(int k, int threshold){
 	resolveBandMatrix();
 	orderLeachesCentrically();
 	vector<int> indexesLeachesRemoved = vector<int>();
+	vector<int> bestNow = vector<int>();
 
 	bool hasStarted = false;
 
 	for (int timesToTry = 0 ; timesToTry < k ; ++timesToTry){
 		while(!isCooledDown()){
-			indexesLeachesRemoved.add(removeOneRandomLeachOrdered(threshold));
+			indexesLeachesRemoved.push_back(removeOneRandomLeachOrdered(threshold));
 			resolveBandMatrix();
 		}
 
@@ -459,24 +497,41 @@ bool Windshield::isCooledDown(){
 }
 
 void Windshield::orderLeachesCentrically(){
-	sort(leachesOrderedCentrically.begin(), leachesOrderedCentrically.end(), less_than_distance());
+	sort(leachesOrderedCentrically.begin(), leachesOrderedCentrically.end());
 }
 
-struct less_than_distance
+/*struct less_than_distance
 {
     inline bool operator() (const Position& p1, const Position& p2)
     {
         return (p1.distanceToCenter < p2.distanceToCenter);
     }
-};
+};*/
 
-void Windshield::localSearchOneByZero(vector<Point> leachesRemoved){
-	for (int i = 0 ; i < leachesRemoved.size() ; ++ i){
-		Point selectedLeach = leachesRemoved[i];
-		matrix[selectedLeach->x][selectedLeach->y] = new Point(selectedLeach->x,selectedLeach->y,selectedLeach->temp,SANGUIJUELA);
+void Windshield::localSearchOneByZero(vector<int> indexesLeachesRemoved){
+	for (int i = 0 ; i < indexesLeachesRemoved.size() ; ++ i){
+		//Retrieve leach to try to put back
+		Position selectedLeach = leachesOrderedCentrically[indexesLeachesRemoved[i]];
+
+		//Points covered by leach
+		vector<Point* > pointsCoveredBySelectedLeach = sanguijuelaPoints(selectedLeach);
+
+		//Put the leach back
+		for (int j = 0 ; j < pointsCoveredBySelectedLeach.size() ; ++ j){
+			pointsCoveredBySelectedLeach[j]->status = SANGUIJUELA;
+		}
+
+		//Resolve
 		resolveBandMatrix();
+
 		if (isCooledDown()){
-			leachesRemoved.erase(i);
+			//If it's still cooledDown, we don't need to eliminate this leach
+			indexesLeachesRemoved.erase(indexesLeachesRemoved.begin() + i);
+		} else { //If is critic again, we must remove it
+			for (int j = 0 ; j < pointsCoveredBySelectedLeach.size() ; ++ j){
+				pointsCoveredBySelectedLeach[j]->status = VACIO;
+			}
+
 		}
 	}
 }
@@ -484,18 +539,18 @@ void Windshield::localSearchOneByZero(vector<Point> leachesRemoved){
 int Windshield::removeOneRandomLeachOrdered(int threshold){
 	int position = 0 + (rand() % (int)(threshold));
 	Position selectedLeach = leachesOrderedCentrically[position];
-	vector<Point> pointsCoveredBySelectedLeach = sanguijuelaPoints(selectedLeach);
+	vector<Point* > pointsCoveredBySelectedLeach = sanguijuelaPoints(selectedLeach);
 	for (int i = 0 ; i < pointsCoveredBySelectedLeach.size() ; ++ i){
 		pointsCoveredBySelectedLeach[i]->status = VACIO;
 	}
-	leachesOrderedCentrically.remove(position);
+	leachesOrderedCentrically.erase(leachesOrderedCentrically.begin() + position);
 	return position;
 }
 
 
 int main(int argc, char *argv[]) {
-    float h;
-	int a,b,r;
+    double h;
+	double a,b,r;
 	//cout << "Ingrese con enters en el medio, a, b, h, r, Ts y las sanguijuelas" << "\n";
     int CantSanguijuleas;
     int Ts;
@@ -506,14 +561,13 @@ int main(int argc, char *argv[]) {
 
     vector< vector<double > > posSanguijuelas;
 
-    ifstream input_file;
+
+ifstream input_file (argv[1]);
         double rowS;
         double colS;
     if(argc > 1){
-        ifstream input_file (argv[1]);
         input_file >> a >> b >> h >> r >> Ts >> CantSanguijuleas;
     }else{
-
 
     cin >> a >> b >> h >> r >> Ts >> CantSanguijuleas;
     }
@@ -540,13 +594,26 @@ int main(int argc, char *argv[]) {
         if(argv[3] == string("1")){
             windshield->resolveBandMatrix();
         }
-          windshield->printMatriz(argv[2]);
-       }else{
-        //windshield->resolveBandMatrix();
-       }
-        //windshield->showMatriz();
 
-   // windshield->matarSanguijuelasRandom();
+          windshield->printMatriz(argv[2]);
+       }
+       else{
+
+       //windshield->resolveBandMatrix();
+        /*Windshield *windshield2 = new Windshield(a, b, h, r, Ts, CantSanguijuleas, posSanguijuelas);
+        windshield2->gaussianElimination();
+
+        for(int i = 0; i < windshield->matrix.size();i++){
+            for(int j = 0; j < windshield->matrix[0].size();j++){
+                if( windshield2->matrix[i][j]->temp !=  windshield->matrix[i][j]->temp){
+                    cout << fixed;
+                    cout << "(" << i << "," << j << ") " << setprecision(5) << windshield2->matrix[i][j]->temp << " vs " << windshield->matrix[i][j]->temp << "\n" << flush;
+                }
+            }
+        }*/
+       }
+
+        //windshield->showMatriz();
     windshield->orderLeachesCentrically();
 
     return 0;

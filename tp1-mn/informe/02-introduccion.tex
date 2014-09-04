@@ -1,38 +1,57 @@
 \section{Introducci\'on te\'orica}
 
-Para escuchar una determinada red local, se va a utilizar el protocolo ARP (\emph{Address Resolution 
-Protocol}) para capturar los distintos paquetes de este formato enviados a trav\'es de la red. ARP 
-es un protocolo que permite mapear direcciones de nivel de red a direcciones f\'isicas. Es decir, 
-establece una relaci\'on entre las capa de red y la capa de enlace.
+Dado que la modelización utlizada para este problema es una matriz y que en base a algunos datos que nos dan de ella (posición de las saniguijuelas, dimensiones y temperatras de los bordes) tenemos que calcular los valores de muchas celdas, lo que hay que resolver es un sistema de ecuaciones. 
+Lo primero que se nos viene a la mente cuando tenemos esto es el método de eliminación gaussiano. Este transforma la matriz de coeficientes en una matriz triangular superior y luego mediante back substitution se pueden obtener todos sus valores.
 
-Se necesita un formato de paquete determinado para encapsular este protocolo de resoluci\'on de 
-direcciones, para mapear las direcciones de red en direcciones f\'isicas. El paquete posee el 
-siguiente formato:
+Veamos ahora más en detalle como funciona cada uno de estos algoritmos.
 
+\subsection{Algoritmo de eliminación gaussiana}
+Es importante en este punto aclarar que para poder hacer estos cálculos la martiz debe ser cuadrada (\ref{sec:MatrizCuadrada}).
+Los pasos a seguir en este algoritmo son:
+
+\begin{itemize}
+
+\item Ir a la columna no cero extrema izquierda
+\item Si el primer renglón tiene un cero en esta columna, intercambiarlo con otro que no lo tenga
+\item Luego, obtener ceros debajo de este elemento delantero, sumando múltiplos adecuados del renglón superior a los renglones debajo de él
+\item Cubrir el renglón superior y repetir el proceso anterior con la submatriz restante. Repetir con el resto de los renglones (en este punto la matriz se encuentra en la forma de escalón)
+\item Comenzando con el último renglón no cero, avanzar hacia arriba: para cada renglón obtener un 1 delantero e introducir ceros arriba de éste sumando múltiplos 
+correspondientes a los renglones correspondientes
+
+\end{itemize}
+ 
+Ejemplo:
+
+\begin{figure}[htb]
 \begin{center}
-\includegraphics[scale=0.55]{imagenes/arppacket.png}
+\includegraphics[scale=0.70]{imagenes/ejemplo_gaus_1.png} 
+\caption{Sistema de ecuaciones de 3x3} 
 \end{center}
+\end{figure}
 
-Los primeros dos campos indican los protocolos de nivel de enlace y nivel de red involucrados en la
-comunicaci\'on. Los siguientes dos campos contienen las longitudes en bytes de cada direcci\'on 
-de hardware y de protocolo. El campo \verb@Oper@ puede tomar los valores 1 (\emph{who-has}) o 2 
-(\emph{reply}): el c\'odigo \emph{who-has} se refiere a que el emisor del paquete necesita saber
-la direcci\'on f\'isica correspondiente a cierto IP; el c\'odigo \emph{reply} permite a un 
-dispositivo dar a conocer su direcci\'on de hardware.
+\begin{figure}[htb]
+\begin{center}
+\includegraphics[scale=0.70]{imagenes/ejemplo_gaus_2.png} 
+\caption{Sistema de ecuaciones con ceros en la primera columna} 
+\end{center}
+\end{figure}
 
-Los siguientes campos son las direcciones de red y las direcciones de hardware tanto del dispositivo 
-emisor como del dispositivo destinatario de los paquetes. 
+\begin{figure}[htb]
+\begin{center}
+\includegraphics[scale=0.70]{imagenes/ejemplo_gaus_3.png} 
+\caption{Sistema de ecuaciones triangulado} 
+\end{center}
+\end{figure}
+\newpage
+En esta última imagen podemos observar que el valor de Z ya lo tenemos. Por lo tanto si reemplazamos el mismo en la ecuación arriba obtenemos Y y lo mismo con la primer ecuación.
 
-Entonces, el objetivo es capturar este tipo de paquetes para analizar la cantidad de informaci\'on
-de las distintas IPs de la red que se comunican y calcular la entrop\'ia de fuentes de informaci\'on
-basadas en los paquetes ARP. Recordar la f\'ormula para obtener la cantidad de informaci\'on de un 
-s\'imbolo $s$:
+La complejidad computacional de esto es aproximadamente $n^3$. Esto es, el número de operaciones requeridas es $n^3$ si el tamaño de la matriz es n x n. Por lo tanto puede volverse un cálclo sumamente grande si la matriz es de dimensiones importantes. Por esto decidimos pensar un poco mejor la situación y encontrarle la vuelta para resolverlo en un tiempo razonable. 
 
-$I(s) = -log(P(s))$
+\subsection{Matriz banda}
 
-Y para calcular la entrop\'ia de una fuente de informaci\'on $S$:
+Analizando cuidadosamente la ecuación del cálculo de cada celda EXPLICACION BANDA 
 
-$H(S) = \displaystyle \sum_{s\in S} P(s) * I(s)$
+
 
 
 
