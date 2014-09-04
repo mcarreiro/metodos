@@ -2,7 +2,6 @@
 #include <iostream>
 #include <list>
 #include <vector>
-#include <tuple>
 #include <cmath>
 #include <iomanip>
 #include <stdlib.h>
@@ -131,7 +130,7 @@ void Windshield::solucionRandom(){
 void Windshield::matarSanguijuelasRandom(){
     int cantSanguijuelas =  sanguijuelasPos.size();
     int sanguijuelaElegida = rand()%cantSanguijuelas;
-
+    cout << "elegi la sanguijuela: "<< sanguijuelaElegida << "\n";
    //creoo un nuevo vector sin la sanguijuela elegida para asesinar
     vector< vector<double > > newSanguijuelasPos;
     newSanguijuelasPos = vector<vector<double > >(cantSanguijuelas - 1, vector<double >(2));
@@ -284,7 +283,7 @@ vector<vector<double> > Windshield::bandMatrix(){
 			}
         }
 	}
-	imprimirMatriz(bandMatrix, m, n);
+	//imprimirMatriz(bandMatrix, m, n);
 	return bandMatrix;
 }
 
@@ -599,7 +598,9 @@ ifstream input_file (argv[1]);
        }
        else{
 
-       //windshield->resolveBandMatrix();
+       windshield->resolveBandMatrix();
+        windshield->solucionRandom();
+        windshield->showMatriz();
         /*Windshield *windshield2 = new Windshield(a, b, h, r, Ts, CantSanguijuleas, posSanguijuelas);
         windshield2->gaussianElimination();
 
@@ -614,7 +615,7 @@ ifstream input_file (argv[1]);
        }
 
         //windshield->showMatriz();
-    windshield->orderLeachesCentrically();
+    //windshield->orderLeachesCentrically();
 
     return 0;
 }
