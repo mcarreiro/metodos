@@ -7,8 +7,6 @@
 #include <stdlib.h>
 #include <fstream>
 #include <algorithm>
-#include <time.h>
-
 using namespace std;
 
 typedef vector<double> rvector;
@@ -131,9 +129,8 @@ void Windshield::solucionRandom(){
 
 void Windshield::matarSanguijuelasRandom(){
     int cantSanguijuelas =  sanguijuelasPos.size();
-    srand ( time(NULL) );
     int sanguijuelaElegida = rand()%cantSanguijuelas;
-
+    cout << "elegi la sanguijuela: "<< sanguijuelaElegida << "\n";
    //creoo un nuevo vector sin la sanguijuela elegida para asesinar
     vector< vector<double > > newSanguijuelasPos;
     newSanguijuelasPos = vector<vector<double > >(cantSanguijuelas - 1, vector<double >(2));
@@ -507,13 +504,8 @@ void Windshield::localSearchOneByZero(vector<int> indexesLeachesRemoved){
 		//Retrieve leach to try to put back
 		Position selectedLeach = leachesOrderedCentrically[indexesLeachesRemoved[i]];
 
-		//Points covered by leach
+		//Points covered by leach and put the leach back
 		vector<Point* > pointsCoveredBySelectedLeach = sanguijuelaPoints(selectedLeach);
-
-		//Put the leach back
-		for (int j = 0 ; j < pointsCoveredBySelectedLeach.size() ; ++ j){
-			pointsCoveredBySelectedLeach[j]->status = SANGUIJUELA;
-		}
 
 		//Resolve
 		resolveBandMatrix();
@@ -525,18 +517,24 @@ void Windshield::localSearchOneByZero(vector<int> indexesLeachesRemoved){
 			for (int j = 0 ; j < pointsCoveredBySelectedLeach.size() ; ++ j){
 				pointsCoveredBySelectedLeach[j]->status = VACIO;
 			}
-
 		}
 	}
 }
 
 int Windshield::removeOneRandomLeachOrdered(int threshold){
+	//Search randomly with threshold the next leach to remove
 	int position = 0 + (rand() % (int)(threshold));
+
+	//Selected leach to remove
 	Position selectedLeach = leachesOrderedCentrically[position];
+
+	//Remove the leach from the windshield
 	vector<Point* > pointsCoveredBySelectedLeach = sanguijuelaPoints(selectedLeach);
 	for (int i = 0 ; i < pointsCoveredBySelectedLeach.size() ; ++ i){
 		pointsCoveredBySelectedLeach[i]->status = VACIO;
 	}
+
+	//Remove the leach from the posible leaches to remove
 	leachesOrderedCentrically.erase(leachesOrderedCentrically.begin() + position);
 	return position;
 }
@@ -545,7 +543,7 @@ int Windshield::removeOneRandomLeachOrdered(int threshold){
 int main(int argc, char *argv[]) {
     double h;
 	double a,b,r;
-	//cout << "Ingrese con enters en el medio, a, b, h, r, Ts y las sanguijuelas" << "\n";
+	cout << "Ingrese con enters en el medio, a, b, h, r, Ts y las sanguijuelas" << "\n";
     int CantSanguijuleas;
     int Ts;
 
