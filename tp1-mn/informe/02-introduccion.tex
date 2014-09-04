@@ -49,7 +49,7 @@ La complejidad computacional de esto es aproximadamente $n^3$. Esto es, el núme
 
 \subsection{Matriz banda}
 
-Analizando cuidadosamente la ecuación del cálculo de cada celda EXPLICACION BANDA 
+Analizando la matriz del sistema de ecuaciones que se genera a partir de la representación del Parabrisas observamos que presenta las caracteristicas de un tipo de matriz llamada "banda", la cual se distingue por tener todas las celdas en 0 salvo en la diagonal ensanchada, es decir, que p celdas a la izquierda y q a la derecha de la diagonal a lo sumo tienen algunos o todos los valores distintos de 0. En nuestro caso, al construir la matriz nos basamos en el tipo de celda, si es el borde frío o una sanguijuela el coeficiente respectivo sera un 1 en la diagonal igualado a la temperatura correspondiente, pero en el caso de ser una celda vacía en la diagonal irá un -4, a los costados un 1 y representando la fila de "arriba" y "abajo" del parabrisas iran un 1 a "m" columnas de distancia de la diagonal. Finalmente la matriz resultante quedará con una banda de ancho m+m, con "m" el ancho del parabrisas.
 
 
 
