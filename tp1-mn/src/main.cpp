@@ -129,8 +129,9 @@ void Windshield::solucionRandom(){
 
 void Windshield::matarSanguijuelasRandom(){
     int cantSanguijuelas =  sanguijuelasPos.size();
+    srand ( time(NULL) );
     int sanguijuelaElegida = rand()%cantSanguijuelas;
-    cout << "elegi la sanguijuela: "<< sanguijuelaElegida << "\n";
+
    //creoo un nuevo vector sin la sanguijuela elegida para asesinar
     vector< vector<double > > newSanguijuelasPos;
     newSanguijuelasPos = vector<vector<double > >(cantSanguijuelas - 1, vector<double >(2));
