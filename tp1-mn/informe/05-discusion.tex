@@ -1,20 +1,15 @@
 \section{Discusi\'on}
 
-Espiral vs centrico
+/subsection{Espiral vs centrico}
+	Durante el desarrollo del algoritmo Greedy + LocalSearch, nuestro primer acercamiento fue recorrer la matriz de forma espiral. El primer problema que encontramos fue que teníamos un cálculo muy grande para determinar dado un punto del parabrisas, qué sanguijuela era y que recorríamos partes de la matriz que no importaban (en especial los bordes). A su vez, tendíamos a alejarnos del objetivo principal que era preocuparnos por el centro. Es por eso que decidimos ordenar las sanguijuealas según su distancia al centro. Para ahorrar tiempo computacional, este dato está calculado en el momento de la creación de la sanguijuela para su posterior ordenamiento.
+
 
 no contar los bordes ni las sanguijuelas para crear la matriz banda
 
 ¿porque random?
 
 
-\subsection{Red del Alto Palermo}
 
-En esta red se observa una gran interacci\'on con el router, cuya IP es \verb@172.17.0.1@. Esto 
-sucede porque el router es el dispositivo por el que pasan en general la mayor\'ia de los pedidos.
-Un aspecto interesante que se ve en esta comunicaci\'on es que no parece haber un pedido fuera de
-la red, es decir, a otro dominio. Lo que se puede deducir es que el dominio de esta red parece ser 
-\verb@172.17.0.0 /16@ donde la IP del router es \verb@172.17.0.1@, el cu\'al se comunica con el
-resto de los dispositivos bajo este dominio.
 
 
 
