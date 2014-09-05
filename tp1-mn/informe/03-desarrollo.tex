@@ -8,7 +8,7 @@ Como explicamos en la introducción de la matriz banda, llegamos a la conclusió
 
 El problema de representar la matriz original es que la mayoría de los valores son 0 y solo importan los elementos de la banda de la matriz, por lo tanto una forma de optimizar espacialmente es solo guardar la banda, con lo que se logra reducir considerablemente el espacio en esta representación, ya que suponiendo que se tiene un parabrisas de n filas y m columnas, el tamaño de la matriz original sería de $(n*m)^2$, mientras que con la optimización de matriz banda quedaría de tamaño (n*m)*(2*m+1).
 
-El método para construir la representación optimizada de la matriz banda es simple, se guardar la diagonal en una matriz, quedando en el centro los elementos de la diagonal dependiendo de lo que haya en esa posición, ya que en el caso de que sea vacía esta deberá tener coeficientes de las posiciones adyacentes. Además nos dimos cuenta que se podía representar la matriz de tal forma que presente una mejor optimización temporal, y consiste en no poner los coeficientes de las celdas vacias adyacentes si estas no son vacias, en tal caso al vector de resultados le restamos la temperatura de la misma, generando que luego no sea necesario considerar las posiciones no vacias para la eliminación gausseana a la hora de resolver el sistema.
+El método para construir la representación optimizada de la matriz banda es simple, se guardar la diagonal en una matriz, quedando en el centro los elementos de la diagonal dependiendo de lo que haya en esa posición, ya que en el caso de que sea vacía esta deberá tener coeficientes de las posiciones adyacentes. Además nos dimos cuenta que se podía representar la matriz de tal forma que presente una mejor optimización temporal, y consiste en no poner los coeficientes de las celdas vacias adyacentes si estas no son vacias, en tal caso al vector de resultados le restamos la temperatura de la misma, generando que luego no sea necesario considerar las posiciones no vacias para la eliminación gausseana a la hora de resolver el sistema, y como consecuencia la no necesidad de intercambiar filas al triangular.
 
 \begin{verbatim}
 
@@ -53,6 +53,47 @@ por cada posición del parabrisas //O(N*M)
 
 \end{verbatim}
 \subsubsection{Optimización temporal}
+
+Para resolver el sistema de ecuaciones lo que se aplica es una eliminación gausseana optimizada y sin la necesidad de intercambiar filas al momento de generar la matriz triangular superior debido a la optimización que se aplicó en el momento de su creación. La eliminación gausseana fue optimizada teniendo en cuenta la forma de la matriz banda que se genera a partir del parabrisas y conociendo sus caracteristicas, ya que al momento de resolverla detecta cuando la posición es no vacia y no necesita triangular en esa fila debido a que ya sabe que abajo son todos ceros. Por la forma que se almacena la matriz banda lo primero que se hace es triangular en diagonal a la izquierda entre las filas vacias, dando como resultado una matriz triangular superior, luego solo le restará hacer una back substitution optimizada, que consiste en realizar algo parecido a lo anterior pero esta vez de abajo hacia arriba, es decir, resta fila a fila "diagonalizando" y en cada fila que se posicion como sabe que solo tiene un coeficiente igualado a un resultado.
+
+\begin{verbatim}
+
+//PRIMERO LA HAGO TRIANGULAR SUPERIOR
+PARA CADA FILA DE LA BANDA, DE ARRIBA A ABAJO
+		
+       SI NO ES VACIO SE QUE ABAJO HAY TODO CERO, CONTINUO
+       SI ES VACIA DIAGONALIZO:
+            
+             centro = bandMatrix[i][n];
+             actual = bandMatrix[i+h][n-h];
+             multiplicador = actual / centro;
+			
+             fila[i+h] - fila[i];
+
+               resultado[i+h] -= resultado[i] * multiplicador;
+       
+	
+	//BACK SUBSTITUTION
+	PARA CADA FILA DE LA BANDA, DE ABAJO A ARRIBA
+		fila = i / n;
+        for( int h = 1; h <= n; h++){ // COMO ES BANDA ME FIJO SI EN LA DIAGONAL IZQ INF HAY DISTINTO DE 0 PARA PIVOTEAR
+           
+             centro = bandMatrix[i][n];
+             actual = bandMatrix[i-h][n+h];
+           
+             multiplicador = actual / centro;
+		
+              fila[i-h] - fila[i];
+                resultado[i-h] -= resultado[i]* multiplicador;
+                
+	        lleno el parabrisas con las temperaturas actuales
+
+        
+	
+
+
+\end{verbatim}
+
 
 \subsubsection{Ejemplo}
 \begin{figure}[htb]
