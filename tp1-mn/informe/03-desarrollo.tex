@@ -6,48 +6,55 @@ Como explicamos en la introducción de la matriz banda, llegamos a la conclusió
 
 \subsubsection{Optimización espacial}
 
-El problema de representar la matriz original es que la mayoría de los valores son 0 y solo importan los elementos de la banda de la matriz, por lo tanto una forma de optimizar espacialmente es solo guardar la banda, con lo que se logra reducir considerablemente el espacio en esta representación, ya que suponiendo que se tiene un parabrisas de n filas y m columnas, el tamaño de la matriz original sería de $(n*m)^2$, mientras que con la optimización de matriz banda quedaría de tamaño (n*m)*(2*m+1)
+El problema de representar la matriz original es que la mayoría de los valores son 0 y solo importan los elementos de la banda de la matriz, por lo tanto una forma de optimizar espacialmente es solo guardar la banda, con lo que se logra reducir considerablemente el espacio en esta representación, ya que suponiendo que se tiene un parabrisas de n filas y m columnas, el tamaño de la matriz original sería de $(n*m)^2$, mientras que con la optimización de matriz banda quedaría de tamaño (n*m)*(2*m+1).
 
-\subsubsection{Optimización temporal}
-\subsubsection{Ejemplo}
+El método para construir la representación optimizada de la matriz banda es simple, se guardar la diagonal en una matriz, quedando en el centro los elementos de la diagonal dependiendo de lo que haya en esa posición, ya que en el caso de que sea vacía esta deberá tener coeficientes de las posiciones adyacentes. Además nos dimos cuenta que se podía representar la matriz de tal forma que presente una mejor optimización temporal, y consiste en no poner los coeficientes de las celdas vacias adyacentes si estas no son vacias, en tal caso al vector de resultados le restamos la temperatura de la misma, generando que luego no sea necesario considerar las posiciones no vacias para la eliminación gausseana a la hora de resolver el sistema.
+
 \begin{verbatim}
 
-por cada posición del parabrisas
+por cada posición del parabrisas //O(N*M)
        pos = fila posicion + columna posicion * ancho;
 		
               si en esa posición hay una SANGUIJUELA:
 			
                      bandMatrix[pos][ancho] = 1;
-                     bandMatrix[pos][res] = ts;
+                     resultados[pos] = ts;
 		
               si esa posición es borde FRIO:
                     
-                      bandMatrix[pos][ancho] = 1;
-                     bandMatrix[pos][res] = -100;
+                     bandMatrix[pos][ancho] = 1;
+                     resultados[pos] = -100;
 
 
               en caso de que esa posición sea VACIA:
                      bandMatrix[pos][ancho] = -4;
-                     bandMatrix[pos][res] = 0;
+                     resultados[pos] = 0;
                     
-                    si la izquierda no es vacìa
-                            bandMatrix[pos][res] -= matrix[i][j-1]->temp;
+                     si la izquierda no es vacìa
+                            resultados[pos] -= temperatura del de la izquierda;
                      else
                              bandMatrix[pos][ancho-1] = 1;
 
-                   si la de arriba no es vacìa bandMatrix[pos][res] -= matrix[i-1][j]->temp;
-                     else bandMatrix[pos][0] = 1;
+                    si la de arriba no es vacìa
+                            resultados[pos] -= temperatura del de arriba;
+                     else 
+                            bandMatrix[pos][0] = 1;
 
                      si la de la derecha no es vacìa
-                            bandMatrix[pos][res] -= matrix[i][j+1]->temp;
-                     else bandMatrix[pos][ancho+1] = 1;
+                            resultados[pos] -= temperatura del de la derecha;
+                     else 
+                            bandMatrix[pos][ancho+1] = 1;
                      
                      si la de abajo no es vacìa
-                      bandMatrix[pos][res] -= matrix[i+1][j]->temp;
-                     else bandMatrix[pos][ancho*2] = 1;
+                            resultados[pos] -= temperatura del de abajo;
+                     else 
+                            bandMatrix[pos][ancho*2] = 1;
 		
 
 \end{verbatim}
+\subsubsection{Optimización temporal}
+
+\subsubsection{Ejemplo}
 \begin{figure}[htb]
 \begin{center}
 \includegraphics[scale=0.70]{imagenes/parabrisasej.png} 
