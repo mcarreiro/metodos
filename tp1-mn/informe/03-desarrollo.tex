@@ -1,5 +1,79 @@
 \section{Desarrollo}
 
+\subsection{Matriz Banda}
+
+Como explicamos en la introducción de la matriz banda, llegamos a la conclusión de que la matriz de ecuaciones de la representación del parabrisas tenía forma de la denominada "matriz banda" cuya respectiva banda era de tamaño m+m+1 con m siendo el ancho del parabrisas. Este es un hecho importante ya que las matrices banda tienen caracteristicas especiales de las cuales es posible la optimización temporal y espacial para resolver el sistema de ecuaciones con eliminación gausseana.
+
+\subsubsection{Optimización espacial}
+
+El problema de representar la matriz original es que la mayoría de los valores son 0 y solo importan los elementos de la banda de la matriz, por lo tanto una forma de optimizar espacialmente es solo guardar la banda, con lo que se logra reducir considerablemente el espacio en esta representación, ya que suponiendo que se tiene un parabrisas de n filas y m columnas, el tamaño de la matriz original sería de $(n*m)^2$, mientras que con la optimización de matriz banda quedaría de tamaño (n*m)*(2*m+1)
+
+\subsubsection{Optimización temporal}
+\subsubsection{Ejemplo}
+\begin{verbatim}
+
+por cada posición del parabrisas
+       pos = fila posicion + columna posicion * ancho;
+		
+              si en esa posición hay una SANGUIJUELA:
+			
+                     bandMatrix[pos][ancho] = 1;
+                     bandMatrix[pos][res] = ts;
+		
+              si esa posición es borde FRIO:
+                    
+                      bandMatrix[pos][ancho] = 1;
+                     bandMatrix[pos][res] = -100;
+
+
+              en caso de que esa posición sea VACIA:
+                     bandMatrix[pos][ancho] = -4;
+                     bandMatrix[pos][res] = 0;
+                    
+                    si la izquierda no es vacìa
+                            bandMatrix[pos][res] -= matrix[i][j-1]->temp;
+                     else
+                             bandMatrix[pos][ancho-1] = 1;
+
+                   si la de arriba no es vacìa bandMatrix[pos][res] -= matrix[i-1][j]->temp;
+                     else bandMatrix[pos][0] = 1;
+
+                     si la de la derecha no es vacìa
+                            bandMatrix[pos][res] -= matrix[i][j+1]->temp;
+                     else bandMatrix[pos][ancho+1] = 1;
+                     
+                     si la de abajo no es vacìa
+                      bandMatrix[pos][res] -= matrix[i+1][j]->temp;
+                     else bandMatrix[pos][ancho*2] = 1;
+		
+
+\end{verbatim}
+\begin{figure}[htb]
+\begin{center}
+\includegraphics[scale=0.70]{imagenes/parabrisasej.png} 
+\caption{Vista de la representación de Parabrisas del ejemplo} 
+\end{center}
+\end{figure}
+
+\newpage
+\begin{figure}[htb]
+\begin{center}
+\includegraphics[scale=0.70]{imagenes/matrizej.png} 
+\caption{Matriz de ecuaciones del ejemplo} 
+\end{center}
+\end{figure}
+
+\newpage
+
+\begin{figure}[htb]
+\begin{center}
+\includegraphics[scale=0.70]{imagenes/matrizbandaej.png} 
+\caption{Matriz banda del ejemplo} 
+\end{center}
+\end{figure}
+
+\newpage
+
 \subsection{Soluciones}
 
 Para resolver el problema que se nos pide, planteamos distintos tipos de solución. Inicialmente encaramos el problema de manera exacta, pero lo deshechamos inmediatamente ya que sabiendo que es un problema de decisión, el tiempo para determinar cuál es el número mínimo de sanguijuelas a eliminar es exponencial en la cantidad de estas. Es por eso que decidimos realizar una heurística, ya que el tiempo es preciado cuando el parabrisas de nuestra nave tiene poco tiempo antes de que se rompa en caso de estar en situación crítica. Para modo de comparación tomamos dos tipos de algoritmos para establecer que es una mejor solución.
