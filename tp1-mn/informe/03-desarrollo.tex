@@ -100,6 +100,7 @@ Class Windshield{
          return leachesToRemove;
     } 
     isCooledDown(){
+         recalculateByBandMatrix();
          return (matrix.centerPoint < Ts)
     }
     orderLeachesByDistanceToCenter(){
