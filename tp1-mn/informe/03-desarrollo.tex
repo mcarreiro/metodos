@@ -114,7 +114,14 @@ Para resolver el problema que se nos pide, planteamos distintos tipos de soluci�
 seleccionar que sanguijuelas matar, pensamos una solución Greedy  (\ref{sec:MatrizCuadrada}) + Local Search . Esta consiste, a grandes rasgos, en ir matando las sanguijuelas del medio (ya que son las que mayor temperatura generan en el punto crìtico) hasta que el punto central este por debajo del 235 Cº. Para tener algún parámetro de referencia pensamos en buscar otra solución posible, y asì  compararlas y chequear que esta sea mejor. Esta solución alternativa consiste básicamente en seleccionar aleatoriamente que sanguijuelas aniquilar. Procederemos ahora a explicar en detalle las implementaciones de estas soluciones.
 
 \subsection{Solución Greedy + Local Search}
-Esta solución consiste, a grandes rasgos, en ir matando las sanguijuelas del medio (ya que son las que mayor temperatura generan en el punto crítico) hasta que el punto central este por debajo del 235 Cº. Finalmente, tratar de realizar una búsqueda local intentado volcar de vuelta en el parabrisas sanguijuelas que habíamos decidido sacar y viendo si era realmente necesario eliminarla para poder salir del estado crítico. La decisión de hacer LocalSearch está dada para el caso de que exista una sanguijuela en el centro y dos a la misma distancia. Pero de un lado haya una linea de muchas sanguijuelas, por lo que es muy probable que con sacar la del lado de la linea fuera suficiente.
+Esta solución consiste, a grandes rasgos, en ir matando las sanguijuelas del medio (ya que son las que mayor temperatura generan en el punto crítico) hasta que el punto central este por debajo del 235 Cº. Finalmente, tratar de realizar una búsqueda local intentado volcar de vuelta en el parabrisas sanguijuelas que habíamos decidido sacar y viendo si era realmente necesario eliminarla para poder salir del estado crítico. La decisión de hacer LocalSearch está dada para el caso de que exista una sanguijuela en el centro y dos a la misma distancia. Pero de un lado haya una linea de muchas sanguijuelas, por lo que es muy probable que con sacar la del lado de la linea fuera suficiente. A continuación podemos observar el resultado de lo recién descripto. Inicialmente había una sanguijuela en el medio y una equidistante a la que quedó, pero eligió sacar esta del lado de la linea.
+
+\begin{figure}[htb]
+\begin{center}
+\includegraphics[scale=0.50]{imagenes/greedyCorrido.png} 
+\caption{Resultado tercer corrida} 
+\end{center}
+\end{figure}
 
 Pseudocodigo:
 
