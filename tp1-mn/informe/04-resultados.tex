@@ -40,3 +40,15 @@ Ahora veamos que obtenemos al aplicarle distintas veces el algoritmo de solució
 \end{figure}
 
 Como podemos observar la solución óptima (la que menos sanguijuelas elimina), es la segunda. Pero como esta solución es completamente random en la primera corrida mata 2 sanguijuelas antes de elegir la correcta y en la tercera 4. Sólo en la segunda elije en el primer intento la sanguijuela correcta.
+\newpage
+Veamos ahora cuanto demoró cada una de las soluciones. Es importante aclarar que acá el algoritmo utilizado para recalcular las temperaturas fue el gaussiano sin banda matriz. Para que la diferencia de tiempos sea mas clara.
+
+
+\begin{figure}[htb]
+\begin{center}
+\includegraphics[scale=0.30]{imagenes/random_tiempo.jpg} 
+\caption{Tiempos de corrida de cada prueba} 
+\end{center}
+\end{figure}
+
+Acá podemos observar que, como era de esperarse, cuanto màs sanguijuelas elimina mas tiempo tarda, ya que debe recalcular las temperaturas.
