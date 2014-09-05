@@ -3,12 +3,16 @@
 \subsection{Espiral vs centrico}
 	Durante el desarrollo del algoritmo Greedy + LocalSearch, nuestro primer acercamiento fue recorrer la matriz de forma espiral. El primer problema que encontramos fue que teníamos un cálculo muy grande para determinar dado un punto del parabrisas, qué sanguijuela era y que recorríamos partes de la matriz que no importaban (en especial los bordes). A su vez, tendíamos a alejarnos del objetivo principal que era preocuparnos por el centro. Es por eso que decidimos ordenar las sanguijuealas según su distancia al centro. Para ahorrar tiempo computacional, este dato está calculado en el momento de la creación de la sanguijuela para su posterior ordenamiento.
 
+\subsection{¿Por que random?}
+
+Cuando empezamos a pensar otras soluciones alternativas a la golosa. Pensamos primero en soluciones totalmente suboptimas, como ir sacando desde el borde hacia el centro. Pero considerabamos que era tan malo que quitaba cualquier tipo de anàlisis serio. Luego también pensamos en ir sacando una del centro y una del borde alternadamente, pero no tenía tampoco algún justificativo conceptual alguno. Ahí fué entonces cuando pensamos en la solución random. Que claramente no responde a ningún compartamiento definido. Nos resultó mejor esto ya que las otras opciones pensadas o directamente estaban mal propuestas a proposito o no tenían sentido alguno
+
 
 \subsection{Por tiempos no llegamos}
   Una mejora que quisimos agregar que no llegamos por tiempos fue no utilizar los bordes y las sanguijuelas, y solo tenerlas como coeficientes reemplazados en el resultado de las celdas que necesiten de los adyacentes para su cálculo. Hubo una realización parcial en el desarrollo de la matriz banda
 
 
-¿porque random?
+
 
 
 
