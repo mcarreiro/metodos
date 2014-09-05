@@ -351,7 +351,7 @@ void Windshield::resolveBandMatrix(){
             }
         }
     }
-	//cout << bandMatrix[21][ancho];
+	
 }
 
 void Windshield::gaussianElimination(){
@@ -563,8 +563,8 @@ int main(int argc, char *argv[]) {
     if(argc > 1){
         input_file >> a >> b >> h >> r >> Ts >> CantSanguijuleas;
     }else{
-    	//cin >> a >> b >> h >> r >> Ts >> CantSanguijuleas; TODO: Put this correctly
-    	a = 100; b = 100 ; h = 2.5 ; r = 10 ; Ts = 400 ; CantSanguijuleas = 4;
+    	cin >> a >> b >> h >> r >> Ts >> CantSanguijuleas; 
+    	//a = 100; b = 100 ; h = 2.5 ; r = 10 ; Ts = 400 ; CantSanguijuleas = 4;
     }
     posSanguijuelas = vector<vector<double > >(CantSanguijuleas, vector<double >(2));
     for (int i=0; i<CantSanguijuleas;i++){
@@ -585,27 +585,29 @@ int main(int argc, char *argv[]) {
         }
         if(argv[3] == string("1")){
             windshield->resolveBandMatrix();
+
         }
+
+	//windshield->solucionRandom();
+      // windshield->showMatriz();
         windshield->printMatriz(argv[2]);
     }else{
-    	//windshield->resolveBandMatrix();
-        //windshield->solucionRandom();
-        //windshield->showMatriz();
-   }
+    
+  }
 
-	windshield->resolveBandMatrix();
-	windshield->printCoreTemp();
-    vector<int> removed = windshield->removeLeachesByGreedy();
-    windshield->printCoreTemp();
+// windshield->resolveBandMatrix();
+// windshield->printCoreTemp();
+//    vector<int> removed = windshield->removeLeachesByGreedy();
+//    windshield->printCoreTemp();
+//
+//    cout << "SIZE: " <<removed.size() << "\n" << flush;
+//
+//    for (int i=0; i<removed.size() ; ++i){
+//     cout << removed[i] << "\n" << flush;
+//    }
 
-    cout << "SIZE: " <<removed.size() << "\n" << flush;
-
-    for (int i=0; i<removed.size() ; ++i){
-    	cout << removed[i] << "\n" << flush;
-    }
-
-    return 0;
-}
+   return 0;
+}   
 
 
 
