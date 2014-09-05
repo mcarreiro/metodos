@@ -1,6 +1,5 @@
 \section{Resultados}
 
-
 \subsection{Resultados Random}
 
 A continuación observaremos una matriz en la que la única sanguijuela que se debe eliminar es la del centro. Esta se encuentra exactamente en el punto central. Adicionalmente hay otras 4 sanguijuelas en las puntas. Matar a estas no soluciona nada ya que la del centro esta aplicando una temperatura constante de 400 Cº. 
@@ -52,3 +51,18 @@ Veamos ahora cuanto demoró cada una de las soluciones. Es importante aclarar qu
 \end{figure}
 
 Acá podemos observar que, como era de esperarse, cuanto màs sanguijuelas elimina mas tiempo tarda, ya que debe recalcular las temperaturas.
+
+\subsection{Resultados Greedy}
+
+Veamos ahora para la misma matriz como se comporta nuestro otro algoritmo. 
+
+
+\begin{figure}[htb]
+\begin{center}
+\includegraphics[scale=0.50]{imagenes/random_2.png} 
+\caption{Resultado corrida con greedy} 
+\end{center}
+\end{figure}
+\newpage
+
+En todas las corridas obtuvimos el mismo resultado y demoraron lo mismo. Era de esperarse, ya que efectivamente en este caso, la sanguijuela a eliminar era la del medio.
