@@ -6,39 +6,45 @@ Como explicamos en la introducción de la matriz banda, llegamos a la conclusió
 
 \subsubsection{Optimización espacial}
 
-El problema de representar la matriz original es que la mayoría de los valores son 0 y solo importan los elementos de la banda de la matriz, por lo tanto una forma de optimizar espacialmente es solo guardar la banda, con lo que se logra reducir considerablemente el espacio en esta representación, ya que suponiendo que se tiene un parabrisas de n filas y m columnas, el tamaño de la matriz original sería de (n*m)^2, mientras que con la optimización de matriz banda quedaría de tamaño (n*m)*(2*m+1)
+El problema de representar la matriz original es que la mayoría de los valores son 0 y solo importan los elementos de la banda de la matriz, por lo tanto una forma de optimizar espacialmente es solo guardar la banda, con lo que se logra reducir considerablemente el espacio en esta representación, ya que suponiendo que se tiene un parabrisas de n filas y m columnas, el tamaño de la matriz original sería de $(n*m)^2$, mientras que con la optimización de matriz banda quedaría de tamaño (n*m)*(2*m+1)
 
 \subsubsection{Optimización temporal}
 \subsubsection{Ejemplo}
 \begin{verbatim}
 
 por cada posición del parabrisas
-		pos = fila posicion + columna posicion * ancho;
+       pos = fila posicion + columna posicion * ancho;
 		
-		si en esa posición hay una SANGUIJUELA:
+              si en esa posición hay una SANGUIJUELA:
 			
-			bandMatrix[pos][ancho] = 1;
-			bandMatrix[pos][res] = ts;
+                     bandMatrix[pos][ancho] = 1;
+                     bandMatrix[pos][res] = ts;
 		
-		si esa posición es borde FRIO:
-			bandMatrix[pos][ancho] = 1;
-			bandMatrix[pos][res] = -100;
+              si esa posición es borde FRIO:
+                    
+                      bandMatrix[pos][ancho] = 1;
+                     bandMatrix[pos][res] = -100;
 
 
-		en caso de que esa posición sea VACIA:
-			bandMatrix[pos][ancho] = -4;
-			bandMatrix[pos][res] = 0;
-			if(matrix[i][j-1]->status != VACIO) bandMatrix[pos][res] -= matrix[i][j-1]->temp;
-			else bandMatrix[pos][ancho-1] = 1;
+              en caso de que esa posición sea VACIA:
+                     bandMatrix[pos][ancho] = -4;
+                     bandMatrix[pos][res] = 0;
+                    
+                    si la izquierda no es vacìa
+                            bandMatrix[pos][res] -= matrix[i][j-1]->temp;
+                     else
+                             bandMatrix[pos][ancho-1] = 1;
 
-			if(matrix[i-1][j]->status != VACIO) bandMatrix[pos][res] -= matrix[i-1][j]->temp;
-			else bandMatrix[pos][0] = 1;
+                   si la de arriba no es vacìa bandMatrix[pos][res] -= matrix[i-1][j]->temp;
+                     else bandMatrix[pos][0] = 1;
 
-			if(matrix[i][j+1]->status != VACIO) bandMatrix[pos][res] -= matrix[i][j+1]->temp;
-			else bandMatrix[pos][ancho+1] = 1;
-
-			if(matrix[i+1][j]->status != VACIO) bandMatrix[pos][res] -= matrix[i+1][j]->temp;
-			else bandMatrix[pos][ancho*2] = 1;
+                     si la de la derecha no es vacìa
+                            bandMatrix[pos][res] -= matrix[i][j+1]->temp;
+                     else bandMatrix[pos][ancho+1] = 1;
+                     
+                     si la de abajo no es vacìa
+                      bandMatrix[pos][res] -= matrix[i+1][j]->temp;
+                     else bandMatrix[pos][ancho*2] = 1;
 		
 
 \end{verbatim}
@@ -49,12 +55,15 @@ por cada posición del parabrisas
 \end{center}
 \end{figure}
 
+\newpage
 \begin{figure}[htb]
 \begin{center}
 \includegraphics[scale=0.70]{imagenes/matrizej.png} 
 \caption{Matriz de ecuaciones del ejemplo} 
 \end{center}
 \end{figure}
+
+\newpage
 
 \begin{figure}[htb]
 \begin{center}
@@ -63,6 +72,7 @@ por cada posición del parabrisas
 \end{center}
 \end{figure}
 
+\newpage
 
 \subsection{Soluciones}
 
