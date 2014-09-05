@@ -554,61 +554,46 @@ int main(int argc, char *argv[]) {
     vector< vector<double > > posSanguijuelas;
 
 
-ifstream input_file (argv[1]);
-        double rowS;
-        double colS;
+    ifstream input_file (argv[1]);
+	double rowS;
+	double colS;
     if(argc > 1){
         input_file >> a >> b >> h >> r >> Ts >> CantSanguijuleas;
     }else{
-
-    cin >> a >> b >> h >> r >> Ts >> CantSanguijuleas;
+    	cin >> a >> b >> h >> r >> Ts >> CantSanguijuleas;
     }
     posSanguijuelas = vector<vector<double > >(CantSanguijuleas, vector<double >(2));
-     for (int i=0; i<CantSanguijuleas;i++){
+    for (int i=0; i<CantSanguijuleas;i++){
+		if(argc > 1){
+			input_file >> rowS >> colS;
+		}else{
+			cin >> rowS >> colS ;
+		}
 
-            if(argc > 1){
-                input_file >> rowS >> colS;
-            }else{
-                cin >> rowS >> colS ;
-            }
+		posSanguijuelas[i][0] = rowS;
+		posSanguijuelas[i][1] = colS;
+    }
 
-            posSanguijuelas[i][0] = rowS;
-            posSanguijuelas[i][1] = colS;
-        }
-
-        Windshield *windshield = new Windshield(a, b, h, r, Ts, CantSanguijuleas, posSanguijuelas);
-       // windshield->matarSanguijuelasRandom();
-       if(argc > 1){
-        if(argv[3] == string("0")){
+	Windshield *windshield = new Windshield(a, b, h, r, Ts, CantSanguijuleas, posSanguijuelas);
+	if(argc > 1){
+		if(argv[3] == string("0")){
             windshield->gaussianElimination();
         }
-
         if(argv[3] == string("1")){
             windshield->resolveBandMatrix();
         }
-
-          windshield->printMatriz(argv[2]);
-       }
-       else{
-
-       windshield->resolveBandMatrix();
-        windshield->solucionRandom();
-        windshield->showMatriz();
-        /*Windshield *windshield2 = new Windshield(a, b, h, r, Ts, CantSanguijuleas, posSanguijuelas);
-        windshield2->gaussianElimination();
-
-        for(int i = 0; i < windshield->matrix.size();i++){
-            for(int j = 0; j < windshield->matrix[0].size();j++){
-                if( windshield2->matrix[i][j]->temp !=  windshield->matrix[i][j]->temp){
-                    cout << fixed;
-                    cout << "(" << i << "," << j << ") " << setprecision(5) << windshield2->matrix[i][j]->temp << " vs " << windshield->matrix[i][j]->temp << "\n" << flush;
-                }
-            }
-        }*/
-       }
-
+        windshield->printMatriz(argv[2]);
+    }else{
+    	//windshield->resolveBandMatrix();
+        //windshield->solucionRandom();
         //windshield->showMatriz();
-    //windshield->orderLeachesCentrically();
+   }
+
+    windshield->orderLeachesCentrically();
+
+    for (int i=0 ; i< windshield->leachesOrderedCentrically.size() ; ++i){
+    	windshield->leachesOrderedCentrically[i].distanceToCenter;
+    }
 
     return 0;
 }
