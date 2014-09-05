@@ -81,6 +81,30 @@ por cada posición del parabrisas //O(N*M)
 
 \newpage
 
+\subsection{Eliminación Gaussiana}
+ A modo de comparación recreamos el clásico método de resolución de Eliminación Gaussiana que consta de la eliminación progresiva de variables en el sistema de ecuaciones, hasta tener sólo una ecuación con una incógnita. Una vez resuelta esta, se procede por sustitución regresiva hasta obtener los valores de todas las variables.
+
+\begin{verbatim}
+Class Windshield{
+    resolveByGaussianElimination(){
+         gaussianElimination();
+         backSubstitution();
+    } 
+    gaussianElimination(){
+        for rows k already been reduced
+            iMax = findPivot();
+            Swap rows k and imax;
+            Force 0’s in column A[k+1..n-1][k];
+    }
+    backSubstitution(){
+        for row from last to first:
+            calculateFromNextOneExceptForLast()
+    }
+}
+\end{verbatim}
+
+
+
 \subsection{Soluciones}
 
 Para resolver el problema que se nos pide, planteamos distintos tipos de solución. Inicialmente encaramos el problema de manera exacta, pero lo deshechamos inmediatamente ya que sabiendo que es un problema de decisión, el tiempo para determinar cuál es el número mínimo de sanguijuelas a eliminar es exponencial en la cantidad de estas. Es por eso que decidimos realizar una heurística, ya que el tiempo es preciado cuando el parabrisas de nuestra nave tiene poco tiempo antes de que se rompa en caso de estar en situación crítica. Para modo de comparación tomamos dos tipos de algoritmos para establecer que es una mejor solución.
