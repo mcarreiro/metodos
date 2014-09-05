@@ -1,25 +1,10 @@
 \section{Conclusiones}
 
-Se pudo observar que capturar los paquetes ARP en distintas redes locales da bastante informaci\'on
-sobre la red. Es decir, con un an\'alisis est\'adistico sobre los paquetes ARP \emph{who-has} 
-tomando como referencia las fuentes de informaci\'on que se pueden definir a partir de las IPs
-que emiten mensajes y las IPs detinatarias, se puede por ejemplo deducir cu\'al es el router de
-la red. Otra manera de verlo es que si ya se sabe cu\'al es la IP del router, los experimentos
-sirven para ver que efectivamente el router es el dispositivos m\'as solicitado, como se puede
-ver en la experimentaci\'on que se realiz\'o en el departamento de un miembro del equipo.
+\subsection{Random vs Greedy}
 
-Se ejecut\'o la herramienta implementada en distintas redes, lo que supuso distintos resultados. 
-Lo interesante de esto es detectar nodos distinguidos o un comportamiento especial que hizo que
-tuvi\'eramos que averiguar ciertas cosas, como sucedi\'o en las capturas de la red del McDonald's
-en donde aparece una forma de asignar IPs cuando se levantan interfaces. Asimismo, con los 
-histogramas hechos de las fuentes correspondientes se puede ver el grado de actividad de ciertos
-dispositivos en la red (por lo menos en el momento en que fue realizado el experimento; para mayor
-precisi\'on se deber\'ia realizar una captura m\'as amplia y de m\'as duraci\'on).
+Como observamos en los resultados para el caso en el que la sanguijuela/s se encuentran en el medio claramente es mejor el greedy, ya que siempre mata a la sanguijuela correcta a diferencia del random que sólo lo hizo en uno de los 3 intentos. Por otro lado si tenemos en cuenta los tiempos que pueden llegar a demorar recalcular las temperaturas, esto le da todavìa una mayor importancia, ya que se reduce considerablemente el tiempo de ejecución.
 
-Como \'ultima observaci\'on cabe destacar que no se debi\'o participar 'agresivamente' en la red. Es
-decir, la escucha de los paquetes ARP fue pasiva. S\'olo con recopilar informaci\'on durante un 
-tiempo determinado se puede deducir con bastante confiabilidad qu\'e dispositivo hace de servidor
-para el resto de los nodos de la red. 
+Por otro lado en el segundo caso, donde es un poco mas conflictivo para la lógica de ir sacando los del medio, no sólo sigue siendo claramente mejor que el random sino que ademàs también da la mejor por solución. Por lo tanto podemos concluir que no sólo es un mejor algoritmo que el random sino que además se comporta de forma óptima para los casos que pensabamos iban a ser mas conflictivos.
 
 \newpage
 
