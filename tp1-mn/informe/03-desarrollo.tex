@@ -2,7 +2,9 @@
 
 \subsection{Soluciones}
 
-Para resolver el problema que se nos pide, seleccionar que sanguijuelas matar, pensamos una soluciòn Greedy  (\ref{sec:MatrizCuadrada}) + Local Search . Esta consiste, a grandes rasgos, en ir matando las sanguijuelas del medio (ya que son las que mayor temperatura generan en el punto crìtico) hasta que el punto central este por debajo del 235 Cº. Para tener algún parámetro de referencia pensamos en buscar otra solución posible, y asì  compararlas y chequear que esta sea mejor. Esta solución alternativa consiste básicamente en seleccionar aleatoriamente que sanguijuelas aniquilar. Procederemos ahora a explicar en detalle las implementaciones de estas soluciones.
+Para resolver el problema que se nos pide, planteamos distintos tipos de solución. Inicialmente encaramos el problema de manera exacta, pero lo deshechamos inmediatamente ya que sabiendo que es un problema de decisión, el tiempo para determinar cuál es el número mínimo de sanguijuelas a eliminar es exponencial en la cantidad de estas. Es por eso que decidimos realizar una heurística, ya que el tiempo es preciado cuando el parabrisas de nuestra nave tiene poco tiempo antes de que se rompa en caso de estar en situación crítica. Para modo de comparación tomamos dos tipos de algoritmos para establecer que es una mejor solución.
+
+seleccionar que sanguijuelas matar, pensamos una solución Greedy  (\ref{sec:MatrizCuadrada}) + Local Search . Esta consiste, a grandes rasgos, en ir matando las sanguijuelas del medio (ya que son las que mayor temperatura generan en el punto crìtico) hasta que el punto central este por debajo del 235 Cº. Para tener algún parámetro de referencia pensamos en buscar otra solución posible, y asì  compararlas y chequear que esta sea mejor. Esta solución alternativa consiste básicamente en seleccionar aleatoriamente que sanguijuelas aniquilar. Procederemos ahora a explicar en detalle las implementaciones de estas soluciones.
 
 \subsection{Solución GRASP}
 
