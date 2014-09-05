@@ -1,12 +1,35 @@
 \section{Desarrollo}
 
-\section{Soluciones}
+\subsection{Soluciones}
 
-Para resolver el problema que se nos pide, seleccionar que sanguijuelas matar, pensamos una soluciòn grasp. Esta consiste, a grandes rasgos, en ir matando las sanguijuelas del medio (ya que son las que mayor temperatura generan en el punto crìtico) hasta que el punto central este por debajo del Ts. Para tener algún parametro de comparación.
+Para resolver el problema que se nos pide, seleccionar que sanguijuelas matar, pensamos una soluciòn Greedy  (\ref{sec:MatrizCuadrada}) + Local Search . Esta consiste, a grandes rasgos, en ir matando las sanguijuelas del medio (ya que son las que mayor temperatura generan en el punto crìtico) hasta que el punto central este por debajo del 235 Cº. Para tener algún parámetro de referencia pensamos en buscar otra solución posible, y asì  compararlas y chequear que esta sea mejor. Esta solución alternativa consiste básicamente en seleccionar aleatoriamente que sanguijuelas aniquilar. Procederemos ahora a explicar en detalle las implementaciones de estas soluciones.
+
+\subsection{Solución GRASP}
 
 
+\subsection{Solución Random}\label{sec:solucionRandom}
 
 
+En esta solución seleccionamos de nuestro array de posiciones de sanguijuelas (que es el array recibido por parametro, osea con las posiciones sin discretizar) una al azar y la eliminamos. Luego ejecutamos de nuevo el cálculo de las temperaturas y chequeamos si el punto crìtico esta por debajo del 235 Cº.Si no lo está, elegimos otra al azar y repetimos el proceso hasta que lo esté. 
+
+Pseudocodigo:
+
+\begin{verbatim}
+Class Windshield{
+    randomSolution(){
+         while(!this->isCooledDown(){
+             this->randomKill()
+         }
+    } 
+    isCooledDown(){
+         return (matrix.centerPoint < Ts)
+    }
+    randomKill(){
+         randomRemove(posSanguijuelas)
+         this->recalculateTemps()
+    }
+}
+\end{verbatim}
 
 
 

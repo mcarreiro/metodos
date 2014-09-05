@@ -4,6 +4,7 @@ Espiral vs centrico
 
 no contar los bordes ni las sanguijuelas para crear la matriz banda
 
+¿porque random?
 
 
 \subsection{Red del Alto Palermo}
@@ -15,58 +16,6 @@ la red, es decir, a otro dominio. Lo que se puede deducir es que el dominio de e
 \verb@172.17.0.0 /16@ donde la IP del router es \verb@172.17.0.1@, el cu\'al se comunica con el
 resto de los dispositivos bajo este dominio.
 
-\subsection{Red de Subway}
 
-Lo primero que se ve es la baja cantidad de IPs que interactuan en la comunicaci\'on. Adem\'as se
-observa que la interacci\'on se realiza en una red privada del dominio \verb@192.168.0.0 /16@ que 
-se suele usar para redes dom\'esticas. Naturalmente la IP del router en este tipo de red es 
-\verb@192.168.0.1@.
-
-De los datos obtenidos, se observ\'o que casi todos los pedidos ten\'ian como destinatario la IP
-del router. Algo que se puede ver en el histograma realizado para esta red es que la IP que menos
-informaci\'on tiene es \verb@192.168.1.20@, lo que significa que es la que m\'as pedidos ARP 
-efectu\'o.
-
-\subsection{Red de Casa}
-
-La primera observaci\'on que se puede realizar es que a pesar de contar unicamente con 5 diferentes 
-dispositivos con acceso a la red (incluyendo el router) se pueden observar un total de 13 diferentes 
-IPs. En segunda instancia se puede detectar f\'acilmente la linea de la entrop\'ia en un valor 
-aproximado de $2.1$ y as\'i tambi\'en la \'unica IP que aporta menor informaci\'on que la entrop\'ia 
-a la IP del router en valor de \verb@192.168.0.1@ el cual da salida hacia internet para los 
-dispositivos de la red. Notar que el dominio de la IP del router vuelve hacer la red dom\'estica \verb@192.168.0.0 /16@, lo que es natural porque el experimento fue realizado en un departamento.
-
-\subsection{Red de McDonald's}
-
-Esta red es la que m\'as datos aport\'o al an\'alisis, fue claramente en la que m\'as pedidos ARP
-se hicieron entre distintos nodos. Esto hace que tenga algunos aspectos interesantes para observar,
-en comparaci\'on con las otras redes analizadas. A diferencia de las anteriores redes se puede 
-destacar que al ser una red de mayor incidencia (contar con una cantidad alta de dispositivos 
-en la comunicaci\'on), la diferencia de informaci\'on entre la IP de menor informaci\'on (el router) 
-y la entrop\'ia de la fuente es mayor.
-
-Lo que no se observa bien en el histograma es que la mayor\'ia de las IPs son del estilo 
-\verb@172.17.203.X@, lo que nos induce a pensar que el dominio de la red es \verb@172.17.203.0 \24@
-y que la mayor interacci\'on se produce en ese dominio, en donde la mayor\'ia de los pedidos ARP
-tienen como destinatario la IP \verb@172.17.203.1@ que se deduce que la IP correspondiente al 
-router de la LAN (es la que menos informaci\'on aporta en la fuente graficada en el histograma, es
-decir, es la barra m\'as peque\~na). 
-
-Otro aspecto interesante que se observ\'o es la gran cantidad de veces que figuraba \verb@0.0.0.0@
-como IP emisora. Este es un pedido ARP gratuito que puede ser utilizado por cualquier dispositivo
-para verificar que determinada IP no est\'e siendo usada (la IP destino del pedido). La aparici\'on
-de esta IP tiene relaci\'on con el siguiente hecho: la IP destino de estos pedidos siempre 
-pertenec\'ian al dominio \verb@169.254.0.0 /16@, usada como \emph{broadcast} de \emph{link local}. Se
-usa para comunicaci\'on entre hosts en un s\'olo \emph{link}. Los hosts obtienen direcciones de este
-dominio mediante una autoconfiguraci\'on, por ejemplo, en situaciones donde el servidor DHCP 
-(\emph{Dynamic Host Configuration Protocol}) no se encuentra. Es decir, cuando una interfaz pierde
-la conexi\'on o es activada, si no puede recibir una IP con el protocolo DHCP se le asigna una IP
-del dominio \verb@169.254.0.0 /16@. Por lo tanto, con el pedido de parte de \verb@0.0.0.0@ se 
-quiere fijar si la IP que le fue asignada no est\'a siendo usada en la red. El \'ultimo comentario
-con este dominio, que tambi\'en est\'a relacionado con el pedido gratuito, es el siguiente: se 
-observ\'o un pedido ARP donde la IP emisora era la misma que la destinataria por cada IP del dominio \verb@169.254.0.0 /16@. Esta particularidad la vimos en el taller; cuando se levanta una interfaz
-muchos sistemas env\'ian autom\'aticamente un pedido ARP gratuito con esta caracter\'istica. De esta
-manera se pueden detectar IPs duplicadas (en caso de recibir respuesta) y actualiza	la cach\'e ARP
-de los dem\'as hosts de la red.
 
 
