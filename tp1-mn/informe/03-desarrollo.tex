@@ -61,21 +61,21 @@ Para resolver el sistema de ecuaciones lo que se aplica es una eliminación gaus
 //PRIMERO LA HAGO TRIANGULAR SUPERIOR
 PARA CADA FILA DE LA BANDA, DE ARRIBA A ABAJO
 		
-       SI NO ES VACIO SE QUE ABAJO HAY TODO CERO, CONTINUO
-       SI ES VACIA DIAGONALIZO:
-            
-             centro = bandMatrix[i][n];
-             actual = bandMatrix[i+h][n-h];
-             multiplicador = actual / centro;
-			
-             fila[i+h] - fila[i];
+   SI NO ES VACIO SE QUE ABAJO HAY TODO CERO, CONTINUO
+   SI ES VACIA DIAGONALIZO:
+        
+         centro = bandMatrix[i][n];
+         actual = bandMatrix[i+h][n-h];
+         multiplicador = actual / centro;
+		
+         fila[i+h] - fila[i];
 
-               resultado[i+h] -= resultado[i] * multiplicador;
-       
-	
-	//BACK SUBSTITUTION
-	PARA CADA FILA DE LA BANDA, DE ABAJO A ARRIBA
-		fila = i / n;
+         resultado[i+h] -= resultado[i] * multiplicador;
+   
+
+    //BACK SUBSTITUTION
+    PARA CADA FILA DE LA BANDA, DE ABAJO A ARRIBA
+        fila = i / n;
         for( int h = 1; h <= n; h++){ // COMO ES BANDA ME FIJO SI EN LA DIAGONAL IZQ INF HAY DISTINTO DE 0 PARA PIVOTEAR
            
              centro = bandMatrix[i][n];
@@ -83,15 +83,10 @@ PARA CADA FILA DE LA BANDA, DE ARRIBA A ABAJO
            
              multiplicador = actual / centro;
 		
-              fila[i-h] - fila[i];
-                resultado[i-h] -= resultado[i]* multiplicador;
+             fila[i-h] - fila[i];
+             resultado[i-h] -= resultado[i]* multiplicador;
                 
-	        lleno el parabrisas con las temperaturas actuales
-
-        
-	
-
-
+             lleno el parabrisas con las temperaturas actuales
 \end{verbatim}
 
 
