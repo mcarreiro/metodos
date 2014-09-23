@@ -6,46 +6,45 @@ Lo primero que se nos viene a la mente cuando tenemos esto es el método de elim
 Veamos ahora más en detalle como funciona cada uno de estos algoritmos.
 
 \subsection{Algoritmo de eliminación gaussiana}
-Es importante en este punto aclarar que para poder hacer estos cálculos la martiz debe ser cuadrada (\ref{sec:MatrizCuadrada}).
-Los pasos a seguir en este algoritmo son:
 
-\begin{itemize}
+Este algoritmo consisnte en restar multiplos de filas entre sí, comenzando desde la primera, con el objetivo de lograr todos ceros por debajo de la diagonal y numero disintos de cero en la diagonal, es decir una matriz triangular superior. En el caso que me quedase un 0 en la diagonal el algoritmo comprende la opción de pivoteo (mas adelante demostraremos que en realidad no necesitamos) que consiste en intercambiar filas entre sí.
 
-\item Ir a la columna no cero extrema izquierda
-\item Si el primer renglón tiene un cero en esta columna, intercambiarlo con otro que no lo tenga
-\item Luego, obtener ceros debajo de este elemento delantero, sumando múltiplos adecuados del renglón superior a los renglones debajo de él
-\item Cubrir el renglón superior y repetir el proceso anterior con la submatriz restante. Repetir con el resto de los renglones (en este punto la matriz se encuentra en la forma de escalón)
-\item Comenzando con el último renglón no cero, avanzar hacia arriba: para cada renglón obtener un 1 delantero e introducir ceros arriba de éste sumando múltiplos 
-correspondientes a los renglones correspondientes
+Veamos ahora algún ejemplo concreto con la siguiente matriz de $3 \times 3$:
 
-\end{itemize}
- 
-Ejemplo:
+\[ \left( \begin{array}{ccc}
+4 & 8 & 9 \\
+1 & 5 & 2 \\
+2 & 3 & 1 \end{array} \right)\] 
 
-\begin{figure}[htb]
-\begin{center}
-\includegraphics[scale=0.70]{imagenes/ejemplo_gaus_1.png} 
-\caption{Sistema de ecuaciones de 3x3} 
-\end{center}
-\end{figure}
+Hago 
 
-\begin{figure}[htb]
-\begin{center}
-\includegraphics[scale=0.70]{imagenes/ejemplo_gaus_2.png} 
-\caption{Sistema de ecuaciones con ceros en la primera columna} 
-\end{center}
-\end{figure}
+\emph{F2 = F2 - 1/4 (F1) y F3 = F3 - 1/2 (F1)} 
+\[ \left( \begin{array}{ccc}
+4 & 8 & 12 \\
+0 & 3 & -1 \\
+0 & -1 & -5 \end{array} \right)\] 
 
-\begin{figure}[htb]
-\begin{center}
-\includegraphics[scale=0.70]{imagenes/ejemplo_gaus_3.png} 
-\caption{Sistema de ecuaciones triangulado} 
-\end{center}
-\end{figure}
+y ahora
+
+\emph{F3 = F3 - -1/3 (F2) } 
+\[ \left( \begin{array}{ccc}
+4 & 8 & 12 \\
+0 & 3 & -1 \\
+0 & 0 & -31/3 \end{array} \right)\] 
+
+Si entendemos la matriz original como un sistema de ecuaciones con 3 variables igualadas a distintos resultados, como podemos ver a continuación:
+
+\[ \left( \begin{array}{ccc}
+4x & 8y & 9z \\
+1x & 5y & 2z \\
+2x & 3y & 1z \end{array} \right)\] 
+
+Con esta nueva matriz triangulada podríamos calcular facilmente el valor de cada variable ya que de la última ecuación podemos despejar facilmente el valor de Z, reemplazarlo en las otras ecuaciones y así calcular las otras variables.
+
+
 \newpage
-En esta última imagen podemos observar que el valor de Z ya lo tenemos. Por lo tanto si reemplazamos el mismo en la ecuación arriba obtenemos Y y lo mismo con la primer ecuación.
 
-La complejidad computacional de esto es aproximadamente $n^3$. Esto es, el número de operaciones requeridas es $n^3$ si el tamaño de la matriz es n x n. Por lo tanto puede volverse un cálclo sumamente grande si la matriz es de dimensiones importantes. Por esto decidimos pensar un poco mejor la situación y encontrarle la vuelta para resolverlo en un tiempo razonable. 
+Por último cabe destacar que la complejidad computacional de esta trinagulación es de O($n^3$). Lo cual puede llegar a un cálculo sumamente extenso si nuestro n es considerablemente importante. Por esto es que decidimos pensar un poco mas la situación y encontrarle la vuelta para resolver en un tiempo razonable.
 
 \subsection{Matriz banda}
 
