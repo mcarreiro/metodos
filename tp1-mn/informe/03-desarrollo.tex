@@ -154,8 +154,10 @@ Class Windshield{
 
 Para resolver el problema que se nos pide, planteamos distintos tipos de solución. Inicialmente encaramos el problema de manera exacta, pero lo deshechamos inmediatamente ya que sabiendo que es un problema de decisión, el tiempo para determinar cuál es el número mínimo de sanguijuelas a eliminar es exponencial en la cantidad de estas. Es por eso que decidimos realizar una heurística, ya que el tiempo es preciado cuando el parabrisas de nuestra nave tiene poco tiempo antes de que se rompa en caso de estar en situación crítica. Para modo de comparación tomamos dos tipos de algoritmos para establecer que es una mejor solución.
 
+\subsubsection{Punto Crítico}
+En un parabrisas real el punto crítico se determina por el punto exacto del medio del parabrisas, en la posición (largo/2, ancho/2), pero en nuestra estructura de datos que representa al parabrisas esta puede no llegar a tener un punto exacto dependiendo de la discretización que tenga el mismo. Por lo tanto tenemos dos casos, el caso $"$trivial$"$ es hay un punto exacto donde cae el punto crítico en el parabrisas, en ese caso elegimos ese. En el caso contrario, cuando tomamos la mitad del largo y ancho del parabrisas para elegir el punto crítico este no sera un número entero, por lo tanto redondearemos para abajo y el punto crítico que consideraremos se priorizara teniendo el cuenta el que esta más arriba a la izquierda.
 
-\subsection{Solución Greedy + Local Search}
+\subsubsection{Solución Greedy + Local Search}
 Esta solución consiste, a grandes rasgos, en ir matando las sanguijuelas del medio (ya que son las que mayor temperatura generan en el punto crítico) hasta que el punto central este por debajo del 235 Cº. Finalmente, tratar de realizar una búsqueda local intentado volcar de vuelta en el parabrisas sanguijuelas que habíamos decidido sacar y viendo si era realmente necesario eliminarla para poder salir del estado crítico. La decisión de hacer LocalSearch está dada para el caso de que exista una sanguijuela en el centro y dos a la misma distancia. Pero de un lado haya una linea de muchas sanguijuelas, por lo que es muy probable que con sacar la del lado de la linea fuera suficiente. A continuación podemos observar el resultado de lo recién descripto. Inicialmente había una sanguijuela en el medio y una equidistante a la que quedó, pero eligió sacar esta del lado de la linea.
 
 \begin{figure}[htb]
@@ -203,7 +205,7 @@ Class Windshield{
 
 
 
-\subsection{Solución Random}\label{sec:solucionRandom}
+\subsubsection{Solución Random}\label{sec:solucionRandom}
 
 
 En esta solución seleccionamos de nuestro array de posiciones de sanguijuelas (que es el array recibido por parametro, osea con las posiciones sin discretizar) una al azar y la eliminamos. Luego ejecutamos de nuevo el cálculo de las temperaturas y chequeamos si el punto crìtico esta por debajo del 235 Cº.Si no lo está, elegimos otra al azar y repetimos el proceso hasta que lo esté. 
