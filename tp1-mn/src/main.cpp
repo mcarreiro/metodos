@@ -267,21 +267,20 @@ vector<vector<double> > Windshield::bandMatrix(){
 				bandMatrix[pos][ancho] = -4;
 				bandMatrix[pos][res] = 0;
 
-				if(matrix[i][j-1]->status != VACIO) bandMatrix[pos][res] -= matrix[i][j-1]->temp;
-				else bandMatrix[pos][ancho-1] = 1;
+				/*if(matrix[i][j-1]->status != VACIO) bandMatrix[pos][res] -= matrix[i][j-1]->temp;
+				else */ bandMatrix[pos][ancho-1] = 1;
 
 
-
-				if(matrix[i-1][j]->status != VACIO) bandMatrix[pos][res] -= matrix[i-1][j]->temp;
-				else bandMatrix[pos][0] = 1;
-
-
-				if(matrix[i][j+1]->status != VACIO) bandMatrix[pos][res] -= matrix[i][j+1]->temp;
-				else bandMatrix[pos][ancho+1] = 1;
+				/*if(matrix[i-1][j]->status != VACIO) bandMatrix[pos][res] -= matrix[i-1][j]->temp;
+				else*/ bandMatrix[pos][0] = 1;
 
 
-				if(matrix[i+1][j]->status != VACIO) bandMatrix[pos][res] -= matrix[i+1][j]->temp;
-				else bandMatrix[pos][ancho*2] = 1;
+				/*if(matrix[i][j+1]->status != VACIO) bandMatrix[pos][res] -= matrix[i][j+1]->temp;
+				else*/ bandMatrix[pos][ancho+1] = 1;
+
+
+				/*if(matrix[i+1][j]->status != VACIO) bandMatrix[pos][res] -= matrix[i+1][j]->temp;
+				else*/ bandMatrix[pos][ancho*2] = 1;
 				break;
 			}
         }
@@ -298,7 +297,7 @@ void Windshield::resolveBandMatrix(){
 	for(int i = 0; i < n*m -1; i++){
 		fila = i / n;
 		columna = i % n;
-        if(matrix[fila][columna]->status != VACIO)  continue; // SI NO ES VACIO SE QUE ABAJO HAY TODO CERO
+        //if(matrix[fila][columna]->status != VACIO)  continue; // SI NO ES VACIO SE QUE ABAJO HAY TODO CERO
         for( int h = 1; h <= n; h++){ // COMO ES BANDA ME FIJO SI EN LA DIAGONAL IZQ INF HAY DISTINTO DE 0 PARA PIVOTEAR
             if(i+h >= n*m || n-h < 0) break;
             double centro = bandMatrix[i][n];
