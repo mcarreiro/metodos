@@ -95,29 +95,31 @@ PARA CADA FILA DE LA BANDA, DE ARRIBA A ABAJO
 Aca podemos ver un ejemplo para ver como funciona lo explicado en esta sección.
 En este caso es un parabrisas de 6x6 granulado en 1 y una sanguijuela de radio 1 con temperatura de 500 en la primera posición.
 
-El parabrisas se vería representado asi:
+El parabrisas se vería representado asi (hay que tener en cuenta que en realidad hay que espejarlo horizontalmente ya que para nosotros el eje de coordenadas se encuentra arriba a la izquierda):
+
 \begin{figure}[htb]
 \begin{center}
-\includegraphics[scale=0.70]{imagenes/parabrisasej.png} 
-\caption{Vista de la representación de Parabrisas del ejemplo} 
+\includegraphics[scale=0.40]{imagenes/matrizbandaej_instancia.png} 
+\includegraphics[scale=0.40]{imagenes/matrizbandaej_temp.png} 
 \end{center}
 \end{figure}
 
-Si se generase la matriz del sistema de ecuaciones se crearía la siguiente matriz:
+Planteando el parabrisas como un sistema de ecuaciones sin tener en cuenta que es banda y por consiguiente sin realizar ninguna optimización al respecto, la matriz quedaría como el siguiente gráfico, donde en cada fila se representa todo el parabrisas como un vector $"$aplanado$"$ pero hace referencia a una en particular. Por lo tanto la diagonal de la matriz representa al coeficiente de esa posición en el parabrisas.
+En base a lo que explicamos anteriormente y como la temperatura de cada celda vacía es el promedio de las 4 contiguas, al plantear la ecuación tij = (t i+1 j + t i-1 j + t i j+1 + t i j-1 ) /4 !!! ACA LATEXEAR !!! nos queda que los coeficientes de la celda actual es 4 y de las contiguas un -1, igualando todo a cero.
+Por lo tanto en cada fila de la matriz calculamos la posición que deberia queda cada celda contigua en la matriz aplanada.
 
-\newpage
-\begin{figure}[htb]
+\begin{figure}
 \begin{center}
 \includegraphics[scale=0.50]{imagenes/matrizej.png} 
 \caption{Matriz de ecuaciones del ejemplo} 
 \end{center}
 \end{figure}
 
-\newpage
+
 
 Pero en vez de eso al optimizar la matriz banda se genera esta matriz:
 
-\begin{figure}[htb]
+\begin{figure}
 \begin{center}
 \includegraphics[scale=0.70]{imagenes/matrizbandaej.png} 
 \caption{Matriz banda del ejemplo} 

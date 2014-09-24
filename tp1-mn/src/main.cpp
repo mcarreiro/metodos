@@ -16,7 +16,7 @@ typedef vector<rvector> rmatrix;
 enum statusPoint {VACIO,SANGUIJUELA,FRIO};
 
 bool esIgual(double a, double b, double error = 0.0000000001){
-	return abs(a-b) <= 0;
+	return abs(a-b) <= error;
 }
 
 void imprimirMatriz(vector<vector<double> > matriz, int filas, int columnas){
@@ -268,19 +268,23 @@ vector<vector<double> > Windshield::bandMatrix(){
 				bandMatrix[pos][res] = 0;
 
 				/*if(matrix[i][j-1]->status != VACIO) bandMatrix[pos][res] -= matrix[i][j-1]->temp;
-				else */ bandMatrix[pos][ancho-1] = 1;
+				else */ 
+				bandMatrix[pos][ancho-1] = 1;
 
 
 				/*if(matrix[i-1][j]->status != VACIO) bandMatrix[pos][res] -= matrix[i-1][j]->temp;
-				else*/ bandMatrix[pos][0] = 1;
+				else*/ 
+				bandMatrix[pos][0] = 1;
 
 
 				/*if(matrix[i][j+1]->status != VACIO) bandMatrix[pos][res] -= matrix[i][j+1]->temp;
-				else*/ bandMatrix[pos][ancho+1] = 1;
+				else*/ 
+				bandMatrix[pos][ancho+1] = 1;
 
 
 				/*if(matrix[i+1][j]->status != VACIO) bandMatrix[pos][res] -= matrix[i+1][j]->temp;
-				else*/ bandMatrix[pos][ancho*2] = 1;
+				else*/ 
+				bandMatrix[pos][ancho*2] = 1;
 				break;
 			}
         }
