@@ -2,15 +2,33 @@
 
 \subsection{Resultados Random}
 
-A continuación observaremos una matriz en la que la única sanguijuela que se debe eliminar es la del centro. Esta se encuentra exactamente en el punto central. Adicionalmente hay otras 4 sanguijuelas en las puntas. Matar a estas no soluciona nada ya que la del centro esta aplicando una temperatura constante de 400 Cº. 
-
+A continuación observaremos un caso en la que la única sanguijuela que se debe eliminar es la del centro. Esta se encuentra exactamente en el punto central. Adicionalmente hay otras 4 sanguijuelas en las puntas. Matar a estas no soluciona nada ya que la del centro esta aplicando una temperatura constante de 400 Cº. Lo observaremos con 4 discretizaciones distintas para tener un mas amplio panorama.
 \begin{figure}[htb]
-\begin{center}
-\includegraphics[scale=0.70]{imagenes/test5.png} 
-\caption{Parabrisas con 5 sanguijuelas} 
-\end{center}
-\end{figure}
+        \centering
+        \begin{subfigure}[htb]{0.3\textwidth}
+                \includegraphics[width=\textwidth]{imagenes/test5_gran1.png}
+                \caption{Granularidad 1}
+               
+        \end{subfigure}
+        \begin{subfigure}[htb]{0.3\textwidth}
+                \includegraphics[width=\textwidth]{imagenes/test5.png}
+                \caption{Granularidad 2.5}
+                
+        \end{subfigure}      
 
+        
+        \begin{subfigure}[htb]{0.3\textwidth}
+                \includegraphics[width=\textwidth]{imagenes/test5_gran5.png}
+                \caption{Granularidad 5}
+                
+        \end{subfigure}
+        \begin{subfigure}[htb]{0.3\textwidth}
+                \includegraphics[width=\textwidth]{imagenes/test5_gran10.png}
+                \caption{Granularidad 10}
+               
+        \end{subfigure}       
+       
+\end{figure}
 
 Ahora veamos que obtenemos al aplicarle distintas veces el algoritmo de solución random explicado en el desarrollo (\ref{sec:solucionRandom}).
 \newpage
