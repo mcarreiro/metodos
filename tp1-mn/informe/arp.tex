@@ -5,6 +5,8 @@
 \usepackage[width=18cm, left=1.5cm, top=2.25cm, height= 25cm]{geometry}
 
 \usepackage{amsmath}
+\usepackage{algorithm}
+\usepackage[noend]{algpseudocode}
 \usepackage{amsfonts}
 \usepackage{amssymb}
 \usepackage{fancyhdr}
@@ -16,9 +18,12 @@
 \usepackage{float}
 \usepackage{listings}
 \usepackage{color}
+\usepackage{verbatim}
 \definecolor{gray97}{gray}{.97}
 \definecolor{gray75}{gray}{.75}
 \definecolor{gray45}{gray}{.45}
+
+\algdef{SE}[DOWHILE]{Do}{doWhile}{\algorithmicdo}[1]{\algorithmicwhile\ #1}%
  
 \usepackage{listings}
 \lstset{ frame=Ltb,

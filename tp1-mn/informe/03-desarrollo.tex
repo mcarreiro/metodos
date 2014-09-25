@@ -152,92 +152,70 @@ Class Windshield{
 
 
 
-\subsection{Soluciones}
+\section{Soluciones}
 
-Para resolver el problema que se nos pide, planteamos distintos tipos de solución. Inicialmente encaramos el problema de manera exacta, pero lo deshechamos inmediatamente ya que sabiendo que es un problema de decisión, el tiempo para determinar cuál es el número mínimo de sanguijuelas a eliminar es exponencial en la cantidad de estas. Es por eso que decidimos realizar una heurística, ya que el tiempo es preciado cuando el parabrisas de nuestra nave tiene poco tiempo antes de que se rompa en caso de estar en situación crítica. Para modo de comparación tomamos dos tipos de algoritmos para establecer que es una mejor solución.
+La resolución del problema de evitar el punto crítico en el centro del parabrisas consiste en la eliminación de sanguijuelas. Suponiendo la existencia de $n$ sanguijuelas, los cantidad de subconjuntos a probar son $2^n$. Es un número que crece rápidamente y si bien se puede resolver por fuerza bruta (ayudados por Backtracking y derivados), suponemos que encontrar el mínimo tiene un orden exponencial en la cantidad de sanguijuelas.
 
-\subsubsection{Punto Crítico}
+Finalmente, planteamos dos tipos de solución a modo de comparación. Estos serán detallados más adelante. Ambas son heurísticas por lo mencionado anteriormente.
+
+\subsection{Punto Crítico}
 En un parabrisas real el punto crítico se determina por el punto exacto del medio del parabrisas, en la posición (largo/2, ancho/2), pero en nuestra estructura de datos que representa al parabrisas esta puede no llegar a tener un punto exacto dependiendo de la discretización que tenga el mismo. Por lo tanto tenemos dos casos, el caso $"$trivial$"$ es hay un punto exacto donde cae el punto crítico en el parabrisas, en ese caso elegimos ese. En el caso contrario, cuando tomamos la mitad del largo y ancho del parabrisas para elegir el punto crítico este no sera un número entero, por lo tanto redondearemos para abajo y el punto crítico que consideraremos se priorizara teniendo el cuenta el que esta más arriba a la izquierda.
 
-\subsubsection{Solución Greedy + Local Search}
-Esta solución consiste, a grandes rasgos, en ir matando las sanguijuelas del medio (ya que son las que mayor temperatura generan en el punto crítico) hasta que el punto central este por debajo del 235 Cº. Finalmente, tratar de realizar una búsqueda local intentado volcar de vuelta en el parabrisas sanguijuelas que habíamos decidido sacar y viendo si era realmente necesario eliminarla para poder salir del estado crítico. La decisión de hacer LocalSearch está dada para el caso de que exista una sanguijuela en el centro y dos a la misma distancia. Pero de un lado haya una linea de muchas sanguijuelas, por lo que es muy probable que con sacar la del lado de la linea fuera suficiente. A continuación podemos observar el resultado de lo recién descripto. Inicialmente había una sanguijuela en el medio y una equidistante a la que quedó, pero eligió sacar esta del lado de la linea.
-
-\begin{figure}[htb]
-\begin{center}
-\includegraphics[scale=0.50]{imagenes/greedy_corrido.png} 
-\caption{Resultado tercer corrida} 
-\end{center}
-\end{figure}
+\subsection{Solución Greedy}
+Esta solución consiste en ir seleccionando las sanguijuelas más cercanas al punto medio hasta que el punto central esté por debajo de 235 Cº. Al no ser una solución exacta es posible que eliminar la más cercana al centro no pertenezca a la mejor solución, pero es intuitivo suponer que la sanguijuela que más cause calor al punto medio esté cerca del mismo. \\
+Lo primero que se realiza es ordenar las sanguijuelas según su distancia al centro. Para esto utilizamos la función $sort()$ de C++ que utiliza como comparador el valor pre-calculado de distancia al centro. El orden de esta parte es $O(n.log(n))$ en donde n es la cantidad de sanguijuelas.\\
+Al ser una solución golosa (greedy), elige la siguiente sanguijuela siempre y cuando no se haya enfríado el punto medio y haya salido del estado crítico. La elección está dada por la sanguijuela más cerca todavía no elegida en una previa iteración.\\
+Suponiendo que la complejidad de rehacer el cálculo es $RA$, la complejidad final es:  $O(n.log(n) + n*RA)$. Notar que esa última $n$ es en el peor caso que tengamos que eliminar todas las sanguijuelas, pero debería ser un $k < n$.
 
 \newpage
-Pseudocodigo:
 
-\begin{verbatim}
-Class Windshield{
-    greedySolution(){
-        orderLeachesByDistanceToCenter()
-         while(!this->isCooledDown(){
-             leachesToRemove(this->removeFirstNotRemovedLeachOrderedCentrically())
-         }
+\begin{algorithm}
+\caption{Solución Greedy}\label{euclid}
+\begin{algorithmic}[1]
+\State $\textit{orderLeachesByDistanceToCenter()}$
+\State $\textit{leachesToRemove} \gets []$
+\Do
+    \State leachesToRemove.add(this->removeFirstNotRemovedLeachOrderedCentrically())
+  \doWhile{$not isCooledDown()$} % <--- use \doWhile for the "while" at the end
+\State $\textit{return leachesToRemove;}$
+\end{algorithmic}
+\end{algorithm}
 
-         localSearchTryToReturnLeaches(leachesToRemove);
+\begin{algorithm}
+\caption{isCooledDown()}\label{euclid}
+\begin{algorithmic}[1]
+\State $\textit{recalculateByBandMatrix();}$
+\State $\textit{return (matrix.centerPoint < Ts)}$ \Comment{$TS es la temperatura máxima que soporta el centro$}
+\end{algorithmic}
+\end{algorithm}
 
-         return leachesToRemove;
-    } 
-    isCooledDown(){
-         recalculateByBandMatrix();
-         return (matrix.centerPoint < Ts)
-    }
-    orderLeachesByDistanceToCenter(){
-        sort(leaches).by(lambda {|leach,otherLeach| leach.distanceToCenter < otherLeach.distanceToCenter})
-    }
-
-    localSearchTryToReturnLeaches(leachesToRemove){
-        for (leach in leachesToRemove){
-            putBackLeachInWindshield(leach);
-            if (isCooledDown){
-                leachesToRemove.erase(leach)
-            }else{
-                takeOutLeachFromWindshield(leach);
-            }
-        }
-    }
-}
-\end{verbatim}
-
-
+\begin{algorithm}
+\caption{orderLeachesByDistanceToCenter()}\label{euclid}
+\begin{algorithmic}[1]
+\State $\textit{sort(leaches).by(lambda {|leach,otherLeach| leach.distanceToCenter < otherLeach.distanceToCenter});}$
+\State $\textit{return (matrix.centerPoint < Ts); //TS es la temperatura máxima que soporta el centro}$
+\end{algorithmic}
+\end{algorithm}
 
 \subsubsection{Solución Random}\label{sec:solucionRandom}
-
-
 En esta solución seleccionamos de nuestro array de posiciones de sanguijuelas (que es el array recibido por parametro, osea con las posiciones sin discretizar) una al azar y la eliminamos. Luego ejecutamos de nuevo el cálculo de las temperaturas y chequeamos si el punto crìtico esta por debajo del 235 Cº.Si no lo está, elegimos otra al azar y repetimos el proceso hasta que lo esté. 
 
-Pseudocodigo:
+\begin{algorithm}
+\caption{RandomSolution}\label{euclid}
+\begin{algorithmic}[1]
+\Do
+    \State this->randomKill()
+  \doWhile{$not isCooledDown()$} % <--- use \doWhile for the "while" at the end
+\State $\textit{return leachesToRemove;}$
+\end{algorithmic}
+\end{algorithm}
 
-\begin{verbatim}
-Class Windshield{
-    randomSolution(){
-         while(!this->isCooledDown(){
-             this->randomKill()
-         }
-    } 
-    isCooledDown(){
-         return (matrix.centerPoint < Ts)
-    }
-    randomKill(){
-         randomRemove(posSanguijuelas)
-         this->recalculateTemps()
-    }
-}
-\end{verbatim}
-
-Vale aclarar que el recalculateTemps utiliza el metodo band matrix, ya que este es màs rápido.
-
-
-
-
-
-
-
+\begin{algorithm}
+\caption{randomKill()}\label{euclid}
+\begin{algorithmic}[1]
+\State $\textit{randomRemoveFrom(allLeaches);}$ \Comment{All Leaches is loaded with matrix}
+\State $\textit{recalculateByBandMatrix();}$
+\end{algorithmic}
+\end{algorithm}
 
 
