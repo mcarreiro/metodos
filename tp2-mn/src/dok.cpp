@@ -44,6 +44,19 @@ DOK* DOK::multiplicar(DOK& otra)
     return result;
 }
 
+vector<double>* DOK::porVector(vector<double>& v){
+    vector<double>* result = new vector<double>();
+    for(map<pair<int, int>, double>::iterator iterador = dicc.begin();
+        iterador != dicc.end();
+        iterador++)
+    {
+        // POS <A,B> por la posicion B del vector y lo sumo a la posicion A
+        pair<int, int> pos = iterador->first;
+        result->at(pos.first) += dicc[pos] * v[pos.second];
+    }
+    return result;
+}
+
 DOK* DOK::transponer()
 {
     DOK *result  = new DOK();
