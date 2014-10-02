@@ -35,9 +35,10 @@ DOK* DOK::multiplicar(DOK& otra)
         {
             // (A,B) * (C,D) con B=C y la sumo en (A,D)
             if(itIZQ->first.second == itDER->first.first){
-                result->dicc[make_pair(itIZQ->first.first, itDER->first.second)] += dicc[itIZQ->first] * otra.dicc[itDER->first];
-                if(  result->dicc[make_pair(itIZQ->first.first, itDER->first.second)] == 0) // SI SE VUELVE CERO LO TENGO QUE BORRAR
-                     result->dicc.erase(make_pair(itIZQ->first.first, itDER->first.second));
+                pair<int, int> pos = make_pair(itIZQ->first.first, itDER->first.second);
+                result->dicc[pos] += dicc[itIZQ->first] * otra.dicc[itDER->first];
+                if(result->dicc[pos] == 0) // SI SE VUELVE CERO LO TENGO QUE BORRAR
+                     result->dicc.erase(pos);
             }
         }
     }
@@ -67,7 +68,7 @@ DOK* DOK::transponer()
         int f = iterador->first.first;
         int c = iterador->first.second;
         double valor = iterador->second;
-        result->definir(f, c, valor);
+        result->definir(c, f, valor);
     }
     return result;
 }
