@@ -7,5 +7,6 @@ class Indeg
 {
 public:
     Indeg(vector<vector<int> >);
+    void print();
 	vector<int> values;
 };

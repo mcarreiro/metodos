@@ -26,3 +26,9 @@ Indeg::Indeg(vector<vector<int> > links){
 	}
 
 }
+
+void Indeg::print(){
+    for(int i=0;i<values.size();i++){
+        cout << "A la página " << i << " lo apuntan: " << values[i] << " páginas" << endl;
+    }
+}
