@@ -32,7 +32,7 @@ int main(int argc, char *argv[]) {
     links[3][i++] = 2;
 
     PageRank pr(0.85, 4, links);
-    pr.iterar(2);
+    pr.iterar(50);
 
     return 0;
 }

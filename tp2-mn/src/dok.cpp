@@ -5,6 +5,7 @@ DOK::DOK(int dim) : dim(dim) {}
 
 void DOK::definir(int f, int c, double val)
 {
+    cout << "DEFINIR:" << val << " POS: (" << f << " , " << c << ")\n";
    pair<int,int> pos = make_pair(f,c);
     if(val != 0){ // Lo tengo que agregar o modificar valor.
         dicc[pos] = val;
@@ -46,16 +47,24 @@ DOK* DOK::multiplicar(DOK& otra)
 }
 
 vector<double>* DOK::porVector(vector<double>& v){
-    vector<double>* result = new vector<double>();
+    vector<double>* result = new vector<double>(v.size());
+    for(unsigned int i = 0; i < v.size(); i++)
+        result->at(i) = 0.00;
    for(map<pair<int, int>, double>::iterator iterador = dicc.begin();
         iterador != dicc.end();
         iterador++)
     {
         // POS <A,B> por la posicion B del vector y lo sumo a la posicion A
         pair<int, int> pos = iterador->first;
-        cout << "( "<<pos.first << " , " << pos.second << ")\n";
+        //cout << "( "<<pos.first << " , " << pos.second << ")\n";
+
+        //cout << "EL VALOR:" << result->at(pos.first) << "\n";
+
         result->at(pos.first) += dicc[pos] * v[pos.second];
+
     }
+        for(unsigned int i = 0; i < v.size(); i++)
+        cout << "VECTOR POS:" << i << " VALOR: "<< result->at(i) << "\n";
     return result;
 }
 
