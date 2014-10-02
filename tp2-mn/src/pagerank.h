@@ -5,7 +5,8 @@
 class PageRank
 {
 public:
-    PageRank(double, vector<vector<int> >&);    
+    PageRank(){};
+    PageRank(double,int, vector<vector<int> >&);
     void iterar(int);
     double manhattan();
 private:

@@ -3,13 +3,13 @@
 #include <iostream>     // std::cout
 
 //links: en la pos "i" tiene un vector con sus links "j" de salida
-PageRank::PageRank(double c, int dim, vector<vector<int>& links) : c(c){
+PageRank::PageRank(double c, int dim, vector<vector<int> >& links) : c(c){
 
-	v = new vector<double>(dim);
-	for(int i = 0; i < n; i++)
+	v = * new vector<double>(dim);
+	for(int i = 0; i < dim; i++)
 		v[i] = 1/dim;
 
-	matriz = new DOK(n);
+	matriz = * new DOK(dim);
 	for(int i = 0; i < links.size(); i++){
 		vector<int> salidas = links[i];
 		int cantSalidas = salidas.size();
@@ -26,7 +26,7 @@ PageRank::PageRank(double c, int dim, vector<vector<int>& links) : c(c){
 			}
 		}
 	}
-}    
+}
 
 double PageRank::manhattan(){
 	double res = 0;
@@ -38,7 +38,7 @@ double PageRank::manhattan(){
 
 void PageRank::iterar(int iteraciones = 1){
 	for(int i = 0; i < iteraciones; i++){
-		v = matriz.porVector(v);
-		cout << "IT: " << i << "NORMA: "<< this.manhattan() << "\n";		
+		this->v = *matriz.porVector(v);
+		cout << "IT: " << i << "NORMA: "<< this->manhattan() << "\n";
 	}
 }
