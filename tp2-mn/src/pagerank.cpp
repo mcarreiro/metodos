@@ -23,14 +23,14 @@ PageRank::PageRank(double c, int dim, vector<vector<int> >& links) : c(c){
 			for(int j = 0; j < cantSalidas; j++){
 				int s = salidas[j];
 
-				matriz.definir(s, i, 1.0/cantSalidas); // En la columna i se define a los s que sale.
+				matriz.definir(s, i, 1.00/cantSalidas ); // En la columna i se define a los s que sale.
 			}
 		}else{
-			for(int j = 0; j < dim; j++)
+			/*for(int j = 0; j < dim; j++)
 			{
 				//if(j != 1)
 					matriz.definir(j, i, 1.0/(dim));
-			}
+			}*/
 		}
 	}
 
@@ -46,16 +46,32 @@ double PageRank::manhattan(){
 
 void PageRank::iterar(int iteraciones = 1){
     int tam = v.size();
-	for(int i = 0; i < iteraciones; i++){
-		this->v = *matriz.porVector(v);
+	for(int it = 0; it < iteraciones; it++){
 
-        /*for (int i = 0; i < tam; i++)
+        double normaX = manhattan();
+        v = *matriz.porVector(v);
+        for (int i = 0; i < tam; i++)
+            v[i] = c*v[i];
+        double normaY = manhattan();
+        double w = normaX - normaY;
+        for (int i = 0; i < tam; i++)
+            v[i] = v[i]+w*(1.0/tam);
+        /*double manh = this->manhattan();
+
+
+       double sum = 0;
+        for (int i = 0; i < tam; i++)
         {
-            dx_sum = 0;
-        // for(auto e : dangling_nodes)
-        //dx_sum += x[e];
-            v[i] += dx_sum / n * stay_probability + ex_sum * ((1 - c) / tam);
+            if(matriz.cantColNoCero(i) == 0)
+                sum += v[i];
+        }
+        this->v = *matriz.porVector(v);
+        for (int i = 0; i < tam; i++)
+        {
+
+            v[i] += sum / tam * c + manh * ((1 - c) / tam);
         }*/
-		cout << "IT: " << i << "NORMA: "<< this->manhattan() << "\n";
+
+		cout << "IT: " << it << "NORMA: "<< this->manhattan() << "\n";
 	}
 }
