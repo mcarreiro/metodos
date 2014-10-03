@@ -28,8 +28,8 @@ PageRank::PageRank(double c, int dim, vector<vector<int> >& links) : c(c){
 		}else{
 			for(int j = 0; j < dim; j++)
 			{
-				if(j != 1)
-					matriz.definir(j, i, 1.0/(dim-1));
+				//if(j != 1)
+					matriz.definir(j, i, 1.0/(dim));
 			}
 		}
 	}
@@ -39,14 +39,23 @@ PageRank::PageRank(double c, int dim, vector<vector<int> >& links) : c(c){
 double PageRank::manhattan(){
 	double res = 0;
 	for(unsigned int i = 0; i < v.size(); i++){
-		res += v[i];
+		res += abs(v[i]);
 	}
 	return res;
 }
 
 void PageRank::iterar(int iteraciones = 1){
+    int tam = v.size();
 	for(int i = 0; i < iteraciones; i++){
 		this->v = *matriz.porVector(v);
+
+        /*for (int i = 0; i < tam; i++)
+        {
+            dx_sum = 0;
+        // for(auto e : dangling_nodes)
+        //dx_sum += x[e];
+            v[i] += dx_sum / n * stay_probability + ex_sum * ((1 - c) / tam);
+        }*/
 		cout << "IT: " << i << "NORMA: "<< this->manhattan() << "\n";
 	}
 }

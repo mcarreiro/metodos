@@ -15,6 +15,7 @@ public:
     DOK* multiplicar(DOK&);
     vector<double>* porVector(vector<double>&);
     DOK* transponer();
+    double cantColNoCero(int);
     int dim;
     map<pair<int,int>, double> dicc;
 private:

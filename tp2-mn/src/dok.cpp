@@ -21,6 +21,18 @@ double DOK::obtener(int f, int c){
     return (dicc.count(pos) > 0) ? dicc[pos] : 0;
 }
 
+double DOK::cantColNoCero(int c){
+    int cant = 0;
+    for(map<pair<int, int>, double>::iterator iterador = dicc.begin();
+        iterador != dicc.end();
+        iterador++)
+    {
+        if(iterador->first.second == c)
+            cant++;
+    }
+    return cant;
+}
+
 DOK* DOK::multiplicar(DOK& otra)
 {
 
