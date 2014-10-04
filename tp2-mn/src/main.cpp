@@ -8,7 +8,7 @@
 #include <fstream>
 #include <algorithm>
 #include <ctime>
-#include "pagerank.h"
+#include "pagerank.cpp"
 
 using namespace std;
 
