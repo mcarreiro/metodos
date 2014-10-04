@@ -9,7 +9,7 @@ PageRank::PageRank(double c, int dim, vector<vector<int> >& links) : c(c){
 	v = * new vector<double>(dim);
 
 	for(int i = 0; i < dim; i++){
-		v.at(i) = 1/(double)dim;
+		v.at(i) = 1.00/(double)dim;
 	}
 
 
@@ -45,9 +45,13 @@ double PageRank::manhattan(){
 }
 
 void PageRank::iterar(int iteraciones = 1){
+
+	//M = (1-c)*A + c * B con B = 1/n * matriz de unos
+	//Mv = (1-c) * Av + c*Bv 
+
     int tam = v.size();
 	for(int it = 0; it < iteraciones; it++){
-
+		/*
         double normaX = manhattan();
         v = *matriz.porVector(v);
         for (int i = 0; i < tam; i++)
@@ -56,22 +60,13 @@ void PageRank::iterar(int iteraciones = 1){
         double w = normaX - normaY;
         for (int i = 0; i < tam; i++)
             v[i] = v[i]+w*(1.0/tam);
-        /*double manh = this->manhattan();
+       */
 
-
-       double sum = 0;
-        for (int i = 0; i < tam; i++)
-        {
-            if(matriz.cantColNoCero(i) == 0)
-                sum += v[i];
-        }
-        this->v = *matriz.porVector(v);
-        for (int i = 0; i < tam; i++)
-        {
-
-            v[i] += sum / tam * c + manh * ((1 - c) / tam);
-        }*/
-
+        vector<double> w = *matriz.porVector(v);
+        for (int i = 0; i < tam; i++){
+            v[i] = (1-c)*w[i]+(c/(double)tam);
+			//cout << v[i] << ";";
+		}
 		cout << "IT: " << it << "NORMA: "<< this->manhattan() << "\n";
 	}
 }

@@ -9,8 +9,9 @@ public:
     PageRank(double,int, vector<vector<int> >&);
     void iterar(int);
     double manhattan();
-private:
     double c; //Probabilidad navegante aleatorio
     vector<double> v;
     DOK matriz;
+private:
+    
 };

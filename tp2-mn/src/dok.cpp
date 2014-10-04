@@ -75,8 +75,8 @@ vector<double>* DOK::porVector(vector<double>& v){
         result->at(pos.first) += dicc[pos] * v[pos.second];
 
     }
-        for(unsigned int i = 0; i < v.size(); i++)
-        cout << "VECTOR POS:" << i << " VALOR: "<< result->at(i) << "\n";
+        //for(unsigned int i = 0; i < v.size(); i++)
+        //cout << "VECTOR POS:" << i << " VALOR: "<< result->at(i) << "\n";
     return result;
 }
 
