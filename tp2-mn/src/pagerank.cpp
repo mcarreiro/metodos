@@ -4,7 +4,7 @@
 #include <iomanip>
 
 //links: en la pos "i" tiene un vector con sus links "j" de salida
-PageRank::PageRank(double c, int dim, vector<vector<int> >& links) : c(c){
+PageRank::PageRank(double c, double tolerancia, int dim, vector<vector<int> >& links) : c(c), tolerancia(tolerancia){
 
 	v = * new vector<double>(dim);
 
@@ -36,37 +36,33 @@ PageRank::PageRank(double c, int dim, vector<vector<int> >& links) : c(c){
 
 }
 
-double PageRank::manhattan(){
+double PageRank::manhattan(vector<double>& x, vector<double>&y){
 	double res = 0;
-	for(unsigned int i = 0; i < v.size(); i++){
-		res += abs(v[i]);
+	for(unsigned int i = 0; i < x.size(); i++){
+		res += abs(x[i] - y[i]);
 	}
 	return res;
 }
 
-void PageRank::iterar(int iteraciones = 1){
+void PageRank::ranking(int max){
 
 	//M = (1-c)*A + c * B con B = 1/n * matriz de unos
 	//Mv = (1-c) * Av + c*Bv 
 
     int tam = v.size();
-	for(int it = 0; it < iteraciones; it++){
-		/*
-        double normaX = manhattan();
-        v = *matriz.porVector(v);
-        for (int i = 0; i < tam; i++)
-            v[i] = c*v[i];
-        double normaY = manhattan();
-        double w = normaX - normaY;
-        for (int i = 0; i < tam; i++)
-            v[i] = v[i]+w*(1.0/tam);
-       */
+    int it = 0;
+    double norma;
+	while(it == 0 || (norma > tolerancia && it < max)  ){
 
-        vector<double> w = *matriz.porVector(v);
+
+        vector<double> w = v;
+        v = *matriz.porVector(v);
         for (int i = 0; i < tam; i++){
-            v[i] = (1-c)*w[i]+(c/(double)tam);
+            v[i] = (1-c)*v[i]+(c/(double)tam);
 			//cout << v[i] << ";";
 		}
-		cout << "IT: " << it << "NORMA: "<< this->manhattan() << "\n";
+		norma = this->manhattan(v,w);
+		cout << "IT: " << it << "NORMA: "<< norma << "\n";
+		it++;
 	}
 }

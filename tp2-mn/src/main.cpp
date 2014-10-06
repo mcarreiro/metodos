@@ -31,8 +31,8 @@ int main(int argc, char *argv[]) {
     links[3][i++] = 0;
     links[3][i++] = 2;
 
-    PageRank pr(0.15, 4, links);
-    pr.iterar(50); //
+    PageRank pr(0.15, 0.0000001, 4, links);
+    pr.ranking(100); //
 
     //CON MISMA PROBA
     links = * new vector<vector<int> >(4);

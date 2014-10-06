@@ -6,10 +6,11 @@ class PageRank
 {
 public:
     PageRank(){};
-    PageRank(double,int, vector<vector<int> >&);
-    void iterar(int);
-    double manhattan();
+    PageRank(double, double,int, vector<vector<int> >&);
+    void ranking(int);
+    double manhattan(vector<double>&, vector<double>&);
     double c; //Probabilidad navegante aleatorio
+    double tolerancia; //Criterio de parada
     vector<double> v;
     DOK matriz;
 private:
