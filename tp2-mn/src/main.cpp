@@ -9,78 +9,30 @@
 #include <algorithm>
 #include <ctime>
 #include "pagerank.cpp"
+#include "readFile.cpp"
 
 using namespace std;
 
 int main(int argc, char *argv[]) {
-    vector<vector<int> > links = * new vector<vector<int> >(4);
-    links[0] = * new vector<int>(3);
-    int i = 0;
-    links[0][i++] = 1;
-    links[0][i++] = 2;
-    links[0][i++] = 3;
-    links[1] = * new vector<int>(2);
-    i = 0;
-    links[1][i++] = 2;
-    links[1][i++] = 3;
-    links[2] = * new vector<int>(1);
-    i=0;
-    links[2][i++] = 0;
-    links[3] = * new vector<int>(2);
-    i=0;
-    links[3][i++] = 0;
-    links[3][i++] = 2;
 
-    PageRank pr(0.15, 0.0000001, 4, links);
-    pr.ranking(100); //
+    string input = argv[1];
+    string output = argv[2];
 
-    //CON MISMA PROBA
-    links = * new vector<vector<int> >(4);
-    links[0] = * new vector<int>(3);
-    i = 0;
-    links[0][i++] = 1;
-    links[0][i++] = 2;
-    links[0][i++] = 3;
-    links[1] = * new vector<int>(3);
-    i = 0;
-    links[1][i++] = 0;
-    links[1][i++] = 2;
-    links[1][i++] = 3;
-    links[2] = * new vector<int>(3);
-    i=0;
-    links[2][i++] = 0;
-    links[2][i++] = 1;
-    links[2][i++] = 3;
-    links[3] = * new vector<int>(3);
-    i=0;
-    links[3][i++] = 0;
-    links[3][i++] = 1;
-    links[3][i++] = 2;
+    ifstream input_file (input);
+    string metodoAEjecutar, tipoInstancia, path;
+    double c, tolerancia;
+    input_file >> metodoAEjecutar >> c >> tipoInstancia >> path >> tolerancia;
+    cout  << metodoAEjecutar << c << tipoInstancia << path << tolerancia;
 
-    //PageRank pr2(0.15, 4, links);
-    //pr2.iterar(50); //
 
-    links = * new vector<vector<int> >(5);
-    links[0] = * new vector<int>(1);
-    i = 0;
-    links[0][i++] = 1;
-    links[1] = * new vector<int>(1);
-    i = 0;
-    links[1][i++] = 0;
-    links[2] = * new vector<int>(1);
-    i=0;
-    links[2][i++] = 3;
-    links[3] = * new vector<int>(1);
-    i=0;
-    links[3][i++] = 2;
-    links[4] = * new vector<int>(2);
-    i=0;
-    links[4][i++] = 3;
-    links[4][i++] = 2;
+    vector<vector<int> > links = readFile(path);
+  
 
-    //PageRank pr3(0.15, links.size() ,links);
-    //pr3.iterar(10); //
-    for(int j = 0;  j < 4; j++)
+
+    PageRank pr(c, tolerancia, links.size(), links);
+    pr.ranking(100); 
+
+    for(int j = 0;  j < links.size(); j++)
         cout << "POS:" << j << " VALOR: "<< pr.v[j] << "\n";
 
     return 0;

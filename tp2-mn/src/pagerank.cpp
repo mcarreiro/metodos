@@ -4,7 +4,7 @@
 #include <iomanip>
 
 //links: en la pos "i" tiene un vector con sus links "j" de salida
-PageRank::PageRank(double c, double tolerancia, int dim, vector<vector<int> >& links) : c(c), tolerancia(tolerancia){
+PageRank::PageRank(double c, double tolerancia, int dim, vector<vector<int> >& links) : c(1-c), tolerancia(tolerancia){
 
 	v = * new vector<double>(dim);
 
