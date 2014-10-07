@@ -24,16 +24,16 @@ int main(int argc, char *argv[]) {
 
     ifstream input_file (input.c_str());
     string tipoInstancia, path;
-	int alg;	
+	int alg;
     double c, tolerancia;
     input_file >> alg >> c >> tipoInstancia >> path >> tolerancia;
     cout  << alg << c << tipoInstancia << path << tolerancia;
 
 
     vector<vector<int> > links = readFile(path);
-	
 
-	if(alg==0) { 
+
+	if(alg==0) {
 		PageRank pr(c, tolerancia, links.size(), links);
 		pr.ranking(100);
 			for(int j = 0;  j < links.size(); j++)
@@ -42,18 +42,18 @@ int main(int argc, char *argv[]) {
 
 	if(alg==1){
 		Hits h(links);
-		h.hubsYautoridades();
+		h.hubsYautoridades(tolerancia);
 		for(int j = 0;  j < links.size(); j++)
 					cout << "POS:" << j << " VALOR X: "<< h.x[j] << "\n";
 		for(int j = 0;  j < links.size(); j++)
 					cout << "POS:" << j << " VALOR Y: "<< h.y[j] << "\n";
 	}
 
-	
-	
 
 
- 
+
+
+
 
     return 0;
 }
