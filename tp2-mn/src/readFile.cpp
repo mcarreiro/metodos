@@ -56,35 +56,26 @@ vector<vector<int > > leerInstancia0(string fileName) {
 vector<vector<int > > leerInstancia1(string fileName) {
     vector<vector<int > > result;
 
-    string line;
-    int a,b,lastNode;
-    lastNode = -1;
+    string line, ss, node;
+    int buf;
+    vector<int> tokens;
+
     ifstream myReadFile(fileName.c_str());
-    cout << fileName << flush << endl;
+
     if (myReadFile.is_open()){
-        int page = 1;
-        while (page < 3) {
-            getline(myReadFile,line);
-            page ++;
-        }
+        while (getline(myReadFile,line)) {
+            node = line.substr(0, line.find(":"));
+            cout << "node: " << node << endl;
+            ss = line.substr(line.find(":"), line.length()-1);
+            cout << "ss: " << ss << endl;
 
-        string q,w;
-        int amount;
+            istringstream iss(ss);
 
-        myReadFile >> q >> w >> amount;
-
-        result = vector<vector<int > >(amount);
-
-        getline(myReadFile,line);
-        getline(myReadFile,line);
-
-        while (!myReadFile.eof()) {
-            myReadFile >> a >> b;
-            if ((a-1) != lastNode || lastNode == -1){
-                result[a-1] = vector<int >();
-                lastNode = a-1;
+            while (iss >> buf){
+                if (buf == -1)
+                    break
+                tokens.push_back(buf);
             }
-            result[a-1].push_back((b-1));
         }
     }
     myReadFile.close();
