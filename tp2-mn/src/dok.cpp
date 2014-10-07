@@ -5,7 +5,7 @@ DOK::DOK(int dim) : dim(dim) {}
 
 void DOK::definir(int f, int c, double val)
 {
-    cout << "DEFINIR:" << val << " POS: (" << f << " , " << c << ")\n";
+    //cout << "DEFINIR:" << val << " POS: (" << f << " , " << c << ")\n";
    pair<int,int> pos = make_pair(f,c);
     if(val != 0){ // Lo tengo que agregar o modificar valor.
         dicc[pos] = val;

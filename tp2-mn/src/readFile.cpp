@@ -41,13 +41,13 @@ vector<vector<int > > leerInstancia0(string fileName) {
     }
     myReadFile.close();
 
-    for (int i = 0 ; i < result.size() ; i++){
-        cout << i << ": " << flush;
-        for (int j = 0 ; j < result[i].size() ; j++){
-            cout << result[i][j] << " ";
-        }
-        cout << endl;
-    }
+    //for (int i = 0 ; i < result.size() ; i++){
+        //cout << i << ": " << flush;
+        //for (int j = 0 ; j < result[i].size() ; j++){
+        //    cout << result[i][j] << " ";
+        //}
+        //cout << endl;
+    //}
 
 
 
@@ -82,13 +82,13 @@ vector<vector<int > > leerInstancia1(string fileName) {
     }
     myReadFile.close();
 
-    for (int i = 0 ; i < result.size() ; i++){
-        cout << i << ": " << flush;
-        for (int j = 0 ; j < result[i].size() ; j++){
-            cout << result[i][j] << " ";
-        }
-        cout << endl;
-    }
+    //for (int i = 0 ; i < result.size() ; i++){
+    //    cout << i << ": " << flush;
+    //    for (int j = 0 ; j < result[i].size() ; j++){
+    //        cout << result[i][j] << " ";
+    //    }
+    //    cout << endl;
+    //}
 
 
 
