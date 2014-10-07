@@ -11,20 +11,35 @@ Hits::Hits(vector<vector<int> >& links)  {
 			matriz.definir(i, s, 1); // En la columna s pongo 1 porque sale a ella
         }
     }
-
+    //Inicializo vectores de hubs y autoridades como dice el paper
     x = vector<double>(matriz.dim, 1);
     y =  vector<double>(matriz.dim, 1);
+    x = this->normalizarVector(x);
+    y = this->normalizarVector(y);
 }
 
 
-void Hits::hubsYautoridades(){
-    int k = 10;
-     DOK* matriz_transpuesta = matriz.transponer();
+void Hits::hubsYautoridades(double tolerancia){
+    int k = 100;
+    DOK* matriz_transpuesta = matriz.transponer();
+    vector<double> xPrevio;
+    vector<double> yPrevio;
+    double toleranciaX;
+    double toleranciaY;
     for( int i = 0; i < k; i++){
+        xPrevio = x;
         x = *matriz_transpuesta->porVector(y);
-        y = *matriz_transpuesta->porVector(x);
         x = this->normalizarVector(x);
+        toleranciaX = this->manhattan(x,xPrevio);
+
+
+        yPrevio = y;
+        y = *matriz.porVector(x);
         y = this->normalizarVector(y);
+        toleranciaY = this->manhattan(y,yPrevio);
+        if(toleranciaY < tolerancia || toleranciaX < tolerancia){
+            break;
+        }
     }
 }
 
@@ -39,6 +54,14 @@ vector<double> Hits::normalizarVector(vector<double> v){
         v[i] = v[i] / norma2;
     }
     return v;
+}
+
+double Hits::manhattan(vector<double>& x, vector<double>&y){
+	double res = 0;
+	for(unsigned int i = 0; i < x.size(); i++){
+		res += abs(x[i] - y[i]);
+	}
+	return res;
 }
 
 

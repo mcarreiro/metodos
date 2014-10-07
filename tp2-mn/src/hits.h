@@ -4,10 +4,12 @@ class Hits
 {
 public:
     Hits( vector<vector<int> >&);
-    void hubsYautoridades();
+    void hubsYautoridades(double tolerancia);
     vector<double> x;
     vector<double> y;
+
 private:
     DOK matriz;
     vector<double> normalizarVector(vector<double>);
+    double manhattan(vector<double>&, vector<double>&);
 };
