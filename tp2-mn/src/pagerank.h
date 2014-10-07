@@ -1,6 +1,5 @@
 #include <vector>
 #include <cmath>
-#include "dok.cpp"
 
 class PageRank
 {
