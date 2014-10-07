@@ -1,5 +1,7 @@
 #include <iostream>
 #include <fstream>
+#include <sstream>
+#include <string>
 #include <vector>
 
 using namespace std;
@@ -11,7 +13,6 @@ vector<vector<int > > leerInstancia0(string fileName) {
     int a,b,lastNode;
     lastNode = -1;
     ifstream myReadFile(fileName.c_str());
-    cout << fileName << flush << endl;
     if (myReadFile.is_open()){
         int page = 1;
         while (page < 3) {
@@ -58,24 +59,25 @@ vector<vector<int > > leerInstancia1(string fileName) {
 
     string line, ss, node;
     int buf;
-    vector<int> tokens;
 
     ifstream myReadFile(fileName.c_str());
 
     if (myReadFile.is_open()){
         while (getline(myReadFile,line)) {
             node = line.substr(0, line.find(":"));
-            cout << "node: " << node << endl;
-            ss = line.substr(line.find(":"), line.length()-1);
-            cout << "ss: " << ss << endl;
+            ss = line.substr(line.find(":")+1, line.length()-1);
 
             istringstream iss(ss);
 
+            vector<int > tokens;
+
             while (iss >> buf){
                 if (buf == -1)
-                    break
+                    break;
                 tokens.push_back(buf);
             }
+
+            result.push_back(tokens);
         }
     }
     myReadFile.close();
