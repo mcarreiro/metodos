@@ -4,7 +4,7 @@
 #include <iomanip>
 
 //links: en la pos "i" tiene un vector con sus links "j" de salida
-PageRank::PageRank(double c, double tolerancia, int dim, vector<vector<int> >& links) : c(1-c), tolerancia(tolerancia){
+PageRank::PageRank(double c, double tolerancia, int dim, vector<vector<int> >& links) : c(c), tolerancia(tolerancia){
 
 	v = * new vector<double>(dim);
 
@@ -26,11 +26,8 @@ PageRank::PageRank(double c, double tolerancia, int dim, vector<vector<int> >& l
 				matriz.definir(s, i, 1.00/cantSalidas ); // En la columna i se define a los s que sale.
 			}
 		}else{
-			/*for(int j = 0; j < dim; j++)
-			{
-				//if(j != 1)
-					matriz.definir(j, i, 1.0/(dim));
-			}*/
+			//for(int j = 0; j < dim; j++ )
+			//	matriz.definir(j, i, 1.00/dim );
 		}
 	}
 
@@ -49,6 +46,10 @@ void PageRank::ranking(int max){
 	//M = (1-c)*A + c * B con B = 1/n * matriz de unos
 	//Mv = (1-c) * Av + c*Bv 
 
+	//P1 = P + d
+	//P2 = cP1 + (1-c)E
+	//P2v = c(P+D)v + (1-c)Ev
+	//P2v = cPv + cDv + (1-c)Ev
     int tam = v.size();
     int it = 0;
     double norma;
@@ -56,9 +57,17 @@ void PageRank::ranking(int max){
 
 
         vector<double> w = v;
-        v = *matriz.porVector(v);
+        
+        double sumaDesconectados = 0;
         for (int i = 0; i < tam; i++){
-            v[i] = (1-c)*v[i]+(c/(double)tam);
+           if(matriz.cantColNoCero(i) == 0)
+           	sumaDesconectados+= v[i]/tam;
+		}
+
+        v = *matriz.porVector(v);
+        
+        for (int i = 0; i < tam; i++){
+            v[i] = c*(v[i]+sumaDesconectados)+((1-c)/(double)tam)  ;
 			//cout << v[i] << ";";
 		}
 		norma = this->manhattan(v,w);

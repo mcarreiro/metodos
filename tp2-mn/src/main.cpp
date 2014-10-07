@@ -7,9 +7,13 @@
 #include <stdlib.h>
 #include <fstream>
 #include <algorithm>
+#include "dok.cpp"
 #include <ctime>
 #include "pagerank.cpp"
+#include "hits.cpp"
+#include "indeg.cpp"
 #include "readFile.cpp"
+
 
 using namespace std;
 

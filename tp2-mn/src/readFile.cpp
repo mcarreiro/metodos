@@ -1,4 +1,3 @@
-#include "indeg.cpp"
 #include <iostream>
 #include <fstream>
 
