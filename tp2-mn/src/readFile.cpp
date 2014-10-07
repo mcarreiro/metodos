@@ -9,7 +9,7 @@ vector<vector<int > > readFile(string fileName) {
     string line;
     int a,b,lastNode;
     lastNode = -1;
-    ifstream myReadFile(fileName);
+    ifstream myReadFile(fileName.c_str());
     cout << fileName << flush << endl;
     if (myReadFile.is_open()){
         int page = 1;
@@ -25,7 +25,7 @@ vector<vector<int > > readFile(string fileName) {
 
         result = vector<vector<int > >(amount);
 
-        getline(myReadFile,line);        
+        getline(myReadFile,line);
         getline(myReadFile,line);
 
         while (!myReadFile.eof()) {

@@ -22,7 +22,7 @@ int main(int argc, char *argv[]) {
     string input = argv[1];
     string output = argv[2];
 
-    ifstream input_file (input);
+    ifstream input_file (input.c_str());
     string metodoAEjecutar, tipoInstancia, path;
     double c, tolerancia;
     input_file >> metodoAEjecutar >> c >> tipoInstancia >> path >> tolerancia;
@@ -30,11 +30,11 @@ int main(int argc, char *argv[]) {
 
 
     vector<vector<int> > links = readFile(path);
-  
+
 
 
     PageRank pr(c, tolerancia, links.size(), links);
-    pr.ranking(100); 
+    pr.ranking(100);
 
     for(int j = 0;  j < links.size(); j++)
         cout << "POS:" << j << " VALOR: "<< pr.v[j] << "\n";
