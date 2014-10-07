@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013) (format=pdflatex 2014.5.18)  7 OCT 2014 19:35
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013) (format=pdflatex 2014.5.18)  7 OCT 2014 19:46
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -693,13 +693,13 @@ LaTeX Info: Redefining \. on input line 6.
 LaTeX Info: Redefining \% on input line 6.
 ) ) 
 Here is how much of TeX's memory you used:
- 6127 strings out of 493315
- 82741 string characters out of 6137904
+ 6128 strings out of 493315
+ 82749 string characters out of 6137904
  162307 words of memory out of 5000000
- 9430 multiletter control sequences out of 15000+600000
+ 9431 multiletter control sequences out of 15000+600000
  10880 words of font info for 41 fonts, out of 8000000 for 9000
  957 hyphenation exceptions out of 8191
- 38i,13n,43p,545b,244s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 38i,13n,43p,540b,244s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/local/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pf
 b></usr/local/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb
 ></usr/local/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb>
@@ -712,7 +712,7 @@ l/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmss10.pfb></usr/local
 /texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmssbx10.pfb></usr/loca
 l/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local
 /texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb>
-Output written on arp.pdf (8 pages, 499963 bytes).
+Output written on arp.pdf (8 pages, 500114 bytes).
 PDF statistics:
  81 PDF objects out of 1000 (max. 8388607)
  56 compressed objects within 1 object stream
