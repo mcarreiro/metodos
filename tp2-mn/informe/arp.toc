@@ -1,0 +1,9 @@
+\select@language {spanish}
+\contentsline {section}{\numberline {1}Resumen}{3}
+\contentsline {section}{\numberline {2}Introducci\'on te\'orica}{4}
+\contentsline {section}{\numberline {3}Desarrollo}{5}
+\contentsline {subsection}{\numberline {3.1}Matriz Dispersa}{5}
+\contentsline {subsection}{\numberline {3.2}DOK vs CRS vs CSC}{5}
+\contentsline {section}{\numberline {4}Experimentaci\IeC {\'o}n Y Resultados}{6}
+\contentsline {section}{\numberline {5}Discusi\'on}{7}
+\contentsline {section}{\numberline {6}Conclusiones}{8}
