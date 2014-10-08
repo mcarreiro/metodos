@@ -26,7 +26,7 @@ int main(int argc, char *argv[]) {
 	int alg, tipoInstancia;	
     double c, tolerancia;
     input_file >> alg >> c >> tipoInstancia >> path >> tolerancia;
-    cout  << alg << c << tipoInstancia << path << tolerancia;
+    //cout  << alg << c << tipoInstancia << path << tolerancia;
 
 
     vector<vector<int> > links;
@@ -39,8 +39,8 @@ int main(int argc, char *argv[]) {
 	if(alg==0) {
 		PageRank pr(c, tolerancia, links.size(), links);
 		pr.ranking(100);
-			for(int j = 0;  j < links.size(); j++)
-				cout << "POS:" << j << " VALOR: "<< pr.v[j] << "\n";
+			//for(int j = 0;  j < links.size(); j++)
+				//cout << "POS:" << j << " VALOR: "<< pr.v[j] << "\n";
 	}
 
 	if(alg==1){
