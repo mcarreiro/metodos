@@ -2,7 +2,10 @@
 #include <utility>      // std::pair
 #include <iostream>     // std::cout
 #include <iomanip>
+#include <vector>
+#include <cmath>
 
+using namespace std;
 //links: en la pos "i" tiene un vector con sus links "j" de salida
 PageRank::PageRank(double c, double tolerancia, int dim, vector<vector<int> >& links) : c(c), tolerancia(tolerancia){
 
@@ -71,7 +74,7 @@ void PageRank::ranking(int max){
 			//cout << v[i] << ";";
 		}
 		norma = this->manhattan(v,w);
-		cout << "IT: " << it << "NORMA: "<< norma << "\n";
+		cout << it << " "<< norma << "\n";
 		it++;
 	}
 }
