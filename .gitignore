@@ -1,0 +1,7 @@
+*.aux
+*.log
+*~
+a.out
+*.o
+.DS_STORE
+*tests/*.out
