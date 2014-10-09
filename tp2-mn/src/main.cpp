@@ -32,13 +32,22 @@ int main(int argc, char *argv[]) {
     vector<vector<int> > links;
     if(tipoInstancia==0)
 		links = leerInstancia0(path);
-	else
+	else if(tipoInstancia==1)
 		links = leerInstancia1(path);
+    else 
+        links = leerInstancia2(path);
 
 
 	if(alg==0) {
-		PageRank pr(c, tolerancia, links.size(), links);
-		pr.ranking(100);
+        if(tipoInstancia != 2){
+		  PageRank pr(c, tolerancia, links.size(), links);
+          pr.ranking(10000);
+        }else{
+          PageRank pr(c, atoi(argv[3])/(double)10, links.size(), links);
+          pr.ranking(10000);
+      }
+
+		
 			//for(int j = 0;  j < links.size(); j++)
 				//cout << "POS:" << j << " VALOR: "<< pr.v[j] << "\n";
 	}
