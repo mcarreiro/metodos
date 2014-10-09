@@ -27,9 +27,10 @@ int main(int argc, char *argv[]) {
     double c, tolerancia;
     input_file >> alg >> c >> tipoInstancia >> path >> tolerancia;
     //cout  << alg << c << tipoInstancia << path << tolerancia;
-
+    //cout << flush;
 
     vector<vector<int> > links;
+
     if(tipoInstancia==0)
 		links = leerInstancia0(path);
 	else if(tipoInstancia==1)
@@ -41,10 +42,12 @@ int main(int argc, char *argv[]) {
 	if(alg==0) {
         if(tipoInstancia != 2){
 		  PageRank pr(c, tolerancia, links.size(), links);
-          pr.ranking(10000);
+          pr.ranking(100);
         }else{
-          PageRank pr(c, atoi(argv[3])/(double)10, links.size(), links);
-          pr.ranking(10000);
+            double cc = atoi(argv[3])/(double)10;
+            //cout << "ATOI:" << cc;
+          PageRank pr(cc, tolerancia , links.size(), links);
+          pr.ranking(100);
       }
 
 		

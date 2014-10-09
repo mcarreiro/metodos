@@ -115,7 +115,8 @@ vector<vector<int > > leerInstancia2(string fileName) {
         int amount;
 
         myReadFile >> q >> w >> amount;
-
+        amount = amount + 60000;
+        //cout << q << w << amount;
         result = vector<vector<int > >(amount);
 
         getline(myReadFile,line);
@@ -123,6 +124,7 @@ vector<vector<int > > leerInstancia2(string fileName) {
 
         while (!myReadFile.eof()) {
             myReadFile >> a >> b;
+            //cout << a << ";" << b << " - " <<flush;
             if ((a) != lastNode || lastNode == -1){
                 result[a] = vector<int >();
                 lastNode = a;
