@@ -24,7 +24,6 @@ Indeg::Indeg(vector<vector<int> > links){
 			}
 		}
 	}
-
 }
 
 void Indeg::print(){

@@ -17,6 +17,7 @@ PageRank::PageRank(double c, double tolerancia, int dim, vector<vector<int> >& l
 
 
 	matriz = * new DOK(dim);
+	desconectados = * new vector<int>();
 	for(unsigned int i = 0; i < links.size(); i++){
 
 		vector<int> salidas = links[i];
@@ -27,10 +28,9 @@ PageRank::PageRank(double c, double tolerancia, int dim, vector<vector<int> >& l
 				int s = salidas[j];
 
 				matriz.definir(s, i, 1.00/cantSalidas ); // En la columna i se define a los s que sale.
-			}
+			}			
 		}else{
-			//for(int j = 0; j < dim; j++ )
-			//	matriz.definir(j, i, 1.00/dim );
+			desconectados.push_back(i);
 		}
 	}
 
@@ -62,11 +62,11 @@ void PageRank::ranking(int max){
         vector<double> w = v;
         
         double sumaDesconectados = 0;
-        for (int i = 0; i < tam; i++){
-           if(matriz.cantColNoCero(i) == 0)
-           	sumaDesconectados+= v[i]/tam;
+        int nodoDesc;
+        for (int i = 0; i < desconectados.size(); i++){
+        	nodoDesc = desconectados[i];
+           	sumaDesconectados+= v[nodoDesc]/tam;
 		}
-
         v = *matriz.porVector(v);
         
         for (int i = 0; i < tam; i++){

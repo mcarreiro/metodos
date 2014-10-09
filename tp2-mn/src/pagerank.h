@@ -12,6 +12,7 @@ public:
     double c; //Probabilidad navegante aleatorio
     double tolerancia; //Criterio de parada
     vector<double> v;
+    vector<int> desconectados;
     DOK matriz;
 private:
     
