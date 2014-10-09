@@ -1,25 +1,9 @@
 \section{Desarrollo}
 
-\subsection{Matriz Dispersa}
-   Se define una matrix dispersa aquella a la que la mayoría de sus elementos son cero.
+\subsection{Page Rank}
 
-   $$ 
-\begin{bmatrix}
-       0    &      0    &   0       &   0           &   a_{04}    \\
-       0    &   a_{11}  &   a_{12}  &   0           &   0    \\
-       0    &      0    &   0       &   a_{23}      &   0    \\
-       0    &      0    &   0       &   a_{33}      &   0    \\
-  a_{40}    &      0    &   0       &   0           &   0    \\
-\end{bmatrix} 
-$$
+\subsection{HITS}
 
-\subsection{DOK vs CRS vs CSC}
-    La matriz dispersa al tener la propiedad de tener muy pocos valores no$-$cero es conveniente solo guardar estos y asumir el resto como cero. Existen varias estructuras como Dictionary of Keys (dok), Compressed Sparse Row (CSR) o Compressed Sparse Column (CSC). En el desarrollo de este TP, utilizamos DOK por facilidad en el uso del mismo. Tanto CSR o CSC se basan en la estructura Yale y se diferencian en como guardan los mismos valores, uno priorizando las columnas y otro las filas respectivamente.\\
-    La estructura Yale consiste en a partir de la matriz original obtener tres vectores que contengan 
-    \begin{itemize}
-        \item A = los elementos no$-$cero de arriba-abajo,izquierda-derecha
-        \item IA = los indices para cada fila i del primer elemento no-cero de dicha fila
-        \item JA = los indices de columna para cada valor de A
-    \end{itemize}
-    Si bien en caso de que haya en una fila muchos números no-ceros es más beneficioso la utilización de esta estructura, la facilidad con DOK permite hacer pruebas más rápido.
+\subsection{Indeg}
+
 
