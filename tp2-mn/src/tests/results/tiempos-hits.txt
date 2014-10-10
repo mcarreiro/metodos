@@ -1,0 +1,2 @@
+stadfor con 100 iteracion y 0 tolerancia: real	4m36.213s
+
