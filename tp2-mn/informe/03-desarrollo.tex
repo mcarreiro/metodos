@@ -28,6 +28,8 @@ Hasta que converja:
 
 \subsection{Indeg}
 
+Indeg utiliza plenamente la información de los links de las páginas que los apuntan y arma un promedio en la cantidad de estos sobre el total de links existentes en la red
+
 \begin{algorithm}
 \caption{Indeg}\label{euclid}
 \begin{algorithmic}[1]
@@ -35,7 +37,7 @@ Hasta que converja:
 \State $result \gets initializaWithZeros(sizeOfLinksMatrix[0])$;
 \FOR{$linksReferencedForAPage in linksMatrix$}
 	\FOR{$link in linksReferencedForAPage$}
-		\STATE{$result[link] += 1$;}
+		\STATE{$result[link] += 1/sizeOfLinksMatrix[0]$;}
 	\ENDFOR
 \ENDFOR
 \end{algorithmic}

@@ -9,9 +9,11 @@ Indeg::Indeg(vector<vector<int> > links){
 	int totalAmountOfDomains = links.size();
 
 	values = vector<int>(totalAmountOfDomains);
+	valuesQuality = vector<int>(totalAmountOfDomains);
 
 	for(int i = 0 ; i < values.size() ; i++){
 		values[i] = 0;
+		valuesQuality[i] = 0;
 	}
 
 	for(int i = 0; i < links.size(); i++){
@@ -21,13 +23,20 @@ Indeg::Indeg(vector<vector<int> > links){
 			for(int j = 0; j < cantSalidas; j++){
 				int s = salidas[j]; //Page I goes to S
 				values[s] = values[s] + 1;
+				valuesQuality[s] = valuesQuality[s] + 1/totalAmountOfDomains;
 			}
 		}
 	}
 }
 
 void Indeg::print(){
+	cout << "PAGINA I LO APUNTAN X PAGINAS";
     for(int i=0;i<values.size();i++){
-        cout << "A la página " << i << " lo apuntan: " << values[i] << " páginas" << endl;
+        //cout << i << values[i] << endl;
+    }
+
+    cout << "PAGINA I TIENE PUNTAJE REFERENCIAL";
+    for(int i=0;i<values.size();i++){
+        cout << i << valuesQuality[i] << endl;
     }
 }

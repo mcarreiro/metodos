@@ -9,4 +9,5 @@ public:
     Indeg(vector<vector<int> >);
     void print();
 	vector<int> values;
+	vector<int> valuesQuality;
 };
