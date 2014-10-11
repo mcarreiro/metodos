@@ -28,4 +28,15 @@ Hasta que converja:
 
 \subsection{Indeg}
 
-
+\begin{algorithm}
+\caption{Indeg}\label{euclid}
+\begin{algorithmic}[1]
+\State $result \gets []$;
+\State $result \gets initializaWithZeros(sizeOfLinksMatrix[0])$;
+\FOR{$linksReferencedForAPage in linksMatrix$}
+	\FOR{$link in linksReferencedForAPage$}
+		\STATE{$result[link] += 1$;}
+	\ENDFOR
+\ENDFOR
+\end{algorithmic}
+\end{algorithm}
