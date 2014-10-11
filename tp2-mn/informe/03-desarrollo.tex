@@ -9,22 +9,12 @@
 \begin{algorithm}
 \caption{Indeg}\label{euclid}
 \begin{algorithmic}[1]
-\STATE result \gets [];
-\STATE result \gets initializaWithZeros(sizeOfLinksMatrix[0]);
-\FOR{\textbf{each} linksReferencedForAPage in linksMatrix}
-\FOR{\textbf{each} link in linksReferencedForAPage}
-	\STATE result[link] += 1;
-\ENDFOR
+\State $result \gets []$;
+\State $result \gets initializaWithZeros(sizeOfLinksMatrix[0])$;
+\FOR{$linksReferencedForAPage in linksMatrix$}
+	\FOR{$link in linksReferencedForAPage$}
+		\STATE{$result[link] += 1$;}
+	\ENDFOR
 \ENDFOR
 \end{algorithmic}
 \end{algorithm}
-
-\begin{algorithm}
-\caption{randomKill()}\label{euclid}
-\begin{algorithmic}[1]
-\State $\textit{randomRemoveFrom(allLeaches);}$ \Comment{All Leaches is loaded with matrix}
-\State $\textit{recalculateByBandMatrix();}$
-\end{algorithmic}
-\end{algorithm}
-
-
