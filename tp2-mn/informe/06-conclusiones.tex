@@ -1,1 +1,20 @@
 \section{Conclusiones}
+
+\subsection{PageRank}
+
+A medida que fuimos investigando y probando el algoritmo del PageRank nos fue quedando cada vez más claro como es que funciona y que se necesita para obtener un buen resultado para un sitio en particular.
+Lo que nos pareció interesante es explicar el algoritmo con la siguiente interpretación metafórica:
+
+\begin{figure}[h!]
+
+       \includegraphics[width=0.45\textwidth]{imagenes/pagerank-pipe-goldfish.png}
+           \hfill
+        \includegraphics[width=0.45\textwidth]{imagenes/ohcrap-goldfish-flowers.png}
+
+\end{figure}
+
+\FloatBarrier
+
+Tomando como al sitio a analizar en cuestión como la pecera, y a otro sitio que tiene un link a nuestro sitio como el balde se puede observar que cuando el $\textit{recurso}$, en este caso el agua, se reparte equitativamente a todos los destinatarios, por lo tanto, si mi pecera es la única que recibe agua voy a obtener más que si tiene otras bocas la canilla con la cual compartir. Esto es lo mismo que sucede en la web y tiene el cuenta el PageRank, cada sitio le distribuye equitativamente una probabilidad a cada salida, cuya suma total es 1. Por lo tanto, me conviene más que me linkee un sitio con pocas salidas que uno con gran cantidad, pero suponiendo que sus respectivos PageRank son similares, ya que mi PageRank también va a depende del de mis entradas, por lo tanto también hay que tener esto en cuenta, ya que es un factor bastante influyente. Por consiguiente, no solo depende la cantidad de sitios que apuntan a si no también el PageRank de cada uno (la  $\textit{calidad}$)
+
+\newpage
