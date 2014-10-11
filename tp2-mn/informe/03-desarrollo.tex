@@ -24,6 +24,25 @@ Hasta que converja:
 
 
 \subsection{HITS}
+Este también lo dividimos en la etapa en la etapa de iniciaclización y de calculo de sus vectores. En la primera creamos la matriz estocástica e inicializamos los vectores y en la segunda calculamos los mismos hasta que iteremos k veces o la diferencia obtenida sea menor que la tolerancia.
+
+Inicializaci\'on:
+\begin{lstlisting}[frame=single]  
+Creo el Dok vacio
+Para cada arista:
+	defino en el dok el nodo desde y hasta
+	
+Inicio los vectores de hubs y autoridades con todos sus valores en 1 y normalizados
+	
+\end{lstlisting}
+
+Cálculo de vectores Hubs y Autoridades
+\begin{lstlisting}[frame=single] 
+Itero de 1 a K
+	Para el vector de hubs multiplico el dok transpuesto por el vector de autoridades y normalizo
+	Para el vector de autoridades multiplicoel dok transpuesto por el vector de hubs y normalizo
+	Si la diferencia entre el nuevo vector de hubs o autoridades con su valor previo es menor a la tolerancia termino la iteracion
+\end{lstlisting}
 
 \subsection{Indeg}
 
