@@ -42,12 +42,12 @@ int main(int argc, char *argv[]) {
 	if(alg==0) {
         if(tipoInstancia != 2){
 		  PageRank pr(c, tolerancia, links.size(), links);
-          pr.ranking(100);
+          pr.ranking(1000);
         }else{
             double cc = atoi(argv[3])/(double)10;
             //cout << "ATOI:" << cc;
           PageRank pr(cc, tolerancia , links.size(), links);
-          pr.ranking(100);
+          pr.ranking(1000);
       }
 
 		

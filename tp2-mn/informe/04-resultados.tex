@@ -8,6 +8,7 @@
 		\item ABORTION: Este caso incluye 2293 páginas
 		\item GENETIC: Este caso incluye 3468 páginas
 		\item STANFORD: Este caso incluye 281903 páginas
+		\item GOOGLE: Este caso incluye 916428 páginas
 	\end{itemize}   
 
 \subsection{Comparación de Normas}
@@ -25,20 +26,27 @@ La norma Manhattan es la distancia entre dos vectores, o en otras palabras, la s
 
 Para evaluar el comportamiento de la norma manhattan variando la probabilidad del navegante aleatorio, el cual de ahora en más lo denotaremos como el parámetro \textbf{c}
 
-Los casos de prueba se corrieron sin un limite entre normas pero si con un limite de 100 iteraciones, ya que, según lo que investigamos, con un c 	$\approx$ 0.15 la matriz suele converger en un máximo de 50 iteraciones, por lo tanto decidimos que el duplicar esto era una buena limitación. 
+Los casos de prueba se corrieron sin un limite entre normas pero si con un limite de 1000 iteraciones, ya que, según lo que investigamos, con un c 	$\approx$ 0.15 la matriz suele converger en un máximo de 50 iteraciones, que por lo que se puede observar suele ser proporcional esta relación a medida que aumenta el c.
 
-\begin{figure}[h!]
-   \centering
-    \includegraphics[width=1\textwidth]{imagenes/pagerank_norma.png}
+\begin{subfigure}{.5\textwidth}
+\centering
+       \includegraphics[width=1\textwidth]{imagenes/pagerank_movies_norma.png}
 \end{figure}
 
-\begin{figure}[h!]
-   \centering
+\begin{figure}{.5\textwidth}
+\centering
     \includegraphics[width=1\textwidth]{imagenes/pagerank_abortion_norma.png}
 \end{figure}
 
-Claramente podemos notar que a medida que el C crece, el algoritmo toma más iteraciones en achicar la norma. Esto se debe a que el grado de aleatoriedad elimina el peso de la unión entre los sitios e indica una uniformidad en el comportamiento, entonces la matriz si bien estocástica ahora se encuentra distribuida esa suma $=$ 1 por columna en varias filas. Esto produce mayor cantidad de iteraciones en el método de la potencia ya que la mayor uniformidad de la matriz provoca que ninguna 'zona' de la matriz absorba más que las demás.   $[1]$
+\begin{figure}{.5\textwidth}
+\centering
+    \includegraphics[width=1\textwidth]{imagenes/pagerank_google_norma.png}
+\end{figure}
+
 \newpage
+
+Claramente podemos notar que a medida que el C crece, el algoritmo toma más iteraciones en achicar la norma. Esto se debe a que el grado de aleatoriedad elimina el peso de la unión entre los sitios e indica una uniformidad en el comportamiento, entonces la matriz si bien estocástica ahora se encuentra distribuida esa suma $=$ 1 por columna en varias filas. Esto produce mayor cantidad de iteraciones en el método de la potencia ya que la mayor uniformidad de la matriz provoca que ninguna 'zona' de la matriz absorba más que las demás.   $[1]$
+
 
 \subsubsection {HITS}
 \subsection{Comparación de Tiempos}

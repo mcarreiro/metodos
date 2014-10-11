@@ -1,6 +1,28 @@
 \section{Desarrollo}
 
 \subsection{Page Rank}
+El algoritmo de PageRank lo dividimos en dos etapas, primero la inicializaci\'on en donde se crea la matriz estoc\'astica y luego la corrida en donde se itera y calcula el pagerank hasta que la diferencia de norma entre los vectores sea menor que la tolerancia establecida.
+
+Inicializaci\'on:
+\begin{lstlisting}[frame=single]  
+Genero un vector inicial.
+Para cada nodo:
+	- Si tiene salidas, inserto en cada celda de la columna correspondiente de los nodos de salida
+	- Si no, guardo el nodo en el vector de desconectados.
+	
+\end{lstlisting}
+
+Calculo del PageRank:
+\begin{lstlisting}[frame=single] 
+
+Hasta que converja:
+	Multiplico la matriz por el vector actual.
+	Aplico el algoritmo para tener en cuentas los nodos desconectados.
+	Aplico el algoritmo para tener en cuenta el navegante aleatorio.
+	Guardo el vector actual.
+	
+\end{lstlisting}
+
 
 \subsection{HITS}
 

@@ -37,9 +37,11 @@ PageRank::PageRank(double c, double tolerancia, int dim, vector<vector<int> >& l
 }
 
 double PageRank::manhattan(vector<double>& x, vector<double>&y){
-	double res = 0;
+	double res = 0, parcial = 0;
 	for(unsigned int i = 0; i < x.size(); i++){
-		res += abs(x[i] - y[i]);
+		parcial = abs(x[i] - y[i]);
+		if(parcial < 0.00000000000000001) parcial = 0;
+		res += parcial;
 	}
 	return res;
 }
