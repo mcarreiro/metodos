@@ -1,7 +1,8 @@
 \section{Introducci\'on te\'orica}
 
 \subsection{Matriz Dispersa}
-   Se define una matrix dispersa aquella a la que la mayoría de sus elementos son cero.
+   Se define como matriz dispersa a aquella a la que la mayoría de sus elementos son cero.
+   Ejemplo:
 
    $$ 
 \begin{bmatrix}
@@ -14,11 +15,11 @@
 $$
 
 \subsection{DOK vs CRS vs CSC}
-    La matriz dispersa al tener la propiedad de tener muy pocos valores no$-$cero es conveniente solo guardar estos y asumir el resto como cero. Existen varias estructuras como Dictionary of Keys (dok), Compressed Sparse Row (CSR) o Compressed Sparse Column (CSC). En el desarrollo de este TP, utilizamos DOK por facilidad en el uso del mismo. Tanto CSR o CSC se basan en la estructura Yale y se diferencian en como guardan los mismos valores, uno priorizando las columnas y otro las filas respectivamente.\\
+    La matriz dispersa al tener la propiedad de tener muy pocos valores no$-$cero es conveniente solo guardar estos y asumir el resto como cero. Existen varias estructuras como Dictionary of Keys (dok), Compressed Sparse Row (CSR) o Compressed Sparse Column (CSC) pensadas para optimizar el espacio y las operaciones con estas estructuras de datos. En el desarrollo de este TP, utilizamos DOK por facilidad en el uso del mismo. Tanto CSR o CSC se basan en la estructura Yale y se diferencian en como guardan los mismos valores, uno priorizando las columnas y otro las filas respectivamente.\\
     La estructura Yale consiste en a partir de la matriz original obtener tres vectores que contengan 
     \begin{itemize}
         \item A = los elementos no$-$cero de arriba-abajo,izquierda-derecha
         \item IA = los indices para cada fila i del primer elemento no-cero de dicha fila
         \item JA = los indices de columna para cada valor de A
     \end{itemize}
-    Si bien en caso de que haya en una fila muchos números no-ceros es más beneficioso la utilización de esta estructura, la facilidad con DOK permite hacer pruebas más rápido.
+    Si bien en caso de que haya en una fila con muchos números no-ceros es más beneficioso la utilización de esta estructura, la facilidad con DOK permite hacer pruebas más rápido.Y nos pareció poco práctico ponernos a implementar todas las lógicas requeridas para la eliminación o agregación de nuevos datos en estas estructuras ya que no hacían a la escencia del TP y complejizaban el código y el debagueo durante las pruebas y el desarrollo. Consideramos que la optimización otorgada por DOK es suficiente para el tipo de análisis que deseamos hacer sobre los algoritmos de rankeo solicitados.
