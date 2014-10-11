@@ -40,7 +40,7 @@ int main(int argc, char *argv[]) {
     else 
         links = leerInstancia2(path);
  	
- 	ofstream myfile (output);
+ 	ofstream myfile (output.c_str());
 	  cout << output;
 
 	if(alg==0) {
