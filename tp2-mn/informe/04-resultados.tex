@@ -84,4 +84,15 @@ A continuación se muestran los resultados para cuatro instancias distintas, 3 m
 \end{figure}
 
 \subsection{Comparación de Tiempos}
- 
+
+El siguiente gráfico muestra la evolución del tiempo de computo en función del tamaño de la red para cada algoritmo. La red utilizada en todos los casos es una red estrella en la que todos los nodos (o sitios) apuntan al primero de ellos. Utilizamos este tipo de grafo ya que en c++ es el más rápido y simple de crear teniendo en cuenta además que la forma del grafo no tiene un impacto de eficiencia en los algoritmos sino su tamaño en nodos y aristas es el que cambia el tiempo de ejecución. Por esto no nos pareció pertinente probar distintos tipos de grafos (arboles, completos, bipartito, etc) sin más bien el tamaño de los mismos.
+
+ \begin{figure}[!htb]
+\begin{center}
+    \includegraphics[scale=0.5]{imagenes/Tiempos.png}
+    \caption{Tiempo de ejecución en función del tamaño de la red}
+    \end{center}
+\end{figure}
+
+
+

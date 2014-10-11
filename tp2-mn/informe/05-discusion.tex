@@ -12,9 +12,40 @@ Como el objetivo de este trabajo práctico esta enfocado al ranking web que se l
 \subsubsection{PageRank}
 Según el paper de Bryan y Leise, quienes proponen el algoritmo, lo más común es que el valor del navegante aleatorio sea de 0.15. Por lo tanto creemos que con este valor es donde aparecerán los mejores resultados, pero también veremos que sucede con valores de 0.5 y 0.85, ya que estos valores indican por un lado que la probabilidad del navegante entre quedarse e irse es equiprobable y por otro lado es el inverso de lo que ellos consideran como el valor más común. En valores de 0 y 1 no tendrían sentido el análisis ya que por un lado daría la matriz original y por el otro una matriz equiprobable.\\
 El caso de prueba que utilizaremos es el dado por la cátedra, \textbf{Abortion}, y lo elegimos ya que es un tema bastante discutido donde se pueden encontrar resultados interesantes.
-
+\subsubsection{HITS}
 \subsubsection{Indeg}
 
 \subsubsection{Comparación}
 
 
+
+
+
+
+\subsection{Ejemplos de comportamiento esperado}
+
+A continuación veremos en redes pequeñas como se comporta el algoritmo para ver si su comportamiento es el esperado.
+
+\subsubsection{HITS}
+ \begin{figure}[!htb]
+\begin{center}
+    \includegraphics[scale=0.5]{imagenes/test4.png}
+    \caption{Red de 7 nodos}
+    \end{center}
+\end{figure}
+
+Resultado obtenido:
+   $$ 
+\begin{bmatrix}
+              &    Autoridad  &  Hub \\
+ Nodo 1 &   0.000000    &      0.383092       \\
+ Nodo 2   &  0.967054    &  0.000000     \\
+ Nodo 3   &  0.000000   &     0.383092  \\
+ Nodo 4   &  0.180008    &     0.454401       \\
+ Nodo 5   &  0.180008    &     0.454401        \\
+ Nodo 6   &  0.000000    &      0.383092     \\
+ Nodo 7   &  0.000000   &     0.383092 \\
+\end{bmatrix} 
+$$
+
+Efectivamente podemos observar que en la columna de autoridades el nodo 2 es el mayor ya que es el que mas apuntado esta y todos aquellos que tienen 0 es porque no son apuntados por ninguno. Por otro lado en la columna de hubs podemos ver que los nodos 4 y 5 son los que mayor valor tienen ya que son los que mas apuntan a otros nodos con 2 salidas.
