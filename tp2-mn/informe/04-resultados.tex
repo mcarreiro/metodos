@@ -50,5 +50,36 @@ A continuación se muestran los resultados para cuatro tests de como evoluciona 
 
 
 \subsubsection {HITS}
+
+
+Estas corridas se hicieron para k= 100 ya que con esto alcanzaba para analizar los compartamientos deseados. La tolerancia en todos los casos fue de 0.0001 excepto en el standford, en este nos pareció interesante reducirla a 0 porque con el otro valor terminaba en 20 iteraciones y nos parecía poco para el análisis.
+
+A continuación se muestran los resultados para cuatro instancias distintas, 3 medianas y una grande, de como evoluciona la norma a lo largo de las iteraciones en ambos vectores :
+\begin{figure}[!htb]
+\begin{center}
+       \includegraphics[scale=0.5]{imagenes/hits-abortion-expanded.png}
+       \caption{Abortion expanded con tolerancia 0.0001}
+  \end{center}
+\end{figure}
+\begin{figure}[!htb]
+\begin{center}
+        \includegraphics[scale=0.5]{imagenes/hits-genetic-expanded.png}
+       \caption{Genetic expanded con tolerancia 0.0001}
+       \end{center}
+\end{figure}
+
+\begin{figure}[!htb]
+\begin{center}
+    \includegraphics[scale=0.5]{imagenes/hits-movie.png}
+    \caption{Movies expanded con tolerancia 0.0001}
+  \end{center}
+\end{figure}
+\begin{figure}[!htb]
+\begin{center}
+    \includegraphics[scale=0.5]{imagenes/hits-stadfor.png}
+    \caption{Standford con tolerancia 0}
+    \end{center}
+\end{figure}
+
 \subsection{Comparación de Tiempos}
  
