@@ -10,11 +10,13 @@ def build():
   link()
 
 def compile():
-  for source in sources:
-    run(compiler, '-c', source+'.cpp', '-o', source+'.o')
+  run(compiler, '-c', 'main.cpp', '-o', 'main.o')
+  #for source in sources:
+    #run(compiler, '-c', source+'.cpp', '-o', source+'.o')
 
 def link():
-  objects = [s+'.o' for s in sources]
+  objects = ['main.o']
+  #objects = [s+'.o' for s in sources]
   run(compiler, '-o', executable, objects)
 
 def clean():
