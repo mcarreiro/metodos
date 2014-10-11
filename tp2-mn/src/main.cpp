@@ -39,20 +39,33 @@ int main(int argc, char *argv[]) {
 		links = vector<vector<int> >(150000, vector<int>(1,1));
     else 
         links = leerInstancia2(path);
-
+ 	
+ 	ofstream myfile (output);
+	  cout << output;
 
 	if(alg==0) {
         if(tipoInstancia != 2){
 		  PageRank pr(c, tolerancia, links.size(), links);
           pr.ranking(1000);
+
+          		for(int j = 0;  j < links.size(); j++){
+          	myfile << fixed;
+          	myfile << setprecision(5) << pr.v[j] << "\n";
+          }
         }else{
             double cc = atoi(argv[3])/(double)10;
             //cout << "ATOI:" << cc;
           PageRank pr(cc, tolerancia , links.size(), links);
           pr.ranking(1000);
+
+          		for(int j = 0;  j < links.size(); j++){
+          	myfile << fixed;
+          	myfile << setprecision(5) << pr.v[j] << "\n";
+          }
+          
       }
 
-		
+
 			//for(int j = 0;  j < links.size(); j++)
 				//cout << "POS:" << j << " VALOR: "<< pr.v[j] << "\n";
 	}
@@ -60,17 +73,35 @@ int main(int argc, char *argv[]) {
 	if(alg==1){
 		Hits h(links);
 		h.hubsYautoridades(tolerancia);
-		//for(int j = 0;  j < links.size(); j++)
-		//			cout << "POS:" << j << " VALOR X: "<< h.x[j] << "\n";
-		//for(int j = 0;  j < links.size(); j++)
-		//			cout << "POS:" << j << " VALOR Y: "<< h.y[j] << "\n";
+
+
+		for(int j = 0;  j < links.size(); j++){
+			myfile << fixed;
+			myfile << setprecision(5) << h.x[j] << "\n";
+
+		}
+				
+					
+		for(int j = 0;  j < links.size(); j++){
+			myfile << fixed;
+			myfile << setprecision(5) << h.y[j] << "\n";
+		}
+					
+
 	}
 	
 	if(alg==2){
 		Indeg indeg (links);
 		//indeg.print();
+
+		myfile << fixed;
+		 for(int i=0;i<indeg.values.size();i++){
+        myfile << indeg.valuesQuality[i] << endl;
+    }
+
 	}
 
+	myfile.close();
 
 
 

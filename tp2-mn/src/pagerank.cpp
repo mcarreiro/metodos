@@ -76,7 +76,7 @@ void PageRank::ranking(int max){
 			//cout << v[i] << ";";
 		}
 		norma = this->manhattan(v,w);
-		cout << it << " "<< norma << "\n";
+		//cout << it << " "<< norma << "\n";
 		it++;
 	}
 }

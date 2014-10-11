@@ -1,6 +1,8 @@
 #include "hits.h"
 #include <utility>
 #include <iostream>
+#include <vector>
+using namespace std;
 Hits::Hits(vector<vector<int> >& links)  {
     matriz = * new DOK(links.size());
     for(unsigned int i = 0; i < links.size(); i++){
@@ -57,11 +59,13 @@ vector<double> Hits::normalizarVector(vector<double> v){
 }
 
 double Hits::manhattan(vector<double>& x, vector<double>&y){
-	double res = 0;
-	for(unsigned int i = 0; i < x.size(); i++){
-		res += abs(x[i] - y[i]);
-	}
-	return res;
+    double res = 0, parcial = 0;
+    for(unsigned int i = 0; i < x.size(); i++){
+        parcial = abs(x[i] - y[i]);
+        if(parcial < 0.00000000000000001) parcial = 0;
+        res += parcial;
+    }
+    return res;
 }
 
 
