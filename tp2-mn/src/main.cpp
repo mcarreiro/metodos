@@ -35,6 +35,8 @@ int main(int argc, char *argv[]) {
 		links = leerInstancia0(path);
 	else if(tipoInstancia==1)
 		links = leerInstancia1(path);
+	else if(tipoInstancia==3)
+		links = vector<vector<int> >(150000, vector<int>(1,1));
     else 
         links = leerInstancia2(path);
 
@@ -58,15 +60,15 @@ int main(int argc, char *argv[]) {
 	if(alg==1){
 		Hits h(links);
 		h.hubsYautoridades(tolerancia);
-		for(int j = 0;  j < links.size(); j++)
-					cout << "POS:" << j << " VALOR X: "<< h.x[j] << "\n";
-		for(int j = 0;  j < links.size(); j++)
-					cout << "POS:" << j << " VALOR Y: "<< h.y[j] << "\n";
+		//for(int j = 0;  j < links.size(); j++)
+		//			cout << "POS:" << j << " VALOR X: "<< h.x[j] << "\n";
+		//for(int j = 0;  j < links.size(); j++)
+		//			cout << "POS:" << j << " VALOR Y: "<< h.y[j] << "\n";
 	}
 	
 	if(alg==2){
 		Indeg indeg (links);
-		indeg.print();
+		//indeg.print();
 	}
 
 
