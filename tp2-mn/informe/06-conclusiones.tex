@@ -49,5 +49,39 @@ Como explicamos anteriormente, el algoritmo de PageRank prioriza la calidad del 
     \end{center}
 \end{figure}
 
+Cuyos pesos son:
+   $$ 
+\begin{bmatrix}
+Nodo 1 & 0.32079\\
+Nodo 2 & 0.15762\\
+Nodo 3 & 0.15762\\
+Nodo 4 & 0.05283\\
+Nodo 5 & 0.05283\\
+Nodo 6 & 0.05283\\
+Nodo 7 & 0.05283\\
+Nodo 8 & 0.05283\\
+\end{bmatrix} 
+$$
+
+Ahora, suponiendo que el costo de cada nodo es mas caro a medida que aumenta su peso, vamos a ver que es más conveniente, si comprar el derecho a que el nodo 1 nos apunte o en vez de eso comprar el linkeo de los nodos 2 y 3. Entonces vamos a testear como se comporta el algoritmo mediante estas dos alternativas lineando al sitio de los Wachiturros.
+
+
+   $$ 
+\begin{bmatrix}
+ & Nodo 1 & Nodo 2 y 3 \\
+Wachiturros & 0.24557  & 0.05018   \\
+Nodo 1 & 0.24201& 0.30469\\
+Nodo 2 & 0.11891& 0.14971\\
+Nodo 3 & 0.11891& 0.14971\\
+Nodo 4 & 0.03986  & 0.05018\\
+Nodo 5 & 0.03986  & 0.05018\\
+Nodo 6 & 0.03986  & 0.05018\\
+Nodo 7 & 0.03986 & 0.05018\\
+Nodo 8 & 0.03986 & 0.05018\\
+\end{bmatrix} 
+$$
+
+Por lo tanto se puede ver que conviene que el Nodo 1 nos apunte antes que el 2 y 3. Conviene porque nos asigna un mayor peso y porque nos deja a su vez mejor posicionado en la tabla final. Además de significar una optimización en el costo total.
+
 \subsubsection{HITS}
 Si el algoritmo aplicado en la red fuese HITS lo recomendable al cliente sería que neogice con los principales HUBS para que apunten a su sitio. Logrando así rankear mejor en la sección de Autoridades sobre el tema. No le recomendaríamos que negocie con las páginas autoridades ya que dificilmente estas accediesen ya que de esta manera se estarían restando puntos en el ranking de autoridades.
