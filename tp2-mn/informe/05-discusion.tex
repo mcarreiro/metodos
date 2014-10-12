@@ -29,6 +29,9 @@ Lo particular de esta red es que uno $ingenuamente$ podría pensar que los dos s
 El resultado real que se obtiene de esta red es que el orden de PageRank se da por el 1, 2 y 3 (los demás nodos no son importantes para ilustrar el comportamiento). El nodo 2 le gana al 3 ya que la diferencia sustancial es que el 1 que tiene un alto valor lo apunta únicamente al 2, es decir, le da todo el peso que él tiene, mientras que el nodo 3 a pesar de tener muchos sitios que lo apuntan estos son sitios de muy bajo valor de los cuales solo tiene nodos de salida.
 
 \subsubsection{HITS}
+
+Dada la siguiente red, veamos que nos devuelve HITS:
+
  \begin{figure}[!htb]
 \begin{center}
     \includegraphics[scale=0.5]{imagenes/test4.png}
@@ -250,3 +253,5 @@ Aquí podemos observar claramente que la calidad además de ser, a priori, buena
 
 \subsubsection{Comparación}
 
+Si comparamos los resultados del PageRank con un $C$ alto claramente da mejores respuestas el HITS. Sin embargo en el paper de Bryan y Leise$[3]$ se recomienda un $C$ de 0.15, con este valor los resultados mejoran notoriamente aunque sigue habiendo algunos que no corresponden o son SPAM. 
+Teniendo en cuenta estas pruebas HITS parecería ser el mejor, aunque no podemos asegurarlo ya que no hicimos las suficientes pruebas y tenemos la cuestión de que PageRank esta pensado para grandes escalas en constante crecimiento, por lo que tendríamos que tener en cuenta eso también a la hora de probarlo rigurosamente.
