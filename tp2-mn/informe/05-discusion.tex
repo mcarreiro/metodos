@@ -16,12 +16,18 @@ En estos dos últimos casos además podemos notar grandes saltos de convergencia
 A continuación veremos en redes pequeñas como se comporta cada algoritmo para ver si su comportamiento es el esperado.
 
 \subsubsection{PageRank}
+Para mostrar un ejemplo del comportamiento del PageRank generamos una red de 11 nodos y lo corrimos con un $c$ = 0.85.
+
  \begin{figure}[!htb]
 \begin{center}
     \includegraphics[scale=0.5]{imagenes/test5.png}
     \caption{Red de 11 nodos, c=0.85}
     \end{center}
 \end{figure}
+
+Lo particular de esta red es que uno $ingenuamente$ podría pensar que los dos sitios centrales 1 y 3 van a ser los que mas PageRank obtengan, pero esa suposición se basaría en que el algoritmo solo tiene en cuenta los grados de entrada de cada nodo. 
+El resultado real que se obtiene de esta red es que el orden de PageRank se da por el 1, 2 y 3 (los demás nodos no son importantes para ilustrar el comportamiento). El nodo 2 le gana al 3 ya que la diferencia sustancial es que el 1 que tiene un alto valor lo apunta únicamente al 2, es decir, le da todo el peso que él tiene, mientras que el nodo 3 a pesar de tener muchos sitios que lo apuntan estos son sitios de muy bajo valor de los cuales solo tiene nodos de salida.
+
 \subsubsection{HITS}
  \begin{figure}[!htb]
 \begin{center}
