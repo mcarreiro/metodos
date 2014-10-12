@@ -53,6 +53,23 @@ $$
 Efectivamente podemos observar que en la columna de autoridades el nodo 2 es el mayor ya que es el que mas apuntado esta y todos aquellos que tienen 0 es porque no son apuntados por ninguno. Por otro lado en la columna de hubs podemos ver que los nodos 4 y 5 son los que mayor valor tienen ya que son los que mas apuntan a otros nodos con 2 salidas.
 
 \subsubsection{Indeg}
+ 	Veamos el comportamiento dada esa pequeña red.
+
+ 	Resultado obtenido:
+   $$ 
+\begin{bmatrix}
+              &    Puntaje \\
+ Nodo 1 &    0.000000 \\
+ Nodo 2   &  0.714285 \\
+ Nodo 3   &  0.000000 \\
+ Nodo 4   &  0.142857 \\
+ Nodo 5   &  0.142857 \\
+ Nodo 6   &  0.000000 \\
+ Nodo 7   &  0.000000 \\
+\end{bmatrix} 
+$$
+
+Este algoritmo naive es bastante claro de interpretar, y el resultado es claramente el esperado. El nodo 2 posee mucha más calidad de sitio ya que es el más apuntado, y en el segundo puesto empatando el nodo 4 y 5, por ser aquellos con más sitios apuntándolos, excpetuando el nodo 2. El resto de los nodos no reciben ningún tipo de link hacia ellos, por lo que su puntaje es de cero.
 
 \subsection{Análisis cualitativo}
 
@@ -185,6 +202,51 @@ Sucede algo parecido con otro sitio de venta de software que aparece pero no nos
 Aunque se pueda ver que con un $c$ menor los resultados tienen relación con el tema nos pareció que no son lo suficiente buenos como para considerarlos excelente resultados cuando se busca sobre un tema tan discutido como el aborto, esperando quizás más definiciones sobre el tema y luchas por su legalización/penalización. 
 
 \subsubsection{HITS}
+Este analásis de calidad lo haremos sobre el tema death penalty. Veremos cuales son los primeros 5 resultados que devuelve HITS en cuanto a autoridades y hubs.
+
+\paragraph{Resultados Hubs}
+\begin{enumerate}
+\item
+http://www.clarkprosecutor.org/html/links/dplinks.htm\\
+Death Penalty Links
+\item
+http://faculty.etsu.edu/blankenm/deathlinks.htm\\
+Death Penalty Links
+\item
+http://coramnobis.com/portal/deathpen.html\\
+A Capital Defender's Toolbox: criminal defense  death penalty litigation online resource center
+\item
+http://info-s.com/deathpenalty.html\\
+The Info Service
+\item
+http://members.xoom.com/ccadp/links.htm\\
+Canadian Coalition Against the Death Penalty - Collection of Links
+
+
+\end{enumerate}
+
+\paragraph{Resultados Autoridades}
+\begin{enumerate}
+\item
+http://sun.soci.niu.edu/~critcrim/dp/dp.html\\
+Death Penalty Information
+\item
+http://www.aclu.org/issues/death/hmdp.html\\
+Death Penalty and the ACLU
+\item
+http://www.ncadp.org\\
+National Coalition To Abolish the Death Penalty
+\item
+http://www.smu.edu/~deathpen\\
+Death Penalty News and Updates
+\item
+http://www.deathpenalty.org\\
+Death Penalty Focus
+
+
+\end{enumerate}
+
+Aquí podemos observar claramente que la calidad además de ser, a priori, buena y correcta, además tiene mucho sentido que la mayoría de los hubs sobre el tema sean links sobre pena de muerta, o servicios de información o central de recursos sobre litigios en penas de muerte. Y que, por otro lado, las autoridades sean diarios con noticias y novedades, organizaciones enfocadas a eso o paginas institucionales (.edu). También es de destacar que ningún link pareciera ser spam, o sobre algo no relacionado.
 
 \subsubsection{Comparación}
 

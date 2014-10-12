@@ -24,3 +24,7 @@ Tomando como al sitio a analizar en cuestión como la pecera, y a otro sitio que
 \subsection{HITS}
 
 En el gráfico que nos muestra el tiempo de computo en función del tamaño de los grafos podemos observar que para grafos grandes este algoritmo se vuelve bastante ineficiente. Sin embargo no debemos olvidar que en su paper$[2]$ Kleinberg habla de que este algoritmo debe ser aplicado no sobre toda la red sin sobre un subconjunto de la misma ($\textit{root set}$) obtenido de una busqueda incial. Por lo tanto si acotamos el análisis a los grafos mas acotados podemos ver que el tiempo de computo es aceptable y hasta muy parecido al de page rank. 
+
+\subsection{INDEG}
+
+Este algoritmo es bastante simple y si bien en una red chica y confiable puede llegar a valer. Igualmente tiene mucho peso la confiabilidad, ya que es muy simple de crecer tu puntaje, simplemente creando páginas tontas que apunten a tus sitios. 
