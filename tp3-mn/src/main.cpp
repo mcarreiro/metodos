@@ -3,6 +3,7 @@
 #include <vector>
 #include "pixel.cpp"
 #include "vecino.cpp"
+#include "bilineal.cpp"
 
 using namespace std;
 
@@ -14,6 +15,8 @@ int main(int argc, char* argv[]) {
     int height, width;
     nat color;
     inputFile >> width >> height;
+
+    cout << "C++ ancho: " << width << " altura: " << height << flush << endl;
 
     vector<vector<Pixel> > imagen;
 
@@ -42,8 +45,11 @@ int main(int argc, char* argv[]) {
         }
     }
 
-    Vecino vecino = Vecino();
-    vecino.hacer(imagen);
+    Vecino metodo1 = Vecino();
+//    metodo1.hacer(imagen);
+
+    Bilineal metodo2 = Bilineal();
+    metodo2.hacer(imagen);
 
     return 0;
 }
