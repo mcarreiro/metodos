@@ -45,18 +45,16 @@ int main(int argc, char* argv[]) {
         }
     }
 
-    cout << "Imprimiendo archivo!"<< flush << endl;
-
     Vecino metodo1 = Vecino();
 //    metodo1.hacer(imagen);
 
     Bilineal metodo2 = Bilineal();
     metodo2.hacer(imagen);
 
+    cout << "Imprimiendo archivo!"<< flush << endl;
+
     string output = argv[2];
     ofstream myfile (output);
-
-    cout << "Imprimiendo archivo2!"<< flush << endl;
 
     for(int a=0; a< width; a++) {
         for (int b = 0; b < height; b++) {
