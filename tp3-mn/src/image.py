@@ -54,7 +54,7 @@ newJ = 0
 
 for line in newFile:
 	pixelArray = line.rstrip().split(" ")
-	newPixels[j,i] = (int(pixelArray[0]),int(pixelArray[1]),int(pixelArray[2]))
+	newPixels[newJ,newI] = (int(pixelArray[0]),int(pixelArray[1]),int(pixelArray[2]))
 	if (newJ < width):
 		newJ += 1
 	else:
