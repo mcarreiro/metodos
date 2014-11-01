@@ -10,7 +10,7 @@ class HighQuality{
 public:
     HighQuality(){};
 
-    void hacer(vector<vector<Pixel > > imagen){
+    void hacer(vector<vector<Pixel > >& imagen){
 
         Bilineal bilineal();
         bilineal.hacer(imagen);
