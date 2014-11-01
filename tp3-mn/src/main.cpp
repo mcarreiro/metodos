@@ -10,8 +10,6 @@ using namespace std;
 typedef unsigned int nat;
 
 int main(int argc, char* argv[]) {
-    cout << argv[1] << flush << endl;
-    cout << argv[2] << flush << endl;
     std::ifstream inputFile(argv[1]);
 
     int height, width;

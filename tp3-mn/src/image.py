@@ -1,7 +1,6 @@
 from __future__ import print_function
 import os,sys
 from PIL import Image
-import subprocess
 
 print ("Nombre de archivo sin extension")
 
@@ -41,12 +40,12 @@ jpgfile.save(imageName+"_bayer."+imageType,imageType)
 f.close()
 
 #call(["g++", "main.cpp -std=gnu++11"])
-subprocess.Popen(["./metodos", imageName+".txt ",imageName+"_out.txt"]).communicate()
+os.system("./metodos "+imageName+".txt "+imageName+"_out.txt")
 
 newFile = open(imageName+"_out.txt",'r')
 
 newImg = Image.new( 'RGB', (width,height))
-newPixels = img.load() # create the pixel map
+newPixels = newImg.load() # create the pixel map
 newI = 0
 newJ = 0
 
@@ -59,7 +58,8 @@ for line in newFile:
 		newJ = 0
 		newI += 1
  
-img.show()
+newImg.show()
+newImg.save(imageName+"_demosicing."+imageType,imageType)
 
 
 
