@@ -10,13 +10,15 @@ using namespace std;
 typedef unsigned int nat;
 
 int main(int argc, char* argv[]) {
+    cout << argv[1] << flush << endl;
+    cout << argv[2] << flush << endl;
     std::ifstream inputFile(argv[1]);
 
     int height, width;
     nat color;
-    inputFile >> width >> height;
+    inputFile >> height >> width;
 
-    cout << "C++ ancho: " << width << " altura: " << height << flush << endl;
+    cout << "C++ altura: " << height << " ancho: " << width << flush << endl;
 
     vector<vector<Pixel> > imagen;
 
@@ -45,11 +47,22 @@ int main(int argc, char* argv[]) {
         }
     }
 
+    cout << "Imprimiendo archivo!"<< flush << endl;
+
     Vecino metodo1 = Vecino();
 //    metodo1.hacer(imagen);
 
     Bilineal metodo2 = Bilineal();
     metodo2.hacer(imagen);
+
+    string output = argv[2];
+    ofstream myfile (output.c_str());
+
+    for(int i=0; i< height; i++) {
+        for (int j = 0; j < width; j++) {
+            myfile << imagen[i][j].rojo << " " << imagen[i][j].verde << " " << imagen[i][j].azul << endl;
+        }
+    }
 
     return 0;
 }

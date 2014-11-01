@@ -1,7 +1,7 @@
 from __future__ import print_function
 import os,sys
 from PIL import Image
-from subprocess import call
+import subprocess
 
 print ("Nombre de archivo sin extension")
 
@@ -16,8 +16,8 @@ print (str(height)+" "+str(width), file=f)
 
 print ("PYTHON: altura: "+str(height)+ " ancho: "+str(width))
 
-for i in xrange(height):
-	for j in xrange(width):
+for i in xrange(0,height-1):
+	for j in xrange(0,width-1):
 		acutalTuple = pix[i,j]
 		newTuple = ()
 		if i % 2 == 0: # AZUL-VERDE-AZUL
@@ -41,4 +41,33 @@ jpgfile.save(imageName+"_bayer."+imageType,imageType)
 f.close()
 
 #call(["g++", "main.cpp -std=gnu++11"])
-call(["./metodos", imageName+".txt"])
+subprocess.Popen(["./metodos", imageName+".txt ",imageName+"_out.txt"]).communicate()
+
+newFile = open(imageName+"_out.txt",'r')
+
+newImg = Image.new( 'RGB', (width,height))
+newPixels = img.load() # create the pixel map
+newI = 0
+newJ = 0
+
+for line in newFile:
+	pixelArray = line.split(" ")
+	newPixels[i,j] = (pixelArray[0],pixelArray[1],pixelArray[2])
+	if (newJ < width):
+		newJ += 1
+	else:
+		newJ = 0
+		newI += 1
+ 
+img.show()
+
+
+
+
+
+
+
+
+
+
+
