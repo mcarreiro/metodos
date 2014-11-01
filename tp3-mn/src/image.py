@@ -1,14 +1,15 @@
 from __future__ import print_function
 import os,sys
 from PIL import Image
-
+print ("MAS ANCHO QUE ALTO")
+print ("REAL ancho 768 altura 512")
 print ("Nombre de archivo sin extension")
 
 imageName = raw_input()
 imageType = "bmp"
 jpgfile = Image.open("../images/"+imageName+"."+imageType)
 pix = jpgfile.load()
-height, width = jpgfile.size
+width, height = jpgfile.size
 
 f = open(imageName+".txt",'w')
 print (str(height)+" "+str(width), file=f)
@@ -17,7 +18,7 @@ print ("PYTHON: altura: "+str(height)+ " ancho: "+str(width))
 
 for i in xrange(0,height-1):
 	for j in xrange(0,width-1):
-		acutalTuple = pix[i,j]
+		acutalTuple = pix[j,i]
 		newTuple = ()
 		if i % 2 == 0: # AZUL-VERDE-AZUL
 			if j % 2 == 0: #AZUL
@@ -33,13 +34,15 @@ for i in xrange(0,height-1):
 			else: #ROJO
 				newTuple = (acutalTuple[0],0,0)
 				print (acutalTuple[0], file=f)
-		pix[i,j] = newTuple
+		pix[j,i] = newTuple
 
 #jpgfile.show()
 jpgfile.save(imageName+"_bayer."+imageType,imageType)
 f.close()
 
-#call(["g++", "main.cpp -std=gnu++11"])
+os.system("g++ main.cpp -std=gnu++11")
+os.system("g++ main.cpp -std=gnu++11")
+os.system("g++ main.cpp -std=gnu++11")
 os.system("./metodos "+imageName+".txt "+imageName+"_out.txt")
 
 newFile = open(imageName+"_out.txt",'r')
@@ -50,8 +53,8 @@ newI = 0
 newJ = 0
 
 for line in newFile:
-	pixelArray = line.split(" ")
-	newPixels[i,j] = (pixelArray[0],pixelArray[1],pixelArray[2])
+	pixelArray = line.rstrip().split(" ")
+	newPixels[j,i] = (int(pixelArray[0]),int(pixelArray[1]),int(pixelArray[2]))
 	if (newJ < width):
 		newJ += 1
 	else:

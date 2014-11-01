@@ -23,9 +23,9 @@ int main(int argc, char* argv[]) {
     imagen.resize(width);
 
     //Load data
-    for(int i=0; i< height; i++) {
+    for(int i=0; i< width; i++) {
         imagen[i].resize(height);
-        for (int j = 0; j < width; j++) {
+        for (int j = 0; j < height; j++) {
             imagen[i][j] = Pixel();
 
             inputFile >> color;
@@ -54,11 +54,13 @@ int main(int argc, char* argv[]) {
     metodo2.hacer(imagen);
 
     string output = argv[2];
-    ofstream myfile (output.c_str());
+    ofstream myfile (output);
 
-    for(int i=0; i< height; i++) {
-        for (int j = 0; j < width; j++) {
-            myfile << imagen[i][j].rojo << " " << imagen[i][j].verde << " " << imagen[i][j].azul << endl;
+    cout << "Imprimiendo archivo2!"<< flush << endl;
+
+    for(int a=0; a< width; a++) {
+        for (int b = 0; b < height; b++) {
+            myfile << imagen[a][b].rojo << " " << imagen[a][b].verde << " " << imagen[a][b].azul << flush << endl;
         }
     }
 
