@@ -56,7 +56,7 @@ public:
                     correccion += imagen[i+1][j-1].verde;
 
                     correccion = imagen[i][j].verde - correccion/8;
-                    imagen[i][j].verde += correccion * 5/8;
+                    imagen[i][j].azul += correccion * 5/8;
                     imagen[i][j].rojo += correccion * 5/8;
                     
                 } 
