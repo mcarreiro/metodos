@@ -27,13 +27,13 @@ public:
                     imagen[i][j].verde = verde;
                     imagen[i][j].azul = azul;
                 } else if ( j%2 == 0){ //ACA HAY VERDE EN FILA PAR
-                    nat rojo = imagen[i+1][j].rojo;
-                    nat azul = imagen[i][j-1].azul;
+                    nat rojo = imagen[i][j+1].rojo;
+                    nat azul = imagen[i-1][j].azul;
                     imagen[i][j].rojo = rojo;
                     imagen[i][j].azul = azul;
                 } else { //ACA HAY VERDE EN FILA IMPAR
-                    nat rojo = imagen[i][j+1].rojo;
-                    nat azul = imagen[i-1][j].azul;
+                    nat rojo = imagen[i+1][j].rojo;
+                    nat azul = imagen[i][j-1].azul;
                     imagen[i][j].rojo = rojo;
                     imagen[i][j].azul = azul;
                 }
