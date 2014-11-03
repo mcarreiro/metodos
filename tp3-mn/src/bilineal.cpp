@@ -48,9 +48,9 @@ public:
 
     void hacerVerdePar(int i,int j,vector<vector<Pixel> >& imagen, color colorACalcular){
         if (colorACalcular == ROJO){
-            imagen[i][j].azul = funcionLineal(i,j,{{i,j-1},{i,j+1}},imagen,ROJO);
+            imagen[i][j].rojo = funcionLineal(i,j,{{i,j-1},{i,j+1}},imagen,ROJO);
         }else{ //Es AZUL el color a calcular
-            imagen[i][j].verde = funcionLineal(i,j,{{i-1,j},{i+1,j}},imagen,AZUL);
+            imagen[i][j].azul = funcionLineal(i,j,{{i-1,j},{i+1,j}},imagen,AZUL);
         }
     }
 
@@ -58,7 +58,7 @@ public:
         if (colorACalcular == AZUL){
             imagen[i][j].azul = funcionLineal(i,j,{{i,j-1},{i,j+1}},imagen,AZUL);
         }else{ //Es AZUL el color a calcular
-            imagen[i][j].verde = funcionLineal(i,j,{{i-1,j},{i+1,j}},imagen,ROJO);
+            imagen[i][j].rojo = funcionLineal(i,j,{{i-1,j},{i+1,j}},imagen,ROJO);
         }
     }
 
