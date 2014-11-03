@@ -30,36 +30,24 @@ public:
         return resultado/cantPuntos;
     }
 
-    void hacerAzul(int i,int j,vector<vector<Pixel> >& imagen, color colorACalcular){
-        if (colorACalcular == ROJO){
-            imagen[i][j].rojo = funcionLineal(i,j,{{i-1,j+1},{i-1,j-1},{i+1,j-1},{i+1,j+1}},imagen,ROJO);
-        }else{ //Es verde el color a calcular
-            imagen[i][j].verde = funcionLineal(i,j,{{i,j+1},{i-1,j},{i,j-1},{i+1,j}},imagen,VERDE);
-        }
+    void hacerAzul(int i,int j,vector<vector<Pixel> >& imagen){
+        imagen[i][j].rojo = funcionLineal(i,j,{{i-1,j+1},{i-1,j-1},{i+1,j-1},{i+1,j+1}},imagen,ROJO);
+        imagen[i][j].verde = funcionLineal(i,j,{{i,j+1},{i-1,j},{i,j-1},{i+1,j}},imagen,VERDE);
     }
 
-    void hacerRojo(int i,int j,vector<vector<Pixel> >& imagen, color colorACalcular){
-        if (colorACalcular == AZUL){
-            imagen[i][j].azul = funcionLineal(i,j,{{i+1,j-1},{i-1,j-1},{i-1,j+1},{i+1,j+1}},imagen,AZUL);
-        }else{ //Es verde el color a calcular
-            imagen[i][j].verde = funcionLineal(i,j,{{i,j+1},{i-1,j},{i,j-1},{i+1,j}},imagen,VERDE);
-        }
+    void hacerRojo(int i,int j,vector<vector<Pixel> >& imagen){
+        imagen[i][j].azul = funcionLineal(i,j,{{i+1,j-1},{i-1,j-1},{i-1,j+1},{i+1,j+1}},imagen,AZUL);
+        imagen[i][j].verde = funcionLineal(i,j,{{i,j+1},{i-1,j},{i,j-1},{i+1,j}},imagen,VERDE);
     }
 
-    void hacerVerdePar(int i,int j,vector<vector<Pixel> >& imagen, color colorACalcular){
-        if (colorACalcular == ROJO){
-            imagen[i][j].rojo = funcionLineal(i,j,{{i,j-1},{i,j+1}},imagen,ROJO);
-        }else{ //Es AZUL el color a calcular
-            imagen[i][j].azul = funcionLineal(i,j,{{i-1,j},{i+1,j}},imagen,AZUL);
-        }
+    void hacerVerdePar(int i,int j,vector<vector<Pixel> >& imagen){
+        imagen[i][j].rojo = funcionLineal(i,j,{{i,j-1},{i,j+1}},imagen,ROJO);
+        imagen[i][j].azul = funcionLineal(i,j,{{i-1,j},{i+1,j}},imagen,AZUL);
     }
 
-    void hacerVerdeImpar(int i,int j,vector<vector<Pixel> >& imagen, color colorACalcular){
-        if (colorACalcular == AZUL){
-            imagen[i][j].azul = funcionLineal(i,j,{{i,j-1},{i,j+1}},imagen,AZUL);
-        }else{ //Es AZUL el color a calcular
-            imagen[i][j].rojo = funcionLineal(i,j,{{i-1,j},{i+1,j}},imagen,ROJO);
-        }
+    void hacerVerdeImpar(int i,int j,vector<vector<Pixel> >& imagen){
+        imagen[i][j].azul = funcionLineal(i,j,{{i,j-1},{i,j+1}},imagen,AZUL);
+        imagen[i][j].rojo = funcionLineal(i,j,{{i-1,j},{i+1,j}},imagen,ROJO);
     }
 
 
@@ -70,17 +58,13 @@ public:
         for(int i=0; i< width; i++) {
             for(int j=0; j< height; j++) {
                 if (i %2 == 0 && j % 2 == 0){ //ACA HAY AZUL
-                    hacerAzul(i,j,imagen,ROJO);
-                    hacerAzul(i,j,imagen,VERDE);
+                    hacerAzul(i,j,imagen);
                 }else if (i %2 == 1 && j % 2 == 1){ //ACA HAY ROJO
-                    hacerRojo(i,j,imagen,AZUL);
-                    hacerRojo(i,j,imagen,VERDE);
+                    hacerRojo(i,j,imagen);
                 } else if ( i%2 == 0){ //ACA HAY VERDE EN FILA PAR
-                    hacerVerdePar(i,j,imagen,ROJO);
-                    hacerVerdePar(i,j,imagen,AZUL);
+                    hacerVerdePar(i,j,imagen);
                 } else { //ACA HAY VERDE EN FILA IMPAR
-                    hacerVerdeImpar(i,j,imagen,ROJO);
-                    hacerVerdeImpar(i,j,imagen,AZUL);
+                    hacerVerdeImpar(i,j,imagen);
                 }
             }
         }
