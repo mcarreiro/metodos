@@ -5,11 +5,16 @@ print ("MAS ANCHO QUE ALTO")
 print ("REAL ancho 768 altura 512")
 print ("Nombre de archivo sin extension")
 
+metodos = {'vecino':1,'bilineal':2,'quality':3}
+
 imageName = raw_input()
 imageType = "bmp"
 jpgfile = Image.open("../images/"+imageName+"."+imageType)
 pix = jpgfile.load()
 width, height = jpgfile.size
+
+print ("Nombre del metodo (opciones: "+str(metodos.keys())+")")
+metodo = raw_input()
 
 f = open(imageName+".txt",'w')
 print (str(height)+" "+str(width), file=f)
@@ -43,7 +48,7 @@ f.close()
 os.system("g++ -o metodos main.cpp -std=gnu++11")
 os.system("g++ -o metodos main.cpp -std=gnu++11")
 os.system("g++ -o metodos main.cpp -std=gnu++11")
-os.system("./metodos "+imageName+".txt "+imageName+"_out.txt")
+os.system("./metodos "+imageName+".txt "+imageName+"_out.txt "+str(metodos[metodo]))
 
 newFile = open(imageName+"_out.txt",'r')
 

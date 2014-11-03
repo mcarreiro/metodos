@@ -45,11 +45,19 @@ int main(int argc, char* argv[]) {
         }
     }
 
-    Vecino metodo1 = Vecino();
-    metodo1.hacer(imagen);
+    string metodo = argv[3];
 
-//    Bilineal metodo2 = Bilineal();
-//    metodo2.hacer(imagen);
+    if (metodo == "1"){
+        Vecino metodo1 = Vecino();
+        metodo1.hacer(imagen);
+    }else if (metodo == "2"){
+        Bilineal metodo2 = Bilineal();
+        metodo2.hacer(imagen);
+    }else if (metodo == "3"){
+
+    }else{
+
+    }
 
     cout << "Imprimiendo archivo!"<< flush << endl;
 
