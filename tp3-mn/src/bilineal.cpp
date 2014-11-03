@@ -32,9 +32,9 @@ public:
 
     void hacerAzul(int i,int j,vector<vector<Pixel> >& imagen, color colorACalcular){
         if (colorACalcular == ROJO){
-            imagen[i][j].rojo = funcionLineal(i,j,{{i+1,j-1},{i-1,j-1},{i-1,j+1},{i+1,j+1}},imagen,ROJO);
+            imagen[i][j].rojo = funcionLineal(i,j,{{i-1,j+1},{i-1,j-1},{i+1,j-1},{i+1,j+1}},imagen,ROJO);
         }else{ //Es verde el color a calcular
-            imagen[i][j].verde = funcionLineal(i,j,{{i+1,j},{i,j-1},{i-1,j},{i,j+1}},imagen,VERDE);
+            imagen[i][j].verde = funcionLineal(i,j,{{i,j+1},{i-1,j},{i,j-1},{i+1,j}},imagen,VERDE);
         }
     }
 
@@ -42,23 +42,23 @@ public:
         if (colorACalcular == AZUL){
             imagen[i][j].azul = funcionLineal(i,j,{{i+1,j-1},{i-1,j-1},{i-1,j+1},{i+1,j+1}},imagen,AZUL);
         }else{ //Es verde el color a calcular
-            imagen[i][j].verde = funcionLineal(i,j,{{i+1,j},{i,j-1},{i-1,j},{i,j+1}},imagen,VERDE);
+            imagen[i][j].verde = funcionLineal(i,j,{{i,j+1},{i-1,j},{i,j-1},{i+1,j}},imagen,VERDE);
         }
     }
 
     void hacerVerdePar(int i,int j,vector<vector<Pixel> >& imagen, color colorACalcular){
         if (colorACalcular == ROJO){
-            imagen[i][j].azul = funcionLineal(i,j,{{i-1,j},{i+1,j}},imagen,ROJO);
+            imagen[i][j].azul = funcionLineal(i,j,{{i,j-1},{i,j+1}},imagen,ROJO);
         }else{ //Es AZUL el color a calcular
-            imagen[i][j].verde = funcionLineal(i,j,{{i,j-1},{i,j+1}},imagen,AZUL);
+            imagen[i][j].verde = funcionLineal(i,j,{{i-1,j},{i+1,j}},imagen,AZUL);
         }
     }
 
     void hacerVerdeImpar(int i,int j,vector<vector<Pixel> >& imagen, color colorACalcular){
         if (colorACalcular == AZUL){
-            imagen[i][j].azul = funcionLineal(i,j,{{i-1,j},{i+1,j}},imagen,AZUL);
+            imagen[i][j].azul = funcionLineal(i,j,{{i,j-1},{i,j+1}},imagen,AZUL);
         }else{ //Es AZUL el color a calcular
-            imagen[i][j].verde = funcionLineal(i,j,{{i,j-1},{i,j+1}},imagen,ROJO);
+            imagen[i][j].verde = funcionLineal(i,j,{{i-1,j},{i+1,j}},imagen,ROJO);
         }
     }
 
