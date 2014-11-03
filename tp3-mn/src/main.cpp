@@ -4,6 +4,7 @@
 #include "pixel.cpp"
 #include "vecino.cpp"
 #include "bilineal.cpp"
+#include "highquality.cpp"
 
 using namespace std;
 
@@ -54,6 +55,8 @@ int main(int argc, char* argv[]) {
         Bilineal metodo2 = Bilineal();
         metodo2.hacer(imagen);
     }else if (metodo == "3"){
+        HighQuality metodo3 = HighQuality();
+        metodo3.hacer(imagen);
 
     }else{
 
