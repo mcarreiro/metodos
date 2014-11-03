@@ -45,11 +45,11 @@ int main(int argc, char* argv[]) {
         }
     }
 
-    Vecino metodo1 = Vecino();
-    metodo1.hacer(imagen);
-
-//    Bilineal metodo2 = Bilineal();
-//    metodo2.hacer(imagen);
+//    Vecino metodo1 = Vecino();
+//    metodo1.hacer(imagen);
+//
+    Bilineal metodo2 = Bilineal();
+    metodo2.hacer(imagen);
 
     cout << "Imprimiendo archivo!"<< flush << endl;
 
