@@ -54,13 +54,8 @@ newJ = 0
 
 for line in newFile:
 	pixelArray = line.rstrip().split(" ")
-	newPixels[newJ,newI] = (int(pixelArray[0]),int(pixelArray[1]),int(pixelArray[2]))
-	if (newJ < width):
-		newJ += 1
-	else:
-		newJ = 0
-		newI += 1
- 
+	newPixels[int(pixelArray[0]),int(pixelArray[1])] = (int(pixelArray[2]),int(pixelArray[3]),int(pixelArray[4]))
+	
 newImg.show()
 newImg.save(imageName+"_demosicing."+imageType,imageType)
 

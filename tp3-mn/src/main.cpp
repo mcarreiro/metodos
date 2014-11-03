@@ -58,7 +58,7 @@ int main(int argc, char* argv[]) {
 
     for(int a=0; a< width; a++) {
         for (int b = 0; b < height; b++) {
-            myfile << imagen[a][b].rojo << " " << imagen[a][b].verde << " " << imagen[a][b].azul << flush << endl;
+            myfile << a << " " << b << " " << imagen[a][b].rojo << " " << imagen[a][b].verde << " " << imagen[a][b].azul << flush << endl;
         }
     }
 
