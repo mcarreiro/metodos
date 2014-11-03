@@ -13,7 +13,7 @@ jpgfile = Image.open("../images/"+imageName+"."+imageType)
 pix = jpgfile.load()
 width, height = jpgfile.size
 
-print ("Nombre del metodo (opciones: "+str(metodos.keys())+")")
+print ("Nombre del metodo (opciones: "+str(metodos.keys())+") si no pones nada corre todos")
 metodo = raw_input()
 
 f = open(imageName+".txt",'w')
@@ -48,21 +48,30 @@ f.close()
 os.system("g++ -o metodos main.cpp -std=gnu++11")
 os.system("g++ -o metodos main.cpp -std=gnu++11")
 os.system("g++ -o metodos main.cpp -std=gnu++11")
-os.system("./metodos "+imageName+".txt "+imageName+"_out.txt "+str(metodos[metodo]))
 
-newFile = open(imageName+"_out.txt",'r')
+def dibujar(i,key_method):
+	os.system("./metodos "+imageName+".txt "+imageName+"_out.txt "+str(i))
 
-newImg = Image.new( 'RGB', (width,height))
-newPixels = newImg.load() # create the pixel map
-newI = 0
-newJ = 0
+	newFile = open(imageName+"_out.txt",'r')
 
-for line in newFile:
-	pixelArray = line.rstrip().split(" ")
-	newPixels[int(pixelArray[0]),int(pixelArray[1])] = (int(pixelArray[2]),int(pixelArray[3]),int(pixelArray[4]))
-	
-newImg.show()
-newImg.save(imageName+"_demosicing_"+metodo+"."+imageType,imageType)
+	newImg = Image.new( 'RGB', (width,height))
+	newPixels = newImg.load() # create the pixel map
+
+	for line in newFile:
+		pixelArray = line.rstrip().split(" ")
+		newPixels[int(pixelArray[0]),int(pixelArray[1])] = (int(pixelArray[2]),int(pixelArray[3]),int(pixelArray[4]))
+		
+	newImg.show()
+	newImg.save(imageName+"_demosicing_"+key_method+"."+imageType,imageType)
+
+
+if metodo == '':
+	for key in metodos:
+		dibujar(metodos[key],key)
+else:
+	dibujar(metodos[metodo],metodo)
+
+
 
 
 
