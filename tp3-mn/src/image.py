@@ -40,9 +40,9 @@ for i in xrange(0,height-1):
 jpgfile.save(imageName+"_bayer."+imageType,imageType)
 f.close()
 
-os.system("g++ main.cpp -std=gnu++11")
-os.system("g++ main.cpp -std=gnu++11")
-os.system("g++ main.cpp -std=gnu++11")
+os.system("g++ -o metodos main.cpp -std=gnu++11")
+os.system("g++ -o metodos main.cpp -std=gnu++11")
+os.system("g++ -o metodos main.cpp -std=gnu++11")
 os.system("./metodos "+imageName+".txt "+imageName+"_out.txt")
 
 newFile = open(imageName+"_out.txt",'r')
