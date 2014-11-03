@@ -61,7 +61,7 @@ public:
                     hacerAzul(i,j,imagen);
                 }else if (i %2 == 1 && j % 2 == 1){ //ACA HAY ROJO
                     hacerRojo(i,j,imagen);
-                } else if ( i%2 == 0){ //ACA HAY VERDE EN FILA PAR
+                } else if ( j%2 == 0){ //ACA HAY VERDE EN FILA PAR
                     hacerVerdePar(i,j,imagen);
                 } else { //ACA HAY VERDE EN FILA IMPAR
                     hacerVerdeImpar(i,j,imagen);

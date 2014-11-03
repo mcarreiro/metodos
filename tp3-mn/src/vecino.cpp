@@ -26,7 +26,7 @@ public:
                     nat azul = imagen[i-1][j-1].azul;
                     imagen[i][j].verde = verde;
                     imagen[i][j].azul = azul;
-                } else if ( i%2 == 0){ //ACA HAY VERDE EN FILA PAR
+                } else if ( j%2 == 0){ //ACA HAY VERDE EN FILA PAR
                     nat rojo = imagen[i+1][j].rojo;
                     nat azul = imagen[i][j-1].azul;
                     imagen[i][j].rojo = rojo;
