@@ -61,7 +61,7 @@ def dibujar(i,key_method):
 		pixelArray = line.rstrip().split(" ")
 		newPixels[int(pixelArray[0]),int(pixelArray[1])] = (int(pixelArray[2]),int(pixelArray[3]),int(pixelArray[4]))
 		
-	newImg.show()
+	#newImg.show()
 	newImg.save(imageName+"_demosicing_"+key_method+"."+imageType,imageType)
 
 
