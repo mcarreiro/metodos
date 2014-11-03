@@ -57,7 +57,6 @@ int main(int argc, char* argv[]) {
     }else if (metodo == "3"){
         HighQuality metodo3 = HighQuality();
         metodo3.hacer(imagen);
-
     }else{
 
     }
