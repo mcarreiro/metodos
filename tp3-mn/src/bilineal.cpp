@@ -14,8 +14,8 @@ public:
         int cantPuntos = 0;
         int resultado = 0;
 
-        for (int i = 0 ; i<puntos.size() ; i++ ){
-            vector<int> punto = puntos[i];
+        for (int f = 0 ; f<puntos.size() ; f++ ){
+            vector<int> punto = puntos[f];
             if (enRango(punto,imagen)){
                 if (colorACalcular == ROJO){
                     resultado += imagen[punto[0]][punto[1]].rojo;

@@ -62,7 +62,7 @@ for line in newFile:
 	newPixels[int(pixelArray[0]),int(pixelArray[1])] = (int(pixelArray[2]),int(pixelArray[3]),int(pixelArray[4]))
 	
 newImg.show()
-newImg.save(imageName+"_demosicing."+imageType,imageType)
+newImg.save(imageName+"_demosicing_"+metodo+"."+imageType,imageType)
 
 
 
