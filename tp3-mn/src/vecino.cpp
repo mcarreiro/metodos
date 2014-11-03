@@ -13,6 +13,7 @@ public:
     void hacer(vector<vector<Pixel > > imagen){
         int width = imagen.size();
         int height = imagen[0].size();
+        cout << "Vecino altura " << height << " ancho " << width << flush << endl;
         for(int i=0; i< height; i++) {
             for(int j=0; j< width; j++) {
                 if (i %2 == 0 && j % 2 == 0){ //ACA HAY AZUL

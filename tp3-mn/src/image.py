@@ -16,9 +16,9 @@ print (str(height)+" "+str(width), file=f)
 
 print ("PYTHON: altura: "+str(height)+ " ancho: "+str(width))
 
-for i in xrange(0,height-1):
-	for j in xrange(0,width-1):
-		acutalTuple = pix[j,i]
+for i in xrange(width):
+	for j in xrange(height):
+		acutalTuple = pix[i,j]
 		newTuple = ()
 		if i % 2 == 0: # AZUL-VERDE-AZUL
 			if j % 2 == 0: #AZUL
@@ -34,7 +34,7 @@ for i in xrange(0,height-1):
 			else: #ROJO
 				newTuple = (acutalTuple[0],0,0)
 				print (acutalTuple[0], file=f)
-		pix[j,i] = newTuple
+		pix[i,j] = newTuple
 
 #jpgfile.show()
 jpgfile.save(imageName+"_bayer."+imageType,imageType)
