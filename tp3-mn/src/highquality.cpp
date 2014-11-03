@@ -12,15 +12,15 @@ public:
 
     void hacer(vector<vector<Pixel > >& imagen){
 
-        Bilineal bilineal();
+        Bilineal bilineal = Bilineal();
         bilineal.hacer(imagen);
         
         double correccion;
 
         int width = imagen.size();
         int height = imagen[0].size();
-        for(int i=2; i< height-2; i++) {
-            for(int j=2; j< width-2; j++) {
+        for(int i=2; i< width-2; i++) {
+            for(int j=2; j< height-2; j++) {
                 correccion = 0;
                 if (i %2 == 0 && j % 2 == 0){ //ACA HAY AZUL
                     
@@ -55,11 +55,21 @@ public:
                     correccion += imagen[i-1][j-1].verde;
                     correccion += imagen[i+1][j-1].verde;
 
-                    correccion = imagen[i][j].verde - correccion/4;
+                    correccion = imagen[i][j].verde - correccion/8;
                     imagen[i][j].verde += correccion * 5/8;
                     imagen[i][j].rojo += correccion * 5/8;
                     
                 } 
+                //cout << "VERDE: " << imagen[i][j].verde << endl;
+                //cout << "ROJO: " << imagen[i][j].rojo << endl;
+                //cout << "AZUL: " << imagen[i][j].azul << endl;
+
+                if(imagen[i][j].verde > 255)
+                    imagen[i][j].verde = 255;
+                if(imagen[i][j].rojo > 255)
+                    imagen[i][j].rojo = 255;
+                if(imagen[i][j].azul > 255)
+                    imagen[i][j].azul = 255;
             }
         }
 
