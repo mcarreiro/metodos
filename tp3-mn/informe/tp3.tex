@@ -1,0 +1,121 @@
+\documentclass[11pt, a4paper,english,spanish]{article}
+\usepackage[spanish]{babel}
+\usepackage[utf8]{inputenc}
+\parskip = 11 pt
+\usepackage[width=18cm, left=1.5cm, top=2.25cm, height= 25cm]{geometry}
+
+\usepackage{amsmath}
+\usepackage{algorithm}
+\usepackage[noend]{algpseudocode}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+\usepackage{caratula}
+\usepackage{url}
+\usepackage{flafter}
+\usepackage{afterpage}
+\usepackage{float}
+\usepackage{listings}
+\usepackage{color}
+\usepackage{verbatim}
+\usepackage{placeins}
+\usepackage{graphicx}
+\usepackage{caption}
+\usepackage{subcaption}
+\definecolor{gray97}{gray}{.97}
+\definecolor{gray75}{gray}{.75}
+\definecolor{gray45}{gray}{.45}
+
+\algdef{SE}[DOWHILE]{Do}{doWhile}{\algorithmicdo}[1]{\algorithmicwhile\ #1}%
+ 
+\usepackage{listings}
+\lstset{ frame=Ltb,
+     framerule=0pt,
+     aboveskip=0.5cm,
+     framextopmargin=3pt,
+     framexbottommargin=3pt,
+     framexleftmargin=0.4cm,
+     framesep=0pt,
+     rulesep=.4pt,
+     backgroundcolor=\color{gray97},
+     rulesepcolor=\color{black},
+     %
+     stringstyle=\ttfamily,
+     showstringspaces = false,
+     basicstyle=\small\ttfamily,
+     commentstyle=\color{gray45},
+     keywordstyle=\bfseries,
+     %
+     numbers=left,
+     numbersep=15pt,
+     numberstyle=\tiny,
+     numberfirstline = false,
+     breaklines=true,
+   }
+
+
+% minimizar fragmentado de listados
+\lstnewenvironment{listing}[1][]
+   {\lstset{#1}\pagebreak[0]}{\pagebreak[0]}
+ 
+\lstdefinestyle{consola}
+   {basicstyle=\scriptsize\bf\ttfamily,
+    backgroundcolor=\color{gray75},
+   }
+ 
+\lstdefinestyle{C++}
+   {language=C++,
+   }
+ 
+\newcommand{\real}{\ensuremath{\mathbb{R}}}
+\newcommand{\grad}{\hspace{-2mm}$\phantom{a}^{\circ}$}
+
+\pagestyle{fancy}
+
+\title{MotionCapture}
+
+%Estilo para el encabezado
+\fancyhead[LO, LE]{Métodos Numéricos}
+\fancyhead[RO, RE]{2$^{do.}$ cuatrimestre de 2014}
+\fancyhead[CO, CE]{}
+
+\fancyfoot[CO, CE]{P\'agina \thepage\ de \pageref{LastPage}}
+
+\begin{document}
+%Estos son los parametros para la caratula
+\materia{Métodos Numéricos}
+\submateria{Trabajo Pr\'actico Nro. 3}
+\titulo{Demosaicing}
+\fecha{\today}
+\integrante{Martin Carreiro}{45/10}{martin301290@gmail.com}
+\integrante{Kevin Kujawski}{459/10}{kevinkuja@gmail.com}
+\integrante{Juan Manuel Ort\'iz de Z\'arate}{403/10}{jmanuoz@gmail.com}
+\maketitle
+\newpage
+
+%Pagina de titulo e indice
+\thispagestyle{empty}
+
+\tableofcontents
+
+%\newpage
+
+\normalsize
+\input{01-resumen}
+\newpage
+\input{02-introduccion}
+\newpage
+\input{03-desarrollo}
+\newpage
+\input{04-resultados}
+\newpage
+\input{05-discusion}
+\newpage
+\input{06-conclusiones}
+\input{07-referencias}
+
+\newpage
+
+\end{document}
+
