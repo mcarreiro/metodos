@@ -6,6 +6,8 @@
 
 typedef unsigned int nat;
 
+using namespace std;
+
 class Spline {
 public:
     Spline(){}
@@ -21,21 +23,21 @@ public:
     void resolverDireccion(int j, int from, int to, vector<vector<Pixel > >& imagen, int direccion){ //0 es horizontal, 1 es vertical
     	int width = imagen.size();
     		
-		vector<int> alphas = new vector<int>(width);
-		vector<int> ls = new vector<int>(width);
-		vector<int> us = new vector<int>(width);
-		vector<int> zs = new vector<int>(width);
+		vector<int> alphas = vector<int>(width);
+		vector<int> ls = vector<int>(width);
+		vector<int> us = vector<int>(width);
+		vector<int> zs = vector<int>(width);
 
-		vector<int> cs = new vector<int>(width);
-		vector<int> bs = new vector<int>(width);
-		vector<int> ds = new vector<int>(width);
+		vector<int> cs = vector<int>(width);
+		vector<int> bs = vector<int>(width);
+		vector<int> ds = vector<int>(width);
 
 		ls[0] = 1;
 		us[0] = 0;
 		zs[0] = 0;
 
 		for (int i = to ; i <= from ; i+=2){ //Por cada azul sin incluir el primero
-			int alpha_i = (3/2)(getByDirection(i+1,j,imagen,direccion) - getByDirection(i-1,j,imagen,direccion)) //Depende del verde de la izquierda y el de la derecha
+			int alpha_i = (3/2)*(getByDirection(i+1,j,imagen,direccion) - getByDirection(i-1,j,imagen,direccion)); //Depende del verde de la izquierda y el de la derecha
 			alphas[i] = alpha_i;
 
 			int ls_i = 4 - 2*us[i-2];
@@ -49,8 +51,8 @@ public:
 		cs[to] = 0;
 
 		for (int k = to-2 ; k >= from ; k-=2){ //k==i pero al reves
-			cs[k] = zs[k] - us[k]cs[k+2]
-			bs[k] = (getByDirection(k+1,j,imagen,direccion) - getByDirection(k-1,j,imagen,direccion))/2 - 2*(cs[k+2] + 2cs[k])/3;
+			cs[k] = zs[k] - us[k]*cs[k+2];
+			bs[k] = (getByDirection(k+1,j,imagen,direccion) - getByDirection(k-1,j,imagen,direccion))/2 - 2*(cs[k+2] + 2*cs[k])/3;
 			ds[k] = (cs[k+2] - cs[k])/6;
 
 			coeficientes[k][j][direccion] = getByDirection(k-1,j,imagen,direccion) + bs[k] + cs[k] + ds[k];
@@ -62,31 +64,33 @@ public:
     }
 
     void plantearYResolverHorizontal(int j, vector<vector<Pixel > >& imagen, color colorAArmar){
+    	int from,to;
     	if (colorAArmar == AZUL){
     		int width = imagen.size();
 
-    		int from = 2;
-    		int to = width -2;
+    		from = 2;
+    		to = width -2;
     	}else if (colorAArmar == ROJO){
     		int width = imagen.size();
 
-    		int from = 1;
-    		int to = width -3;
+    		from = 1;
+    		to = width -3;
 		}
 		resolverDireccion(j,from,to,imagen,0);
     }
 
-    void plantearYResolverVertical(int i, vector<vector<Pixel > >& imagen, color colorAArmar){
+    void plantearYResolverVertical(int j, vector<vector<Pixel > >& imagen, color colorAArmar){
+    	int from,to;
     	if (colorAArmar == AZUL){
     		int height = imagen[0].size();
 
-    		int from = 2;
-    		int to = height -2;
+    		from = 2;
+    		to = height -2;
     	}else if (colorAArmar == ROJO){
     		int height = imagen[0].size();
 
-    		int from = 1;
-    		int to = height -3;
+    		from = 1;
+    		to = height -3;
     	}
 		resolverDireccion(j,from,to,imagen,1);
 	}
@@ -94,7 +98,7 @@ public:
     void hacer(vector<vector<Pixel > >& imagen){
     	
 
-		Bilineal b();
+		Bilineal b = Bilineal();
 		b.hacer(imagen);//TODO: ver si hay que obviar los verdes
 
     	int width = imagen.size();
@@ -117,14 +121,14 @@ public:
 
     	for(int i=1; i< width-2; i++) {
     		if (i % 2 == 0)
-				plantearYResolverVertical(j,imagen,AZUL);
+				plantearYResolverVertical(i,imagen,AZUL);
 			else
-   				plantearYResolverVertical(j,imagen,ROJO);
+   				plantearYResolverVertical(i,imagen,ROJO);
     	}	
 
     	for(int a=1; a< width-1; a++) {
             for(int b=1; b< height-1; b++) {
-        		if (a%2 != b%2) continue //Solo quiero los azules y rojos
+        		if (a%2 != b%2) continue; //Solo quiero los azules y rojos
 
 				if (abs(imagen[a][b].verde - coeficientes[a][b][0]) < abs(imagen[a][b].verde - coeficientes[a][b][1])){
 					imagen[a][b].verde = coeficientes[a][b][0];

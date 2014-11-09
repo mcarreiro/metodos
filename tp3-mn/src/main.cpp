@@ -59,7 +59,7 @@ int main(int argc, char* argv[]) {
         HighQuality metodo3 = HighQuality();
         metodo3.hacer(imagen);
     }else{
-        Spline spline metodo4 = Spline();
+        Spline metodo4 = Spline();
         metodo4.hacer(imagen);
     }
 
