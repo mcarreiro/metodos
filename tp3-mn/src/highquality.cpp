@@ -1,5 +1,6 @@
 #include "pixel.cpp"
 #include <vector>
+#include <cmath>
 
 typedef unsigned int nat;
 
@@ -31,7 +32,7 @@ public:
                     correccion -= imagen[i][j+2].azul;
                     correccion -= imagen[i+2][j].azul;
                     correccion = imagen[i][j].azul + correccion/4;
-                    imagen[i][j].verde += 0.75 * correccion;
+                    imagen[i][j].verde += 0.25 * correccion;
                     //imagen[i][j].rojo += 0.75 * correccion;
                 
                 }else if (i %2 == 1 && j % 2 == 1){ //ACA HAY ROJO
@@ -83,7 +84,9 @@ public:
                 if(imagen[i][j].azul > 255) imagen[i][j].azul = 255;
 
 
-                if(imagen[i][j].verde== 255 && imagen[i][j].rojo < 70 && imagen[i][j].azul < 70)
+                if(imagen[i][j].verde == 255 
+                    && (((imagen[i][j].rojo - imagen[i][j].verde)) > 100 
+                    || ((imagen[i][j].azul - imagen[i][j].verde)) > 100) )
                     imagen[i][j].verde = 0;
             }
         }
