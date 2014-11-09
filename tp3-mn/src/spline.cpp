@@ -53,7 +53,10 @@ public:
 			bs[k] = (getByDirection(k+1,j,imagen,direccion) - getByDirection(k-1,j,imagen,direccion))/2 - 2*(cs[k+2] + 2*cs[k])/3;
 			ds[k] = (cs[k+2] - cs[k])/6;
 
-			coeficientes[k][j][direccion] = getByDirection(k-1,j,imagen,direccion) + bs[k] + cs[k] + ds[k];
+			if (direccion == 0)
+				coeficientes[k][j][direccion] = getByDirection(k-1,j,imagen,direccion) + bs[k] + cs[k] + ds[k];
+			else
+				coeficientes[j][k][direccion] = getByDirection(k-1,j,imagen,direccion) + bs[k] + cs[k] + ds[k];
 			//coeficientes[k][j][0] = getByDirection(k-1,j,imagen,direccion);
 			//coeficientes[k][j][2] = zs[k] - us[k]cs[k+2];
 			//coeficientes[k][j][1] = (imagen[k+1][j].verde - imagen[k-1][j].verde)/2 - 2*(cs[k+2] + 2cs[k])/3;
@@ -128,11 +131,11 @@ public:
             for(int b=1; b< height-1; b++) {
         		if (a%2 != b%2) continue; //Solo quiero los azules y rojos
 
-				//if (fabs(imagen[a][b].verde - coeficientes[a][b][0]) < fabs(imagen[a][b].verde - coeficientes[a][b][1])){
+				if (fabs(imagen[a][b].verde - coeficientes[a][b][0]) < fabs(imagen[a][b].verde - coeficientes[a][b][1])){
 					imagen[a][b].verde = coeficientes[a][b][0];
-				//} else {
+				} else {
 					imagen[a][b].verde = coeficientes[a][b][1];
-				//}
+				}
         	}
         }
 	}
