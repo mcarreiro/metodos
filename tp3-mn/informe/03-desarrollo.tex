@@ -1,1 +1,21 @@
 \section{Desarrollo}
+
+\subsection{Vecinos}
+
+\subsection{Bilineal}
+
+\subsection{Direccional}
+
+\subsection{High Quality}
+
+El algoritmo de demosaicing que denominamos "High Quality" se basa en el paper de Malvar, He y Cutler. Su principal atractivo es que realiza una corrección de la imagen luego de aplicar el algoritmo de Interpolación Bilineal pero teniendo en cuenta para calcular un color a los otros dos, en diferencia a los otros algoritmos que solo tienen en cuenta los valores cercanos con respecto a su mismo color.
+
+
+Para el algoritmo highquality decidimos solamente procesar el color verde de los pixeles ya que solamente medimos la calidad de ese color en el tp.
+
+- Primero hacemos bilineal sobre todos los colores de la imagen
+- Por cada pixel de la imagen (exceptuando los bordes):
+		
+	
+
+

@@ -13,8 +13,8 @@ def compare(file1, file2, error):
     distancia = 0
 
 
-    for i in xrange(width):
-        for j in xrange(height):
+    for i in xrange(2,width-2):
+        for j in xrange(2,height-2):
             verde1  = pix1[i,j][1]
             verde2  = pix2[i,j][1]
             dis = abs(verde1 - verde2)
