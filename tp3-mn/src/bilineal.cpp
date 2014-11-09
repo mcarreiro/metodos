@@ -1,3 +1,5 @@
+#ifndef Bilineal_H
+#define Bilineal_H
 #include "pixel.cpp"
 
 class Bilineal{
@@ -54,7 +56,7 @@ public:
     void hacer(vector<vector<Pixel> >& imagen){
         int width = imagen.size();
         int height = imagen[0].size();
-        cout << "Bilineal altura " << height << " ancho " << width << flush << endl;
+        //cout << "Bilineal altura " << height << " ancho " << width << flush << endl;
         for(int i=0; i< width; i++) {
             for(int j=0; j< height; j++) {
                 if (i %2 == 0 && j % 2 == 0){ //ACA HAY AZUL
@@ -71,3 +73,5 @@ public:
 
     };
 };
+
+#endif

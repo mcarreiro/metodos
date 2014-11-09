@@ -1,25 +1,25 @@
 from __future__ import print_function
 import os,sys
 from PIL import Image
-print ("MAS ANCHO QUE ALTO")
-print ("REAL ancho 768 altura 512")
-print ("Nombre de archivo sin extension")
+#print ("MAS ANCHO QUE ALTO")
+#print ("REAL ancho 768 altura 512")
+#print ("Nombre de archivo sin extension")
+imageName, metodo = sys.argv[1:]
+metodos = {'vecino':1,'quality':3,'bilineal':2,'spline':4}
 
-metodos = {'vecino':1,'bilineal':2,'quality':3}
-
-imageName = raw_input()
+#imageName = raw_input()
 imageType = "bmp"
 jpgfile = Image.open("../images/"+imageName+"."+imageType)
 pix = jpgfile.load()
 width, height = jpgfile.size
 
-print ("Nombre del metodo (opciones: "+str(metodos.keys())+") si no pones nada corre todos")
-metodo = raw_input()
+#print ("Nombre del metodo (opciones: "+str(metodos.keys())+") si no pones nada corre todos")
+#metodo = raw_input()
 
 f = open(imageName+".txt",'w')
 print (str(height)+" "+str(width), file=f)
 
-print ("PYTHON: altura: "+str(height)+ " ancho: "+str(width))
+#print ("PYTHON: altura: "+str(height)+ " ancho: "+str(width))
 
 for i in xrange(width):
 	for j in xrange(height):
@@ -50,7 +50,8 @@ os.system("g++ -o metodos main.cpp -std=gnu++11")
 os.system("g++ -o metodos main.cpp -std=gnu++11")
 
 def dibujar(i,key_method):
-	os.system("./metodos "+imageName+".txt "+imageName+"_out.txt "+str(i))
+	print (" ")
+	os.system("echo "+key_method+" ;time ./metodos "+imageName+".txt "+imageName+"_out.txt "+str(i))
 
 	newFile = open(imageName+"_out.txt",'r')
 
@@ -65,7 +66,7 @@ def dibujar(i,key_method):
 	newImg.save(imageName+"_demosicing_"+key_method+"."+imageType,imageType)
 
 
-if metodo == '':
+if metodo == 't':
 	for key in metodos:
 		dibujar(metodos[key],key)
 else:
