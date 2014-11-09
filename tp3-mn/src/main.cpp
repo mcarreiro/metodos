@@ -17,7 +17,7 @@ int main(int argc, char* argv[]) {
     nat color;
     inputFile >> height >> width;
 
-    cout << "C++ altura: " << height << " ancho: " << width << flush << endl;
+    //cout << "C++ altura: " << height << " ancho: " << width << flush << endl;
 
     vector<vector<Pixel> > imagen;
 
@@ -61,7 +61,7 @@ int main(int argc, char* argv[]) {
 
     }
 
-    cout << "Imprimiendo archivo!"<< flush << endl;
+    //cout << "Imprimiendo archivo!"<< flush << endl;
 
     string output = argv[2];
     ofstream myfile (output);
