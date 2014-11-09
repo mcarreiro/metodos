@@ -31,8 +31,8 @@ public:
                     correccion -= imagen[i-2][j].azul;
                     correccion -= imagen[i][j+2].azul;
                     correccion -= imagen[i+2][j].azul;
-                    correccion = imagen[i][j].azul + correccion/4;
-                    imagen[i][j].verde += 0.25 * correccion;
+                    correccion = imagen[i][j].azul + correccion/float(4);
+                    imagen[i][j].verde += 5/8 * correccion;
                     //imagen[i][j].rojo += 0.75 * correccion;
                 
                 }else if (i %2 == 1 && j % 2 == 1){ //ACA HAY ROJO
@@ -41,7 +41,7 @@ public:
                     correccion -= imagen[i-2][j].rojo;
                     correccion -= imagen[i][j+2].rojo;
                     correccion -= imagen[i+2][j].rojo;
-                    correccion = imagen[i][j].rojo + correccion/4;
+                    correccion = imagen[i][j].rojo + correccion/float(4);
                     imagen[i][j].verde += 0.5 * correccion;
                     //imagen[i][j].azul += 0.5 * correccion;
 
@@ -78,10 +78,10 @@ public:
                 //cout << "ROJO: " << imagen[i][j].rojo << endl;
                 //cout << "AZUL: " << imagen[i][j].azul << endl;
 
-if(imagen[i][j].verde > 255 
-                    && (((imagen[i][j].rojo - imagen[i][j].verde)) > 100 
-                    || ((imagen[i][j].azul - imagen[i][j].verde)) > 100) )
-                    imagen[i][j].verde = 0;
+//if(imagen[i][j].verde > 255 
+  //                  && (((imagen[i][j].rojo - imagen[i][j].verde)) > 100 
+    //                || ((imagen[i][j].azul - imagen[i][j].verde)) > 100) )
+      //              imagen[i][j].verde = 0;
                 
                 if(imagen[i][j].verde > 255) imagen[i][j].verde = 255;
                 if(imagen[i][j].rojo > 255) imagen[i][j].rojo = 255;
