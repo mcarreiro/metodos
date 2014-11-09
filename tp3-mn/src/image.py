@@ -5,7 +5,7 @@ from PIL import Image
 #print ("REAL ancho 768 altura 512")
 #print ("Nombre de archivo sin extension")
 imageName, metodo = sys.argv[1:]
-metodos = {'vecino':1,'quality':3,'bilineal':2}
+metodos = {'vecino':1,'quality':3,'bilineal':2,'spline':4}
 
 #imageName = raw_input()
 imageType = "bmp"

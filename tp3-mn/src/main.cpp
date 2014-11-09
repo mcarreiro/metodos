@@ -5,6 +5,7 @@
 #include "vecino.cpp"
 #include "bilineal.cpp"
 #include "highquality.cpp"
+#include "spline.cpp"
 
 using namespace std;
 
@@ -58,7 +59,8 @@ int main(int argc, char* argv[]) {
         HighQuality metodo3 = HighQuality();
         metodo3.hacer(imagen);
     }else{
-
+        Spline spline metodo4 = Spline();
+        metodo4.hacer(imagen);
     }
 
     //cout << "Imprimiendo archivo!"<< flush << endl;
