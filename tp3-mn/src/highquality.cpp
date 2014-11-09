@@ -78,16 +78,16 @@ public:
                 //cout << "ROJO: " << imagen[i][j].rojo << endl;
                 //cout << "AZUL: " << imagen[i][j].azul << endl;
 
+if(imagen[i][j].verde > 255 
+                    && (((imagen[i][j].rojo - imagen[i][j].verde)) > 100 
+                    || ((imagen[i][j].azul - imagen[i][j].verde)) > 100) )
+                    imagen[i][j].verde = 0;
                 
                 if(imagen[i][j].verde > 255) imagen[i][j].verde = 255;
                 if(imagen[i][j].rojo > 255) imagen[i][j].rojo = 255;
                 if(imagen[i][j].azul > 255) imagen[i][j].azul = 255;
 
 
-                if(imagen[i][j].verde == 255 
-                    && (((imagen[i][j].rojo - imagen[i][j].verde)) > 100 
-                    || ((imagen[i][j].azul - imagen[i][j].verde)) > 100) )
-                    imagen[i][j].verde = 0;
             }
         }
 
