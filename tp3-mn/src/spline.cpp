@@ -2,9 +2,7 @@
 #define Spline_H
 
 #include "bilineal.cpp"
-
-
-typedef unsigned int nat;
+#include <cmath>
 
 using namespace std;
 
@@ -130,11 +128,11 @@ public:
             for(int b=1; b< height-1; b++) {
         		if (a%2 != b%2) continue; //Solo quiero los azules y rojos
 
-				if (abs(imagen[a][b].verde - coeficientes[a][b][0]) < abs(imagen[a][b].verde - coeficientes[a][b][1])){
+				//if (fabs(imagen[a][b].verde - coeficientes[a][b][0]) < fabs(imagen[a][b].verde - coeficientes[a][b][1])){
 					imagen[a][b].verde = coeficientes[a][b][0];
-				} else {
+				//} else {
 					imagen[a][b].verde = coeficientes[a][b][1];
-				}
+				//}
         	}
         }
 	}
