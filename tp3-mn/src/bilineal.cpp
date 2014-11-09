@@ -1,3 +1,5 @@
+#ifndef Bilineal_H
+#define Bilineal_H
 #include "pixel.cpp"
 
 class Bilineal{
@@ -71,3 +73,5 @@ public:
 
     };
 };
+
+#endif
