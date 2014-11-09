@@ -6,6 +6,21 @@
 
 \subsection{Direccional}
 
+Para este algoritmo nos basamos en lo explicado por Burden y Faires$[1]$ para el caculo de los splines y en lo desarrollado por Ron Kimmel$[2]$ para el algoritmo en sí. El método lo aplicamos sólo para el color verde mientras que para los otros utilizamos bilineal. 
+
+Lo que hace es:
+\begin{lstlisting}[frame=single] 
+Para cada celda:
+	Interpolo mediante spline su fila y columna
+	Calculo sus derivadas aproximadas en direcci\'on horizontal y vertical
+	Si la derivada horizontal es mayor
+		celda.verde = interpolaci\'on horizontal * 0.3 +  interpolaci\'on vertical *  0.7
+	sino
+		celda.verde = interpolaci\'on horizontal * 0.3 +  interpolaci\'on vertical * 0.7	
+\end{lstlisting}
+
+Dado que las interpolaciones mediante splines no son nada triviales lo explicaremos mas adelante en detalle. Las derivadas en $x$  la aproximamos haciendo $|G(x-1,y)-G(x+1,y)|$ donde G es el valor del color verde en ese punto, la derivada en $y$ es análoga. Dado que un mayor valor en la derivada puede estar indicándonos un potencial borde le damos mayor peso a la derivada cuyo valor es más chico multiplicando a este por 0.7 y a la otra por 0.3. Finalmente las sumamos para obtener el verde correspondiente en nuestra celda.
+
 \subsection{High Quality}
 
 El algoritmo de demosaicing que denominamos "High Quality" se basa en el paper de Malvar, He y Cutler. Su principal atractivo es que realiza una corrección de la imagen luego de aplicar el algoritmo de Interpolación Bilineal pero teniendo en cuenta para calcular un color a los otros dos, en diferencia a los otros algoritmos que solo tienen en cuenta los valores cercanos con respecto a su mismo color.
