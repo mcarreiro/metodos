@@ -131,11 +131,21 @@ public:
             for(int b=1; b< height-1; b++) {
         		if (a%2 != b%2) continue; //Solo quiero los azules y rojos
 
-				if (fabs(imagen[a][b].verde - coeficientes[a][b][0]) < fabs(imagen[a][b].verde - coeficientes[a][b][1])){
-					imagen[a][b].verde = coeficientes[a][b][0];
-				} else {
-					imagen[a][b].verde = coeficientes[a][b][1];
-				}
+        		float derivadaX = fabs(imagen[a+1][b].verde - imagen[a-1][b].verde);
+        		float derivadaY = fabs(imagen[a][b+1].verde - imagen[a][b-1].verde);
+
+        		if (derivadaX > derivadaY){
+    				imagen[a][b].verde = 0.3 * coeficientes[a][b][0] + 0.7 * coeficientes[a][b][1];
+        		} else {
+        			imagen[a][b].verde = 0.7 * coeficientes[a][b][0] + 0.3 * coeficientes[a][b][1];
+        		}
+
+				//if (fabs(imagen[a][b].verde - coeficientes[a][b][0]) < fabs(imagen[a][b].verde - coeficientes[a][b][1])){
+					//imagen[a][b].verde = percentageY * coeficientes[a][b][0] + percentageX * coeficientes[a][b][1];
+				//} else {
+					//imagen[a][b].verde = coeficientes[a][b][1];
+				//}
+
         	}
         }
 	}
