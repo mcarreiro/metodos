@@ -1,6 +1,33 @@
 \section{Desarrollo}
 
+Como explicamos en la introducción estaremos analizando 4 algoritmos distintos, estos son: Vecinos, Bilineal, Direccional y High Quality. La idea será comparar sus resultados subjetivamente, es decir a simple vista como 
+vemos la imagen resultante, objetivamente y temporalmente, osea cuanto tiempo demora en ejecutarse el procedimiento, para poder concluir finalmente las ventajas y desventajas de cada uno. A continuación explicaremos como 
+implementamos cada uno.
+
 \subsection{Vecinos}
+Este es el más simple de todos. La idea es estabelecer el valor de los colores faltantes de cada pixel en base al vecino que tenga dicho valor. Por ejemplo si estamos en un pixel azul le preguntamos a algun vecino rojo y 
+otro verde su valor y los seteamos en los correspondientes colores de nuestro pixel.
+
+Pseudocódigo:
+\begin{lstlisting}[frame=single] 
+Para cada celda:
+	si es roja:
+		celda.verde = vecinoIzq.verde
+		celda.azul  = vecinoSuperiorIzq.azul	
+	si es azul:
+		celda.rojo = vecinoInferiorDerecho.rojo
+		celda.verde = vecinoDerecho.verde
+	si es verde y fila par:
+		celda.rojo = vecinoDerecho.rojo
+		celda.azul = vecinoSuperior.azul
+	si es verde y fila impar:
+		celda.rojo = vecinoInferior.rojo
+		celda.azul = vecinoIzquierdo.azul
+\end{lstlisting}
+
+Se diferencia entre fila par e impar cuando la celda es verde ya que es distinta la disposición de sus vecinos en cada caso, esto en cambio se mantiene inmutable en los casos de celda roja o azul. La selección del
+vecino izquierdo y superior izquierdo cuando es roja es porque siempre existe ese vecino, a diferencia del derecho por ejemplo ya que el rojo puede ser una celda borde y no tener dicho adyacente. La misma idea aplicamos 
+al caso de la celda azul y de las verdes, apuntamos a elegir el vecino que siempre existe.
 
 \subsection{Bilineal}
 
