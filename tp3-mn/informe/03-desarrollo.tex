@@ -20,7 +20,7 @@ Para cada celda:
 	si es verde y fila par:
 		celda.rojo = vecinoDerecho.rojo
 		celda.azul = vecinoSuperior.azul
-	si es verde y fila impar:
+	si es verde y fila impar
 		celda.rojo = vecinoInferior.rojo
 		celda.azul = vecinoIzquierdo.azul
 \end{lstlisting}
@@ -40,10 +40,10 @@ Lo que hace es:
 Para cada celda:
 	Interpolo mediante spline su fila y columna
 	Calculo sus derivadas aproximadas en direcci\'on horizontal y vertical
-	Si la derivada horizontal es mayor
-		celda.verde = interpolaci\'on horizontal * 0.3 +  interpolaci\'on vertical *  0.7
+	Si la derivada horizontal es mayor:
+		celda.verde = interpolacion horizontal * 0.3 + interpolacion vertical *  0.7
 	sino
-		celda.verde = interpolaci\'on horizontal * 0.3 +  interpolaci\'on vertical * 0.7	
+		celda.verde = interpolacion horizontal * 0.3 + interpolacion vertical * 0.7
 \end{lstlisting}
 
 Dado que las interpolaciones mediante splines no son nada triviales lo explicaremos mas adelante en detalle. Las derivadas en $x$  la aproximamos haciendo $|G(x-1,y)-G(x+1,y)|$ donde G es el valor del color verde en ese punto, la derivada en $y$ es análoga. Dado que un mayor valor en la derivada puede estar indicándonos un potencial borde le damos mayor peso a la derivada cuyo valor es más chico multiplicando a este por 0.7 y a la otra por 0.3. Finalmente las sumamos para obtener el verde correspondiente en nuestra celda.
@@ -54,17 +54,12 @@ Todos los algoritmos anteriores aproximaban el valor mediante un color, pero est
 
 El algoritmo de demosaicing que denominamos "High Quality" se basa en el paper de Malvar, He y Cutler. Su principal atractivo es que realiza una corrección de la imagen luego de aplicar el algoritmo de Interpolación Bilineal pero teniendo en cuenta para calcular un color a los otros dos, en diferencia a los otros algoritmos que solo tienen en cuenta los valores cercanos con respecto a su mismo color.
 
-
-
 Para el algoritmo highquality decidimos solamente procesar el color verde de los pixeles ya que solamente medimos la calidad de ese color en el tp.
 
-- Primero hacemos bilineal sobre todos los colores de la imagen
-- Por cada pixel de la imagen (exceptuando los bordes):
-	- Si la imagen cae en verde la ignoro
-	- Si cae en rojo o azul:
-		- Al color verde de ese pixel le sumo el valor del color actual calculado en la bilineal
-		- 
-		
-	
-
-
+\begin{lstlisting}[frame=single] 
+Primero hacemos bilineal sobre todos los colores de la imagen
+Por cada pixel de la imagen (exceptuando los bordes):
+	Si la imagen cae en verde la ignoro
+	Si cae en rojo o azul:
+		Al color verde de ese pixel le sumo el valor del color actual calculado en la bilineal
+\end{lstlisting}
