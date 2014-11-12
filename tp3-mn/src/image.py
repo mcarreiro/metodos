@@ -45,9 +45,9 @@ for i in xrange(width):
 jpgfile.save(imageName+"_bayer."+imageType,imageType)
 f.close()
 
-os.system("g++ -o metodos main.cpp -std=gnu++11")
-os.system("g++ -o metodos main.cpp -std=gnu++11")
-os.system("g++ -o metodos main.cpp -std=gnu++11")
+os.system("g++ -o metodos main.cpp -std=gnu++0x")
+os.system("g++ -o metodos main.cpp -std=gnu++0x")
+os.system("g++ -o metodos main.cpp -std=gnu++0x")
 
 def dibujar(i,key_method):
 	print (" ")
