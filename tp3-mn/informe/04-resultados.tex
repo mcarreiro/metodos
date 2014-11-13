@@ -7,7 +7,7 @@ Es un método para definir la relación entre una señal y el ruido de la regena
 
 \subsection{Colores}
 
-Se nos ocurrió que podría ser interesante chequear los comportamientos de estos procedimientos en una imagen con muchos bordes ya que estos, en algoritmos como el directional, son factores importantes y potencialmente conflictivos. Además hicimos que la imagen sea grande (5000 x 3000 pixeles) para poder analizar tiempos de computo y para influir en la calidad subjetiva, ya que si ponemos imagenes con mucha definición pequeños errores podrían pasar desapercividos para el ojo humano.
+Se nos ocurrió que podría ser interesante chequear los comportamientos de estos procedimientos en una imagen con muchos bordes ya que estos, en algoritmos como el directional, son factores importantes y potencialmente conflictivos. Además hicimos que la imagen sea grande (5000 x 3000 pixeles) para poder analizar tiempos de computo y para influir en la calidad subjetiva, ya que si ponemos imágenes con mucha definición pequeños errores podrían pasar desapercividos para el ojo humano.
 
 Tambien expondremos la imagen bayerizada para que quede claro que la conversción que estamos haciendo es correcta.
 
@@ -89,14 +89,33 @@ Efectivamente a primera vista parecería que todas dieran lo mismo. Pero veamos 
 \endminipage 
 \end{figure}
 
-Como supimos el algoritmo directional y el bilineal tuvieron pequeños errores en los bordes. Podemos observar que en esos casos entre el verde y el violeta parece haber como una `cosedura', la misma se repite en todos los bordes de la imagen. Estas diferencias imperceptibles por el tamaño de la imagen a primera vista pueden ser efectivamente comprobadas mediante un análisis de calidad objetivo. 
+El algoritmo bilineal y el high quality tuvieron pequeños errores en los bordes. Podemos observar que en esos casos entre el verde y el violeta parece haber como una `cosedura', la misma se repite en todos los bordes de la imagen. Estas diferencias imperceptibles por el tamaño de la imagen a primera vista pueden ser efectivamente comprobadas mediante un análisis de calidad objetivo. 
 
-PSNR 41.14 con bilineal
-PSNR 39.67 con quality
-PSNR 48.13 con directional
-PSNR 48.13 con vecinos
+A continuación podemos ver los PSNR obtenidos al comparar los distintos resultados con la imagen original. Las im{ágenes que al hacerles zoom tenían esas "coseduras" efectivamente fueron las que mas bajo PSNR dieron, es decir las que mas difirieron de la real.
 
-tiempos:
+$$ 
+\begin{bmatrix}
+           &      PSNR     \\
+       quality    &   39.67   \\
+       bilineal    &      41.14   \\
+       directional    &      48.13    \\
+       vecinos   &      048.13      \\
+\end{bmatrix} 
+$$
+
+A continuación veremos también cual fué el tiempo de computo de cada algoritmo.
+
+$$ 
+\begin{bmatrix}
+           &      Tiempo (segundos)     \\
+       quality    &   64.88   \\
+       bilineal    &      63.00   \\
+       directional    &      57.82    \\
+       vecinos   &      10.31      \\
+\end{bmatrix} 
+$$
+
+Como era de esperarse, las proporc1iones tiempo tienen sentido. Vecinos es el mas rápido ya que es el procedimiento mas simple y quality tarda mas que bilineal ya que antes aplica bilineal para luego mejorarlo (aunque en este caso no lo mejora). Para este caso tanto por calidad objetiva, subjetiva como en tiempo de cómputo vecinos parecería ser el mejor.
 
 \subsection{Imágen 9}
 \begin{figure}[h!]
