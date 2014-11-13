@@ -51,7 +51,7 @@ os.system("g++ -o metodos main.cpp -std=gnu++0x")
 
 def dibujar(i,key_method):
 	print (" ")
-	os.system("echo "+key_method+" ;time ./metodos "+imageName+".txt "+imageName+"_out.txt "+str(i))
+	os.system("./metodos "+imageName+".txt "+imageName+"_out.txt "+str(i))
 
 	newFile = open(imageName+"_out.txt",'r')
 
