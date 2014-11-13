@@ -11,7 +11,7 @@ Se nos ocurrió que podría ser interesante chequear los comportamientos de esto
 
 Tambien expondremos la imagen bayerizada para que quede claro que la conversción que estamos haciendo es correcta.
 
-\begin{figure}[!htb]
+\begin{figure}
 
 \minipage{0.5\textwidth}
 \begin{center}
@@ -42,7 +42,7 @@ Tambien expondremos la imagen bayerizada para que quede claro que la conversció
 \endminipage\hfill
 \end{figure}
 \newpage
-\begin{figure}[!htb]
+\begin{figure}
 \minipage{0.5\textwidth}
 \begin{center}
     \includegraphics[scale=0.08]{imagenes/colores_demosicing_spline.png}
@@ -91,49 +91,46 @@ Efectivamente a primera vista parecería que todas dieran lo mismo. Pero veamos 
 
 Como supimos el algoritmo directional y el bilineal tuvieron pequeños errores en los bordes. Podemos observar que en esos casos entre el verde y el violeta parece haber como una `cosedura', la misma se repite en todos los bordes de la imagen. Estas diferencias imperceptibles por el tamaño de la imagen a primera vista pueden ser efectivamente comprobadas mediante un análisis de calidad objetivo. 
 
-PSNR 41.14 con bilineal
-PSNR 39.67 con quality
-PSNR 48.13 con directional
-PSNR 37.45 con vecinos
+PSNR 41.14 con bilineal\\
+PSNR 39.67 con quality\\
+PSNR 48.13 con directional\\
+PSNR 37.45 con vecinos\\
 
 tiempos:
 
-\subsection{Imágen 9}
-\begin{figure}[h!]
+\newpage
 
+\subsection{Imágen 9}
+
+\begin{figure}
        \includegraphics[width=0.5\textwidth]{imagenes/img9.png}
            \hfill
         \includegraphics[width=0.5\textwidth]{imagenes/img9_bayer.png}
-
 \end{figure}
 
-\begin{figure}[h!]
-
+\begin{figure}
        \includegraphics[width=0.5\textwidth]{imagenes/img9_demosicing_vecino.png}
            \hfill
         \includegraphics[width=0.5\textwidth]{imagenes/img9_demosicing_bilineal.png}
-
 \end{figure}
 
-\begin{figure}[h!]
+\begin{figure}
 
        \includegraphics[width=0.5\textwidth]{imagenes/img9_demosicing_spline.png}
            \hfill
         \includegraphics[width=0.5\textwidth]{imagenes/img9_demosicing_quality.png}
-
 \end{figure}
+
+\newpage
+
 \subsection{Comparación de tiempos}
 
 En esta sección presentaremos una comparativa entre los tiempos que tarda cada algoritmo a medida que aumenta el tamaño de la imagen. Para tal fin testamos cada algoritmo con imágenes cuadradas generadas aleatoriamente que van aumentando su tamaño, y creemos que es una forma correcta de comparar los tiempos ya que la complejidad de cada algoritmo es independiente de la información que tenga la imagen, pero dependiente del tamaño.
 
-\begin{figure}[h!]
-
-       \includegraphics[width=1\textwidth]{imagenes/tiempo_algoritmos_random.pdf}
-           
-
+\begin{figure}[h]
+       \includegraphics[width=1\textwidth]{imagenes/tiempo_algoritmos_random.png}
 \end{figure}
 
+\newpage
 
-
-
-
+  
