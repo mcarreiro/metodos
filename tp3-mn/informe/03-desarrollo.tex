@@ -74,7 +74,7 @@ Dado que las interpolaciones mediante splines no son nada triviales lo explicare
 Los Splines son funciones partidas que dadas n particiones disjuntas del dominio geneneran n funciones para cada subconjunto interpolando todos los puntos en el medio. Para nuestro caso, cada subconjunto estará dado por cada pixel que en la bayerización contenía solo verde adjunto a un pixel rojo y azul para cada dirección, vertical y horizontal. Es decir, en la dirección horizontal, el verde de la izquierda, y el de la derecha ; para vertical, el de arriba y el de abajo. 
 Una vez que tenemos cada una de esas funciones que tendrán la forma
 
-$f_j(x) = d_j(x-x_j)^3 + c_j(x-x_j)^2 + b_j(x-x_j) + a_j \forall x_j <= x < x_{j+k}, en nuestro caso k = 2$ \\
+$f_j(x) = d_j(x-x_j)^3 + c_j(x-x_j)^2 + b_j(x-x_j) + a_j \forall$ $x_j <= x < x_{j+k}$, en nuestro caso $k = 2$ \\
 
 Solo queda calcular el valor del verde en el pixel rojo o azul.
 Es fácil notar que $(x-x_j) = 1$, por lo que para cada función el resultado va a ser $d_j+c_j+b_j+a_j$, siendo $a_j$ = el verde original en ese pixel.\\
@@ -86,6 +86,11 @@ Solo queda triangular y obtener cada una de las $b_j,c_j y d_j$.
 Todos los algoritmos anteriores aproximaban el valor mediante un color, pero esto no era suficiente para darle la suficiente definición ya que muchas veces los colores tienen un brillo o luminicencia que impacta en los tres pero que no se distingue cuando para el calculo del mismo se usan valores cercanos de ese , por lo tanto el algoritmo de demosaicing que denominamos "High Quality" y se basa en el paper de Malvar, He y Cutler, propone realzar cada color para darle una mejor definición utilizando los colores restantes. Por lo tanto se podria decir que este algoritmo no es un algoritmo para aproximar colores faltantes, sino que se utiliza a partir de una aproximación ya obtenida anteriormente para darle una mejor calidad a la misma.
 
 Como la imagen Bayerizada se compone del doble de pixeles verdes que el resto, este resulta ser el color más importante para encontrar la interpolación correcta. Por lo tanto, y como figura en el enunciado del TP, decidimos inclinarlos por solo analizar dicho color, y en consecuencia solo realizando el calculado apropiado para el mismo.
+
+Antes de comenzar con el algoritmo, queremos hacer una observación de implementación
+Cuando comenzamos las pruebas del algoritmo de Quality notamos que en zonas oscuras aparecían pixeles con verde mucho mayor a 255 y nuestro primer parche plancharlo en 255. Obviamente esto generó pixeles verde claro en zonas indebidas (mayormente oscuras), e intentamos plancharlo en cero en comparación con el nivel de azul y rojo de ese mismo pixel. Pero produjo que en otras zonas se oscurecieran cuando no debían.\\
+Este caso no estaba contemplado en el paper, y pudimos observar cual era el problema. Quality aproxima el valor del verde dado el promedio de sus vecinos rojos o azules para dar luminicencia, el problema es que si el valor actual del verde era muy chico comparado con estos rojos y azules mencionados, al hacer la cuenta, el valor quedaba negativo, y en el producto quedaba mucho más grande que 255, y al hacer la acotación dicha en el primer párrafo era que nos quedaban los verdes saturados.\\
+La solución a dicho problema fue de antemano chequear que la resta, no me convierta un número negativo, en caso de ser así, planchar en cero. De esta manera no arruinamos ni zonas oscuras, ni zonas claras.
 
 \begin{lstlisting}[frame=single] 
 Primero hacemos bilineal sobre todos los colores de la imagen

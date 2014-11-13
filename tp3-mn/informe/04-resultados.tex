@@ -7,11 +7,12 @@ Es un método para definir la relación entre una señal y el ruido de la regena
 
 \subsection{Colores}
 
+
 Se nos ocurrió que podría ser interesante chequear los comportamientos de estos procedimientos en una imagen con muchos bordes ya que estos, en algoritmos como el directional, son factores importantes y potencialmente conflictivos. Además hicimos que la imagen sea grande (5000 x 3000 pixeles) para poder analizar tiempos de computo y para influir en la calidad subjetiva, ya que si ponemos imágenes con mucha definición pequeños errores podrían pasar desapercividos para el ojo humano.
 
 Tambien expondremos la imagen bayerizada para que quede claro que la conversción que estamos haciendo es correcta.
 
-\begin{figure}[!htb]
+\begin{figure}
 
 \minipage{0.5\textwidth}
 \begin{center}
@@ -42,7 +43,7 @@ Tambien expondremos la imagen bayerizada para que quede claro que la conversció
 \endminipage\hfill
 \end{figure}
 \newpage
-\begin{figure}[!htb]
+\begin{figure}
 \minipage{0.5\textwidth}
 \begin{center}
     \includegraphics[scale=0.08]{imagenes/colores_demosicing_spline.png}
@@ -89,6 +90,7 @@ Efectivamente a primera vista parecería que todas dieran lo mismo. Pero veamos 
 \endminipage 
 \end{figure}
 
+
 El algoritmo bilineal y el high quality tuvieron pequeños errores en los bordes. Podemos observar que en esos casos entre el verde y el violeta parece haber como una `cosedura', la misma se repite en todos los bordes de la imagen. Estas diferencias imperceptibles por el tamaño de la imagen a primera vista pueden ser efectivamente comprobadas mediante un análisis de calidad objetivo. 
 
 A continuación podemos ver los PSNR obtenidos al comparar los distintos resultados con la imagen original. Las im{ágenes que al hacerles zoom tenían esas "coseduras" efectivamente fueron las que mas bajo PSNR dieron, es decir las que mas difirieron de la real.
@@ -117,42 +119,45 @@ $$
 
 Como era de esperarse, las proporc1iones tiempo tienen sentido. Vecinos es el mas rápido ya que es el procedimiento mas simple y quality tarda mas que bilineal ya que antes aplica bilineal para luego mejorarlo (aunque en este caso no lo mejora). Para este caso tanto por calidad objetiva, subjetiva como en tiempo de cómputo vecinos parecería ser el mejor.
 
-\subsection{Imágen 9}
-\begin{figure}[h!]
 
+\newpage
+
+\subsection{Imágen 9}
+
+\begin{figure}
        \includegraphics[width=0.5\textwidth]{imagenes/img9.png}
            \hfill
         \includegraphics[width=0.5\textwidth]{imagenes/img9_bayer.png}
-
 \end{figure}
 
-\begin{figure}[h!]
-
+\begin{figure}
        \includegraphics[width=0.5\textwidth]{imagenes/img9_demosicing_vecino.png}
            \hfill
         \includegraphics[width=0.5\textwidth]{imagenes/img9_demosicing_bilineal.png}
-
 \end{figure}
 
-\begin{figure}[h!]
+\begin{figure}
 
        \includegraphics[width=0.5\textwidth]{imagenes/img9_demosicing_spline.png}
            \hfill
         \includegraphics[width=0.5\textwidth]{imagenes/img9_demosicing_quality.png}
-
 \end{figure}
+
+\newpage
+
 \subsection{Comparación de tiempos}
 
 En esta sección presentaremos una comparativa entre los tiempos que tarda cada algoritmo a medida que aumenta el tamaño de la imagen. Para tal fin testamos cada algoritmo con imágenes cuadradas generadas aleatoriamente que van aumentando su tamaño, y creemos que es una forma correcta de comparar los tiempos ya que la complejidad de cada algoritmo es independiente de la información que tenga la imagen, pero dependiente del tamaño.
 
-\begin{figure}[h!]
-
-       \includegraphics[width=1\textwidth]{imagenes/tiempo_algoritmos_random.pdf}
-           
-
+\begin{figure}[h]
+       \includegraphics[width=1\textwidth]{imagenes/tiempo_algoritmos_random.png}
 \end{figure}
 
+\newpage
+
+\subsection{Comparación de calidad}
+En esta sección compararemos solo los verdes de las imágenes y veremos los resultados utilizando PSNR. Recordemos que este término, calcula nivel de ruido en una señal.
 
 
-
-
+Notemos que Spline si bien tendría que tener un valor mayor que bilineal no lo tiene, es decir, el nivel de ruido es mayor en el direccional. Esto tiene sentido en la medida que el algoritmo direccional utiliza toda la fila y toda la columna para calcular el valor de las coordenadas $b_j$, $c_j$ y $d_j$ por lo que está sujeto a valores distintos al valor final, a diferencia de Bilineal que está sujeto a sus vecinos directos que es mucho más probable que tengan un valor más próximo.
+  
