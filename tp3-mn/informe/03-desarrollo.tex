@@ -74,7 +74,7 @@ Dado que las interpolaciones mediante splines no son nada triviales lo explicare
 Los Splines son funciones partidas que dadas n particiones disjuntas del dominio geneneran n funciones para cada subconjunto interpolando todos los puntos en el medio. Para nuestro caso, cada subconjunto estará dado por cada pixel que en la bayerización contenía solo verde adjunto a un pixel rojo y azul para cada dirección, vertical y horizontal. Es decir, en la dirección horizontal, el verde de la izquierda, y el de la derecha ; para vertical, el de arriba y el de abajo. 
 Una vez que tenemos cada una de esas funciones que tendrán la forma
 
-$f_j(x) = d_j(x-x_j)^3 + c_j(x-x_j)^2 + b_j(x-x_j) + a_j \forall x_j <= x < x_{j+k}, en nuestro caso k = 2$ \\
+$f_j(x) = d_j(x-x_j)^3 + c_j(x-x_j)^2 + b_j(x-x_j) + a_j \forall$ $x_j <= x < x_{j+k}$, en nuestro caso $k = 2$ \\
 
 Solo queda calcular el valor del verde en el pixel rojo o azul.
 Es fácil notar que $(x-x_j) = 1$, por lo que para cada función el resultado va a ser $d_j+c_j+b_j+a_j$, siendo $a_j$ = el verde original en ese pixel.\\
