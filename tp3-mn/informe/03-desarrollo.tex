@@ -87,6 +87,11 @@ Todos los algoritmos anteriores aproximaban el valor mediante un color, pero est
 
 Como la imagen Bayerizada se compone del doble de pixeles verdes que el resto, este resulta ser el color más importante para encontrar la interpolación correcta. Por lo tanto, y como figura en el enunciado del TP, decidimos inclinarlos por solo analizar dicho color, y en consecuencia solo realizando el calculado apropiado para el mismo.
 
+Antes de comenzar con el algoritmo, queremos hacer una observación de implementación
+Cuando comenzamos las pruebas del algoritmo de Quality notamos que en zonas oscuras aparecían pixeles con verde mucho mayor a 255 y nuestro primer parche plancharlo en 255. Obviamente esto generó pixeles verde claro en zonas indebidas (mayormente oscuras), e intentamos plancharlo en cero en comparación con el nivel de azul y rojo de ese mismo pixel. Pero produjo que en otras zonas se oscurecieran cuando no debían.\\
+Este caso no estaba contemplado en el paper, y pudimos observar cual era el problema. Quality aproxima el valor del verde dado el promedio de sus vecinos rojos o azules para dar luminicencia, el problema es que si el valor actual del verde era muy chico comparado con estos rojos y azules mencionados, al hacer la cuenta, el valor quedaba negativo, y en el producto quedaba mucho más grande que 255, y al hacer la acotación dicha en el primer párrafo era que nos quedaban los verdes saturados.\\
+La solución a dicho problema fue de antemano chequear que la resta, no me convierta un número negativo, en caso de ser así, planchar en cero. De esta manera no arruinamos ni zonas oscuras, ni zonas claras.
+
 \begin{lstlisting}[frame=single] 
 Primero hacemos bilineal sobre todos los colores de la imagen
 Por cada pixel de la imagen (exceptuando los bordes):
