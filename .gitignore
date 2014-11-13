@@ -10,6 +10,7 @@ a.out
 src/.idea/
 tp3-mn/src/.idea/
 tp3-mn/src/metodos
+tp1-mn/src/.deps
 tp3-mn/src/ilusion.txt
 tp3-mn/src/ilusion_bayer.bmp
 tp3-mn/src/ilusion_demosicing_spline.bmp
