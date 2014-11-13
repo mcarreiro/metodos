@@ -20,7 +20,7 @@ def compare(file1, file2):
 
 	result = 20 * math.log10(255) - 10 * math.log10(mse)
 
-	print ("Comparacion entre las dos imagenes para el color verde tiene PSNR " + str(result))
+	print (width+ ' ' + str(result))
 
 if __name__=='__main__':
 	import sys
