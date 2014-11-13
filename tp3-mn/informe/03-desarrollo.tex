@@ -1,8 +1,10 @@
 \section{Desarrollo}
 
-Como explicamos en la introducción estaremos analizando 4 algoritmos distintos, estos son: Vecinos, Bilineal, Direccional y High Quality. La idea será comparar sus resultados subjetivamente, es decir a simple vista como 
+Como explicamos en la introducción estaremos analizando 4 algoritmos distintos, estos son: Vecinos, Bilineal, Direccional y High Quality. En lineas generales anticiparemos que los primeros dos se utilizan para rearmar toda la imagen desde la bayerización. El resto serán utilizados para aproximar mejor el valor del verde original en los píxeles que en la bayerizción solo habían atrapado rojo y azul. Esto es porque el verde es el color que más ve el ser humano y mientras mejor esté la imagen en ese color, subjetivamente quedará mejor.\\
+La idea será comparar sus resultados subjetivamente, es decir a simple vista como 
 vemos la imagen resultante, objetivamente y temporalmente, osea cuanto tiempo demora en ejecutarse el procedimiento, para poder concluir finalmente las ventajas y desventajas de cada uno. A continuación explicaremos como 
-implementamos cada uno.
+implementamos cada uno.\\
+
 
 \subsection{Vecinos}
 Este es el más simple de todos. La idea es estabelecer el valor de los colores faltantes de cada pixel en base al vecino que tenga dicho valor. Por ejemplo si estamos en un pixel azul le preguntamos a algun vecino rojo y 
@@ -49,12 +51,14 @@ Para todos los pixeles de la imágen:
       Calculo el valor de rojo que tendrá el pixel haciendo el promedio de los valores en rojo de los 2 puntos a derecha e izquierda (que estén en rango).  
 \end{verbatim}
 
+
+
 \subsection{Direccional}
 
 Para este algoritmo nos basamos en lo explicado por Burden y Faires$[1]$ para el caculo de los splines y en lo desarrollado por Ron Kimmel$[2]$ para el algoritmo en sí. El método lo aplicamos sólo para el color verde mientras que para los otros utilizamos bilineal. 
 
 Lo que hace es:
-\begin{lstlisting}[frame=single] 
+\begin{verbatim}[frame=single] 
 Para cada celda:
 	Interpolo mediante spline su fila y columna
 	Calculo sus derivadas aproximadas en direcci\'on horizontal y vertical
@@ -62,11 +66,19 @@ Para cada celda:
 		celda.verde = interpolacion horizontal * 0.3 + interpolacion vertical * 0.7
 	sino
 		celda.verde = interpolacion horizontal * 0.3 + interpolacion vertical * 0.7
-\end{lstlisting}
+\end{verbatim}
 
 Dado que las interpolaciones mediante splines no son nada triviales lo explicaremos mas adelante en detalle. Las derivadas en $x$  la aproximamos haciendo $|G(x-1,y)-G(x+1,y)|$ donde G es el valor del color verde en ese punto, la derivada en $y$ es análoga. Dado que un mayor valor en la derivada puede estar indicándonos un potencial borde le damos mayor peso a la derivada cuyo valor es más chico multiplicando a este por 0.7 y a la otra por 0.3. Finalmente las sumamos para obtener el verde correspondiente en nuestra celda.
 
 \subsubsection{Splines Cubicos}
+Los Splines son funciones partidas que dadas n particiones disjuntas del dominio geneneran n funciones para cada subconjunto interpolando todos los puntos en el medio. Para nuestro caso, cada subconjunto estará dado por cada pixel que en la bayerización contenía solo verde adjunto a un pixel rojo y azul para cada dirección, vertical y horizontal. Es decir, en la dirección horizontal, el verde de la izquierda, y el de la derecha ; para vertical, el de arriba y el de abajo. 
+Una vez que tenemos cada una de esas funciones que tendrán la forma
+
+$f_j(x) = d_j(x-x_j)^3 + c_j(x-x_j)^2 + b_j(x-x_j) + a_j \forall x_j <= x < x_{j+k}, en nuestro caso k = 2$ \\
+
+Solo queda calcular el valor del verde en el pixel rojo o azul.
+Es fácil notar que $(x-x_j) = 1$, por lo que para cada función el resultado va a ser $d_j+c_j+b_j+a_j$, siendo $a_j$ = el verde original en ese pixel.\\
+Solo queda triangular y obtener cada una de las $b_j,c_j y d_j$.
 
 
 \subsection{High Quality}
