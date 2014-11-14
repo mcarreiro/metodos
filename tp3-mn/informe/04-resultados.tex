@@ -155,6 +155,56 @@ En esta sección presentaremos una comparativa entre los tiempos que tarda cada 
 
 \newpage
 
+\subsection{Imagen 12}
+
+A continuación probaremos con una imagen provista por la cátedra para tener mas resultados sobre los cuales apoyarnos a la hora de sacar nuestras conclusiones. Obviaremos la imagen bayerizada ya que sólo
+nos interesaba ver que sea correcta la bayerización y con lo ya hecho eso queda claro.
+
+\begin{figure}
+\begin{center}
+       \includegraphics[scale=0.5]{imagenes/img12.png}
+       \caption{Original }\label{fig:awesome_image1}
+        \end{center}
+
+\end{figure}
+\newpage
+\begin{figure}[!htb]
+\minipage{0.5\textwidth}
+\begin{center}
+    \includegraphics[scale=0.3]{imagenes/img12_demosicing_bilineal.png}
+    \caption{Bilineal }
+ \end{center}
+\endminipage
+\minipage{0.5\textwidth}
+\begin{center}
+    \includegraphics[scale=0.3]{imagenes/img12_demosicing_quality.png}
+    \caption{High Quality}
+        \end{center}
+\endminipage\hfill
+\end{figure}
+\newpage
+\begin{figure}
+\minipage{0.5\textwidth}
+\begin{center}
+    \includegraphics[scale=0.3]{imagenes/img12_demosicing_spline.png}
+    \caption{Directional}
+        \end{center}
+\endminipage
+\minipage{0.5\textwidth}
+\begin{center}
+    \includegraphics[scale=0.3]{imagenes/img12_demosicing_vecino.png}
+    \caption{Vecinos}
+ \end{center}
+\endminipage
+ 
+\end{figure}
+
+
+Subjetivamente highquality parece ser la mejor. Ya que se la ve bastante menos borrosa que las demás y con bordes mas nítidos, esto es facilmente apreciable en los dibujos que hay sobre la casa. A diferencia de vecinos que tiene bordes no sólo poco nítidos sino hasta claramente pixelados.
+
+Veamos ahora a través del calculo del PSNR contra la imagen original cual es la mas mejor objetivoamente.
+
+
 \subsection{Comparación de calidad}
 En esta sección compararemos solo los verdes de las imágenes y veremos los resultados utilizando PSNR. Recordemos que este término, calcula nivel de ruido en una señal.
 
