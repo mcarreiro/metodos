@@ -1,8 +1,12 @@
-
+\subsection{Algoritmos}
+En base a los algoritmos presentados, concluimos que a partir del tiempo de cómputo y resultados que ofrecen los mismos, siempre conviene optar por el algoritmo de HighQuality, ya que como se observa en las secciones anteriores, la calidad que ofrece es extremadamente buena y el tiempo que tarda es aceptable.
+Otra cosa que nos llamo la atención fueron los resultados obtenidos por las dos interpolaciones bilineales y direccionales, ya que si bien en teoría la direccional debería obtener mejores resultados, estos solo se aprecian al mirarlos, es decir subjetivamente, ya que objetivamente el bilineal aproxima mejor los colores originales y obtiene un menor ruido en la señal del color verde.
 
 \subsection{Bordes}
 En caso de una imagen con cambios grandes en zonas pequeñas, todos los algoritmos tienden a fallar en esas zonas.
 Esto se debe a que todos los algoritmos dependen fuertemente de los pixeles próximos cercanos, los cuales poseen valores muy distintos al valor a calcular. Esto es denominado borde.
 
+Otro punto interesante es que si bien el algoritmo de High Quality funcionó mejor objetiva y subjetivamente para las imagenes que son fotografiías esto no fué así en el caso de la imagen $"$colores$"$. Pensamos que esto se debe a que este procedimiento fué especialmente pensado para fotografías, es decir imagenes con bordes mas suaves o sin tanta saturación de color de cada lado del borde. Y que es por esto que en este caso los resultados dieron casi lo contrario de todo el resto (vecinos fué el mejor en todo sentido).
+
 \subsection{Otro uso}
-Si bien el TP está apuntado a los algoritmos que corren en las cámaras de fotos, un uso útil puede ser el de compresión de imágenes, ya que bayerizando la imagen original reduce en un tercio el tamaño de la imágen original y en poco tiempo obtener la original, o al menos una aproximación bastante acertada de la misma.
+Si bien el TP está apuntado a los algoritmos que corren en las cámaras de fotos, un uso útil puede ser el de compresión de imágenes, ya que bayerizando la imagen original reduce en un tercio su tamaño y en poco tiempo (menor aún en la práctica cuando lo usan las camáras digitales) se puede obtener la original, o al menos una aproximación bastante acertada de la misma.
