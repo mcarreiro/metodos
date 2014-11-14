@@ -34,21 +34,44 @@ al caso de la celda azul y de las verdes, apuntamos a elegir el vecino que siemp
 \subsection{Bilineal}
 
 La interpolación es una forma de aproximar valores desconocidos en algún punto a partir de valores que sí conocemos, sabiendo de antemano que van a tener un cierto grado de error. Esto se puede trasladar a nuestro problema, ya que tenemos que aproximar valores para un color de pixel a partir de valores cercanos conocidos, con la unica diferencia que en vez de ser en una dimensión como si fuese una funcion, esta será en dos dimensiones, de ahí el nombre de $'bilineal'$. Esta interpolación en 2 dimensiones se realiza a partir de los 4 puntos mas cercanos del color del pixel que queremos aproximar. Para calcular el valor de dicho punto primero se saca el promedio de los valores en dirección horizontal, luego en dirección vertical y por último el promedio de dichos valores. Cabe aclarar que dependiendo el color de pixel actual y el color que se quiera aproximar, podemos llegar a tener información de solo 2 puntos cercanos, pero alineados en la misma dirección, con lo que solo se calculará la aproximación en esa dirección.
-\begin{verbatim}[frame=single] 
+\begin{verbatim}
 Para todos los pixeles de la imágen:
   Si estoy parado en un pixel azul:
-    Calculo el valor de rojo que tendrá el pixel haciendo el promedio de los valores en rojo de los 4 puntos oblicuos a este (que estén en rango).
-    Calculo el valor de verde que tendrá el pixel haciendo el promedio de los valores en verde de los 4 puntos adyacentes a este (que estén en rango).
+    Calculo el valor de rojo que tendrá el pixel 
+    haciendo el promedio de los valores en rojo de los 
+    4 puntos oblicuos a este (que estén en rango).
+    
+    Calculo el valor de verde que tendrá el pixel 
+    haciendo el promedio de los valores en verde de los 
+
+    4 puntos adyacentes a este (que estén en rango).
   Si estoy parado en un pixel rojo:
-    Calculo el valor de azul que tendrá el pixel haciendo el promedio de los valores en azul de los 4 puntos oblicuos a este (que estén en rango).
-    Calculo el valor de verde que tendrá el pixel haciendo el promedio de los valores en verde de los 4 puntos adyacentes a este (que estén en rango).
+    Calculo el valor de azul que tendrá el pixel 
+    haciendo el promedio de los valores en azul de los 
+    4 puntos oblicuos a este (que estén en rango).
+    
+    Calculo el valor de verde que tendrá el pixel 
+    haciendo el promedio de los valores en verde de los 
+    4 puntos adyacentes a este (que estén en rango).
+
   Si estoy parado en un pixel verde:
     Si estoy parado en una fila de azules:
-      Calculo el valor de rojo que tendrá el pixel haciendo el promedio de los valores en rojo de los 2 puntos superiores e inferiores (que estén en rango).
-      Calculo el valor de azul que tendrá el pixel haciendo el promedio de los valores en azul de los 2 puntos a derecha e izquierda (que estén en rango).
+      Calculo el valor de rojo que tendrá el pixel 
+      haciendo el promedio de los valores en rojo de los 
+      2 puntos superiores e inferiores (que estén en rango).
+
+      Calculo el valor de azul que tendrá el pixel 
+      haciendo el promedio de los valores en azul de los 
+      2 puntos a derecha e izquierda (que estén en rango).
+
     Si estoy parado en una fila de rojos:
-      Calculo el valor de azul que tendrá el pixel haciendo el promedio de los valores en azul de los 2 puntos superiores e inferiores (que estén en rango).
-      Calculo el valor de rojo que tendrá el pixel haciendo el promedio de los valores en rojo de los 2 puntos a derecha e izquierda (que estén en rango).  
+      Calculo el valor de azul que tendrá el pixel 
+      haciendo el promedio de los valores en azul de los 
+      2 puntos superiores e inferiores (que estén en rango).
+
+      Calculo el valor de rojo que tendrá el pixel 
+      haciendo el promedio de los valores en rojo de los 
+      2 puntos a derecha e izquierda (que estén en rango).  
 \end{verbatim}
 
 
@@ -78,7 +101,7 @@ $f_j(x) = d_j(x-x_j)^3 + c_j(x-x_j)^2 + b_j(x-x_j) + a_j \forall$ $x_j <= x < x_
 
 Solo queda calcular el valor del verde en el pixel rojo o azul.
 Es fácil notar que $(x-x_j) = 1$, por lo que para cada función el resultado va a ser $d_j+c_j+b_j+a_j$, siendo $a_j$ = el verde original en ese pixel.\\
-Solo queda triangular y obtener cada una de las $b_j,c_j y d_j$.
+Solo queda triangular y obtener cada una de las $b_j$ ,$c_j$ y $d_j$.
 
 
 \subsection{High Quality}
