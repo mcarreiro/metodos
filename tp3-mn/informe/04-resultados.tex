@@ -125,19 +125,17 @@ Como era de esperarse, las proporc1iones tiempo tienen sentido. Vecinos es el ma
 
 \subsection{Imagen 9 - Avión}
 
-Nos pareció interesante hacer un análisis particular de la Imagen 9 ya que posee varias características en donde se pueden observar diferentes condiciones para ver como actúan los cuatro algoritmos, estos son: tener gran cantidad de sectores bordes, gran variedad de colores que contrastan altamente y principalmente tener texto. Destacamos esto último ya que una de las cualidades más importantes que deben poseer estos algoritmos es la de asegurar nitidez y suavidad, detalles que se ven al procesar imágenes que poseen texto. 
-
-
+Nos pareció interesante hacer un análisis particular de la Imagen 9 ya que posee varias características en donde se pueden observar diferentes condiciones para ver como actúan los cuatro algoritmos, estos son: tener gran cantidad de sectores bordes, gran variedad de colores que contrastan altamente y principalmente tener texto. Destacamos esto último ya que una de las cualidades más importantes que deben poseer estos algoritmos es la de asegurar nitidez y suavidad, detalles que se ven al procesar imágenes que poseen texto. \\
 A continuación mostraremos el resultado de los algoritmos para esta imagen:
 
-\begin{figure}
+\begin{figure}[h]
        \includegraphics[width=0.5\textwidth]{imagenes/img9.png}
            \hfill
         \includegraphics[width=0.5\textwidth]{imagenes/img9_bayer.png}   
         Imagen original y bayerizada
 \end{figure}
 
-\begin{figure}
+\begin{figure}[h]
        \includegraphics[width=0.5\textwidth]{imagenes/img9_demosicing_vecino.png}
            \hfill
         \includegraphics[width=0.5\textwidth]{imagenes/img9_demosicing_bilineal.png}
@@ -145,13 +143,13 @@ A continuación mostraremos el resultado de los algoritmos para esta imagen:
 \end{figure}
 
 
-\begin{figure}
-
+\begin{figure}[h]
        \includegraphics[width=0.5\textwidth]{imagenes/img9_demosicing_spline.png}
            \hfill
         \includegraphics[width=0.5\textwidth]{imagenes/img9_demosicing_quality.png}
         Algoritmos de Interpolación Direccional y HighQuality
 \end{figure}
+\newpage
 
 Como se puede observar, a simple vista pareciera que los 4 algoritmos dan un resultado bastante aceptable, pero mirando detalladamente y comparando entre sí se puede observar una gran diferencia entre ellos, principalmente en zonas borde y en la zona del texto del avión. Subjetivamente pareciera ser que la imagen más parecida a la original es la del HighQuality, seguida por la Interpolación Direccional, pero objetivamente en base a los resultados obtenidos al método PSNR se observa que el algoritmo de Interpolación Bilineal supera al Direccional, algo que llama bastante la atención y que indica que lo subjetivo se diferencia bastante de los objetivo. 
 
@@ -164,7 +162,6 @@ $$
        vecinos   &      30.49     \\
 \end{bmatrix} 
 $$
-
 Yendo más a fondo aún en la cuestión y para mostrar el nivel de detalle que obtiene cada algoritmo, decidimos hacer zoom en la zona donde la imagen posee texto:
 
 \begin{figure}
@@ -195,8 +192,8 @@ Acá si se puede observar la nitidez y suavidad que presenta cada algoritmo, vi�
 
 A continuación probaremos con una imagen provista por la cátedra para tener mas resultados sobre los cuales apoyarnos a la hora de sacar nuestras conclusiones. Obviaremos la imagen bayerizada ya que sólo
 nos interesaba ver que sea correcta la bayerización y con lo ya hecho eso queda claro.
-\newpage
-\begin{figure}
+
+\begin{figure}[h]
 \begin{center}
        \includegraphics[scale=0.3]{imagenes/img12.png}
        \caption{Original }\label{fig:awesome_image1}
@@ -204,7 +201,7 @@ nos interesaba ver que sea correcta la bayerización y con lo ya hecho eso queda
 
 \end{figure}
 
-\begin{figure}[!htb]
+\begin{figure}[!ht]
 \minipage{0.5\textwidth}
 \begin{center}
     \includegraphics[scale=0.3]{imagenes/img12_demosicing_bilineal.png}
@@ -219,7 +216,7 @@ nos interesaba ver que sea correcta la bayerización y con lo ya hecho eso queda
 \endminipage\hfill
 \end{figure}
 
-\begin{figure}
+\begin{figure}[h]
 \minipage{0.5\textwidth}
 \begin{center}
     \includegraphics[scale=0.3]{imagenes/img12_demosicing_spline.png}
@@ -256,6 +253,8 @@ Como dato interesante vale aclarar que en el tejado de la casa podemos ver anoma
 
 \newpage
 
+\section{Conclusiones}
+
 \subsection{Comparación de tiempos}
 
 En esta sección presentaremos una comparativa entre los tiempos que tarda cada algoritmo a medida que aumenta el tamaño de la imagen. Para tal fin testamos cada algoritmo con imágenes cuadradas generadas aleatoriamente que van aumentando su tamaño, y creemos que es una forma correcta de comparar los tiempos ya que la complejidad de cada algoritmo es independiente de la información que tenga la imagen, pero dependiente del tamaño.
@@ -274,7 +273,7 @@ Igualmente no es poco notar que son bastantes lentos los algoritmos, y las prueb
 En esta sección compararemos solo los verdes de las imágenes y veremos los resultados utilizando PSNR. Recordemos que este término, calcula nivel de ruido en una señal.
 
 \begin{figure}[h]
-       \includegraphics[width=1\textwidth]{imagenes/quality_performance.png}
+       \includegraphics[scale=0.8]{imagenes/quality_performance.png}
        \caption{Img1}
 \end{figure}
 
