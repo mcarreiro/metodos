@@ -20,7 +20,7 @@ def compare(file1, file2):
 
 	result = 20 * math.log10(255) - 10 * math.log10(mse)
 
-	print (width+ ' ' + str(result))
+	print (file2+ ' ' + str(result))
 
 if __name__=='__main__':
 	import sys
