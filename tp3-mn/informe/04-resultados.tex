@@ -16,13 +16,13 @@ Tambien expondremos la imagen bayerizada para que quede claro que la conversció
 
 \minipage{0.5\textwidth}
 \begin{center}
-       \includegraphics[scale=0.08]{imagenes/colores.png}
+       \includegraphics[scale=0.04]{imagenes/colores.png}
        \caption{Original }\label{fig:awesome_image1}
         \end{center}
 \endminipage\hfill
 \minipage{0.5\textwidth}
 \begin{center}
-        \includegraphics[scale=0.08]{imagenes/colores_bayer.png}
+        \includegraphics[scale=0.04]{imagenes/colores_bayer.png}
        \caption{Bayerizada}\label{fig:awesome_image1}
         \end{center}
 \endminipage\hfill 
@@ -31,28 +31,28 @@ Tambien expondremos la imagen bayerizada para que quede claro que la conversció
 \begin{figure}[!htb]
 \minipage{0.5\textwidth}
 \begin{center}
-    \includegraphics[scale=0.08]{imagenes/colores_demosicing_bilineal.png}
+    \includegraphics[scale=0.04]{imagenes/colores_demosicing_bilineal.png}
     \caption{Bilineal }
  \end{center}
 \endminipage
 \minipage{0.5\textwidth}
 \begin{center}
-    \includegraphics[scale=0.08]{imagenes/colores_demosicing_quality.png}
+    \includegraphics[scale=0.04]{imagenes/colores_demosicing_quality.png}
     \caption{High Quality}
         \end{center}
 \endminipage\hfill
 \end{figure}
-\newpage
+
 \begin{figure}
 \minipage{0.5\textwidth}
 \begin{center}
-    \includegraphics[scale=0.08]{imagenes/colores_demosicing_spline.png}
+    \includegraphics[scale=0.04]{imagenes/colores_demosicing_spline.png}
     \caption{Directional}
         \end{center}
 \endminipage
 \minipage{0.5\textwidth}
 \begin{center}
-    \includegraphics[scale=0.08]{imagenes/colores_demosicing_vecino.png}
+    \includegraphics[scale=0.04]{imagenes/colores_demosicing_vecino.png}
     \caption{Vecinos}
  \end{center}
 \endminipage
@@ -75,6 +75,7 @@ Efectivamente a primera vista parecería que todas dieran lo mismo. Pero veamos 
         \end{center}
 \endminipage 
 \end{figure}
+\newpage
 \begin{figure}[!htb]
 \minipage{0.5\textwidth}
 \begin{center}
@@ -159,15 +160,15 @@ En esta sección presentaremos una comparativa entre los tiempos que tarda cada 
 
 A continuación probaremos con una imagen provista por la cátedra para tener mas resultados sobre los cuales apoyarnos a la hora de sacar nuestras conclusiones. Obviaremos la imagen bayerizada ya que sólo
 nos interesaba ver que sea correcta la bayerización y con lo ya hecho eso queda claro.
-
+\newpage
 \begin{figure}
 \begin{center}
-       \includegraphics[scale=0.5]{imagenes/img12.png}
+       \includegraphics[scale=0.3]{imagenes/img12.png}
        \caption{Original }\label{fig:awesome_image1}
         \end{center}
 
 \end{figure}
-\newpage
+
 \begin{figure}[!htb]
 \minipage{0.5\textwidth}
 \begin{center}
@@ -182,7 +183,7 @@ nos interesaba ver que sea correcta la bayerización y con lo ya hecho eso queda
         \end{center}
 \endminipage\hfill
 \end{figure}
-\newpage
+
 \begin{figure}
 \minipage{0.5\textwidth}
 \begin{center}
@@ -198,11 +199,14 @@ nos interesaba ver que sea correcta la bayerización y con lo ya hecho eso queda
 \endminipage
  
 \end{figure}
-
+\newpage
 
 Subjetivamente highquality parece ser la mejor. Ya que se la ve bastante menos borrosa que las demás y con bordes mas nítidos, esto es facilmente apreciable en los dibujos que hay sobre la casa. A diferencia de vecinos que tiene bordes no sólo poco nítidos sino hasta claramente pixelados.
 
 Veamos ahora a través del calculo del PSNR contra la imagen original cual es la mas mejor objetivoamente.
+
+
+En el tejado de la casa podemos ver anomalías en todos los resultados, así como también en los arboles que estan a la izquierda y por encima. Más adelante analizaremos bien porque es que sucede esto.
 
 
 \subsection{Comparación de calidad}
