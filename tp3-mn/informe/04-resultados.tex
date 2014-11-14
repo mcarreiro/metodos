@@ -94,12 +94,12 @@ Efectivamente a primera vista parecería que todas dieran lo mismo. Pero veamos 
 
 El algoritmo bilineal y el high quality tuvieron pequeños errores en los bordes. Podemos observar que en esos casos entre el verde y el violeta parece haber como una `cosedura', la misma se repite en todos los bordes de la imagen. Estas diferencias imperceptibles por el tamaño de la imagen a primera vista pueden ser efectivamente comprobadas mediante un análisis de calidad objetivo. 
 
-A continuación podemos ver los PSNR obtenidos al comparar los distintos resultados con la imagen original. Las im{ágenes que al hacerles zoom tenían esas "coseduras" efectivamente fueron las que mas bajo PSNR dieron, es decir las que mas difirieron de la real.
+A continuación podemos ver los PSNR obtenidos al comparar los distintos resultados con la imagen original. Las im{ágenes que al hacerles zoom tenían esas $"$coseduras$"$ efectivamente fueron las que mas bajo PSNR dieron, es decir las que mas difirieron de la real.
 
 $$ 
 \begin{bmatrix}
            &      PSNR     \\
-       quality    &   39.67   \\
+       highquality    &   39.67   \\
        bilineal    &      41.14   \\
        directional    &      48.13    \\
        vecinos   &      048.13      \\
@@ -111,7 +111,7 @@ A continuación veremos también cual fué el tiempo de computo de cada algoritm
 $$ 
 \begin{bmatrix}
            &      Tiempo (segundos)     \\
-       quality    &   64.88   \\
+       highquality    &   64.88   \\
        bilineal    &      63.00   \\
        directional    &      57.82    \\
        vecinos   &      10.31      \\
@@ -133,21 +133,24 @@ A continuación mostraremos el resultado de los algoritmos para esta imagen:
 \begin{figure}
        \includegraphics[width=0.5\textwidth]{imagenes/img9.png}
            \hfill
-        \includegraphics[width=0.5\textwidth]{imagenes/img9_bayer.png}
-           
+        \includegraphics[width=0.5\textwidth]{imagenes/img9_bayer.png}   
+        Imagen original y bayerizada
 \end{figure}
 
 \begin{figure}
        \includegraphics[width=0.5\textwidth]{imagenes/img9_demosicing_vecino.png}
            \hfill
         \includegraphics[width=0.5\textwidth]{imagenes/img9_demosicing_bilineal.png}
+        Algoritmos de Vecinos e Interpolación Bilineal
 \end{figure}
+
 
 \begin{figure}
 
        \includegraphics[width=0.5\textwidth]{imagenes/img9_demosicing_spline.png}
            \hfill
         \includegraphics[width=0.5\textwidth]{imagenes/img9_demosicing_quality.png}
+        Algoritmos de Interpolación Direccional y HighQuality
 \end{figure}
 
 Como se puede observar, a simple vista pareciera que los 4 algoritmos dan un resultado bastante aceptable, pero mirando detalladamente y comparando entre sí se puede observar una gran diferencia entre ellos, principalmente en zonas borde y en la zona del texto del avión. Subjetivamente pareciera ser que la imagen más parecida a la original es la del HighQuality, seguida por la Interpolación Direccional, pero objetivamente en base a los resultados obtenidos al método PSNR se observa que el algoritmo de Interpolación Bilineal supera al Direccional, algo que llama bastante la atención y que indica que lo subjetivo se diferencia bastante de los objetivo. 
@@ -155,7 +158,7 @@ Como se puede observar, a simple vista pareciera que los 4 algoritmos dan un res
 $$ 
 \begin{bmatrix}
         algoritmo   &      PSNR     \\
-       quality    &   37.71  \\
+       highquality    &   37.71  \\
        bilineal    &     35.34  \\
        directional    &      33.35    \\
        vecinos   &      30.49     \\
