@@ -123,9 +123,10 @@ Como era de esperarse, las proporc1iones tiempo tienen sentido. Vecinos es el ma
 
 \newpage
 
-\subsection{Imágen 9}
+\subsection{Imagen 9 - Avión}
 
 Nos pareció interesante hacer un análisis particular de la Imagen 9 ya que posee varias características en donde se pueden observar diferentes condiciones para ver como actúan los cuatro algoritmos, estos son: tener gran cantidad de sectores bordes, gran variedad de colores que contrastan altamente y principalmente tener texto. Destacamos esto último ya que una de las cualidades más importantes que deben poseer estos algoritmos es la de asegurar nitidez y suavidad, detalles que se ven al procesar imágenes que poseen texto. 
+
 
 A continuación mostraremos el resultado de los algoritmos para esta imagen:
 
@@ -149,7 +150,7 @@ A continuación mostraremos el resultado de los algoritmos para esta imagen:
         \includegraphics[width=0.5\textwidth]{imagenes/img9_demosicing_quality.png}
 \end{figure}
 
-Como se puede observar, a simple vista pareciera que los 4 algoritmos dan un resultado bastante aceptable, pero mirando detalladamente y comparando entre sí se puede observar una gran diferencia entre ellos, principalmente en zonas borde y en la zona del texto del avión. Subjetivamente pareciera ser que la imagen más parecida a la original es la del HighQuality, seguida por la Interpolación Direccional, pero objetivamente en base a los resultados obtenidos al método PSNR se observa que el algoritmo de Interpolación Bilineal supera al Direccional
+Como se puede observar, a simple vista pareciera que los 4 algoritmos dan un resultado bastante aceptable, pero mirando detalladamente y comparando entre sí se puede observar una gran diferencia entre ellos, principalmente en zonas borde y en la zona del texto del avión. Subjetivamente pareciera ser que la imagen más parecida a la original es la del HighQuality, seguida por la Interpolación Direccional, pero objetivamente en base a los resultados obtenidos al método PSNR se observa que el algoritmo de Interpolación Bilineal supera al Direccional, algo que llama bastante la atención y que indica que lo subjetivo se diferencia bastante de los objetivo. 
 
 $$ 
 \begin{bmatrix}
@@ -161,6 +162,7 @@ $$
 \end{bmatrix} 
 $$
 
+Yendo más a fondo aún en la cuestión y para mostrar el nivel de detalle que obtiene cada algoritmo, decidimos hacer zoom en la zona donde la imagen posee texto:
 
 \begin{figure}
        \includegraphics[width=0.5\textwidth]{imagenes/img9_demosicing_vecino_cropped.png}
@@ -181,6 +183,8 @@ $$
        \includegraphics[width=0.5\textwidth]{imagenes/img9_demosicing_quality_cropped.png}
         \caption{Quality}
 \end{figure}
+
+Acá si se puede observar la nitidez y suavidad que presenta cada algoritmo, viéndose como mejora la calidad del texto para cada imagen y como va disminuyendo el ruido aumentando la refinación alrededor del mismo.
 
 \newpage
 
