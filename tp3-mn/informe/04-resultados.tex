@@ -257,7 +257,7 @@ Como dato interesante vale aclarar que en el tejado de la casa podemos ver anoma
 
 \subsection{Comparación de tiempos}
 
-En esta sección presentaremos una comparativa entre los tiempos que tarda cada algoritmo a medida que aumenta el tamaño de la imagen. Para tal fin testamos cada algoritmo con imágenes cuadradas generadas aleatoriamente que van aumentando su tamaño, y creemos que es una forma correcta de comparar los tiempos ya que la complejidad de cada algoritmo es independiente de la información que tenga la imagen, pero dependiente del tamaño.
+En esta sección presentaremos una comparativa entre los tiempos que tarda cada algoritmo a medida que aumenta el tamaño de la imagen. Para tal fin testamos cada algoritmo con imágenes cuadradas generadas aleatoriamente que van aumentando su tamaño, y creemos que es una forma correcta de comparar los tiempos ya que la complejidad de cada algoritmo es mas independiente de la información que tenga la imagen que del tamaño debido a que las iteraciones depende directamente de este.
 
 \begin{figure}[h]
        \includegraphics[width=1\textwidth]{imagenes/tiempo_algoritmos_random.png}
@@ -277,7 +277,7 @@ En esta sección compararemos solo los verdes de las imágenes y veremos los res
        \caption{Img1}
 \end{figure}
 
-Como venimos viendo en otros ejemplos, img9, y este img1, y como era esperado, el vecinos es el que peor hizo, y quality fue el mejor. Sin embargo notemos que Spline si bien 
+Como venimos viendo en otros ejemplos, img9, img12, y este, como era esperado, el vecinos es el que peor hizo, y quality fue el mejor. Sin embargo notemos que Spline si bien 
 tendría que tener un valor mayor que bilineal ya que subjetivamente notamos mejora entre ellos, no lo tiene, es 
 decir, el nivel de ruido es mayor en el direccional. Esto tiene sentido en la medida que el algoritmo direccional 
 utiliza toda la fila y toda la columna para calcular el valor de las coordenadas $b_j$, $c_j$ y $d_j$ por lo que está 
