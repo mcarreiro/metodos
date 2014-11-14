@@ -125,10 +125,15 @@ Como era de esperarse, las proporc1iones tiempo tienen sentido. Vecinos es el ma
 
 \subsection{Imágen 9}
 
+Nos pareció interesante hacer un análisis particular de la Imagen 9 ya que posee varias características en donde se pueden observar diferentes condiciones para ver como actúan los cuatro algoritmos, estos son: tener gran cantidad de sectores bordes, gran variedad de colores que contrastan altamente y principalmente tener texto. Destacamos esto último ya que una de las cualidades más importantes que deben poseer estos algoritmos es la de asegurar nitidez y suavidad, detalles que se ven al procesar imágenes que poseen texto. 
+
+A continuación mostraremos el resultado de los algoritmos para esta imagen:
+
 \begin{figure}
        \includegraphics[width=0.5\textwidth]{imagenes/img9.png}
            \hfill
         \includegraphics[width=0.5\textwidth]{imagenes/img9_bayer.png}
+           
 \end{figure}
 
 \begin{figure}
@@ -142,6 +147,39 @@ Como era de esperarse, las proporc1iones tiempo tienen sentido. Vecinos es el ma
        \includegraphics[width=0.5\textwidth]{imagenes/img9_demosicing_spline.png}
            \hfill
         \includegraphics[width=0.5\textwidth]{imagenes/img9_demosicing_quality.png}
+\end{figure}
+
+Como se puede observar, a simple vista pareciera que los 4 algoritmos dan un resultado bastante aceptable, pero mirando detalladamente y comparando entre sí se puede observar una gran diferencia entre ellos, principalmente en zonas borde y en la zona del texto del avión. Subjetivamente pareciera ser que la imagen más parecida a la original es la del HighQuality, seguida por la Interpolación Direccional, pero objetivamente en base a los resultados obtenidos al método PSNR se observa que el algoritmo de Interpolación Bilineal supera al Direccional
+
+$$ 
+\begin{bmatrix}
+        algoritmo   &      PSNR     \\
+       quality    &   37.71  \\
+       bilineal    &     35.34  \\
+       directional    &      33.35    \\
+       vecinos   &      30.49     \\
+\end{bmatrix} 
+$$
+
+
+\begin{figure}
+       \includegraphics[width=0.5\textwidth]{imagenes/img9_demosicing_vecino_cropped.png}
+        \caption{Vecinos}
+\end{figure}
+
+\begin{figure}
+       \includegraphics[width=0.5\textwidth]{imagenes/img9_demosicing_bilineal_cropped.png}
+        \caption{Bilineal}
+\end{figure}
+
+\begin{figure}
+       \includegraphics[width=0.5\textwidth]{imagenes/img9_demosicing_spline_cropped.png}
+        \caption{Direccional}
+\end{figure}
+
+\begin{figure}
+       \includegraphics[width=0.5\textwidth]{imagenes/img9_demosicing_quality_cropped.png}
+        \caption{Quality}
 \end{figure}
 
 \newpage
@@ -231,7 +269,7 @@ En esta sección compararemos solo los verdes de las imágenes y veremos los res
        \caption{Img1}
 \end{figure}
 
-Como era esperado, el vecinos es el que peor hizo, y quality fue el mejor. Sin embargo notemos que Spline si bien 
+Como venimos viendo en otros ejemplos, img9, y este img1, y como era esperado, el vecinos es el que peor hizo, y quality fue el mejor. Sin embargo notemos que Spline si bien 
 tendría que tener un valor mayor que bilineal ya que subjetivamente notamos mejora entre ellos, no lo tiene, es 
 decir, el nivel de ruido es mayor en el direccional. Esto tiene sentido en la medida que el algoritmo direccional 
 utiliza toda la fila y toda la columna para calcular el valor de las coordenadas $b_j$, $c_j$ y $d_j$ por lo que está 
